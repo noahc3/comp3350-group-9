@@ -8,10 +8,10 @@ public class Recipe {
     private String authorId;
     private String content;
     private IngredientList ingredients;
-    private float servingSize;
+    private double servingSize;
     private List<String> tags;
 
-    public Recipe(String id, String title, String authorId, String content, IngredientList ingredients, float servingSize, List<String> tags) {
+    public Recipe(String id, String title, String authorId, String content, IngredientList ingredients, double servingSize, List<String> tags) {
         this.id = id;
         this.title = title;
         this.authorId = authorId;
@@ -41,7 +41,7 @@ public class Recipe {
         return ingredients;
     }
 
-    public float getServingSize() {
+    public double getServingSize() {
         return servingSize;
     }
 

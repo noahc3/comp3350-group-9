@@ -23,8 +23,8 @@ public class Ingredient {
         return measurement;
     }
 
-    public void multiplyQuantity(int factor) {
-        quantity *= factor;
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
     }
 
     public Ingredient copy() {
