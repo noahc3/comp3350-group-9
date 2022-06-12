@@ -22,4 +22,12 @@ public class Ingredient {
     public String getMeasurement() {
         return measurement;
     }
+
+    public void multiplyQuantity(int factor) {
+        quantity *= factor;
+    }
+
+    public Ingredient copy() {
+        return new Ingredient(name, quantity, measurement);
+    }
 }
