@@ -1,9 +1,14 @@
 package comp3350.cookit.persistence;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import comp3350.cookit.application.Main;
+import comp3350.cookit.objects.Author;
+import comp3350.cookit.objects.Ingredient;
+import comp3350.cookit.objects.IngredientList;
+import comp3350.cookit.objects.Recipe;
 import comp3350.cookit.objects.Student;
 import comp3350.cookit.objects.Course;
 import comp3350.cookit.objects.SC;
@@ -13,9 +18,8 @@ public class DataAccessStub
 	private String dbName;
 	private String dbType = "stub";
 
-	private ArrayList<Student> students;
-	private ArrayList<Course> courses;
-	private ArrayList<SC> scs;
+	private List<Author> authors;
+	private List<Recipe> recipes;
 
 	public DataAccessStub(String dbName)
 	{
@@ -33,39 +37,47 @@ public class DataAccessStub
 		Course course;
 		SC mySC;
 
-		students = new ArrayList<Student>();
-		student = new Student("100", "Gary Chalmers", "Management");
-		students.add(student);
-		student = new Student("200", "Selma Bouvier", "University Centre");
-		students.add(student);
-		student = new Student("300", "Arnie Pye", "Frank Kennedy");
-		students.add(student);
-		student = new Student("400", "Mary Bailey", "Off Campus");
-		students.add(student);
+		authors = Arrays.asList(
+				new Author("0", "bobpiazza", "I love making muffins. Find me on allrecipes: https://www.allrecipes.com/cook/2955506"),
+				new Author("1", "Myrna", "Find me on allrecipes: https://www.allrecipes.com/cook/2792648?content=recipes")
+		);
 
-		courses = new ArrayList<Course>();
-		course = new Course("COMP3010", "Distributed Computing");
-		courses.add(course);
-		course = new Course("COMP3020", "Human-Computer Interaction");
-		courses.add(course);
-		course = new Course("COMP3350", "Software Development");
-		courses.add(course);
-		course = new Course("COMP3380", "Databases");
-		courses.add(course);
-
-		scs = new ArrayList<SC>();
-		mySC = new SC("100", "COMP3010", "Gary Chalmers", "Distributed Computing", "C+");
-		scs.add(mySC);
-		mySC = new SC("200", "COMP3010", "Selma Bouvier", "Distributed Computing", "A+");
-		scs.add(mySC);
-		mySC = new SC("100", "COMP3350", "Gary Chalmers", "Software Development", "A");
-		scs.add(mySC);
-		mySC = new SC("300", "COMP3350", "Arnie Pye", "Software Development", "B");
-		scs.add(mySC);
-		mySC = new SC("100", "COMP3380", "Gary Chalmers", "Databases", "A");
-		scs.add(mySC);
-		mySC = new SC("200", "COMP3380", "Selma Bouvier", "Databases", "B");
-		scs.add(mySC);
+		recipes = Arrays.asList(
+				new Recipe(
+						"Lemon Cranberry Muffins",
+						"0",
+						"1. Preheat oven to 400F. Grease 12 muffin cups, or line with paper muffin liners.\n2. Combine flour, sugar, baking powder, and salt in a large bowl. Mix lemon juice and milk in a measuring cup, to sour milk; beat eggs, oil, and milk mixture in a bowl. Stir egg mixture into flour mixture until just moistened; fold in cranberries. Fill prepared muffin cups two-thirds full; sprinkle with almonds.\n3. Bake in preheated oven until a toothpick inserted into a muffin comes out clean, 18 to 20 minutes. Cool for 5 minutes before removing from pan to wire rack.",
+						IngredientList.Create(
+								new Ingredient("all-purpose flour", 2, "cups"),
+								new Ingredient("white sugar", 1.25, "cups"),
+								new Ingredient("baking powder", 0.5, "tbsp"),
+								new Ingredient("salt", 0.5, "tsp"),
+								new Ingredient("lemon juice", 0.25, "cups"),
+								new Ingredient("milk", 0.75, "cups"),
+								new Ingredient("eggs", 2, "whole"),
+								new Ingredient("vegetable oil", 0.5, "cups"),
+								new Ingredient("cranberries, halved", 1, "cups"),
+								new Ingredient("toasted slivered almonds", 0.33, "cups")
+							),
+						12,
+						Arrays.asList("Breakfast", "Comfort Food", "Easy", "Snack")
+					),
+				new Recipe(
+						"Honey-Garlic Slow Cooker Chicken Thighs",
+						"1",
+						"1. Lay chicken thighs into the bottom of a 4-quart slow cooker.\n2. Whisk soy sauce, ketchup, honey, garlic, and basil together in a bowl; pour over the chicken.\n3. Cook on Low for 6 hours.",
+						IngredientList.Create(
+								new Ingredient("boneless, skinless chicken thighs", 4, "whole"),
+								new Ingredient("soy sauce", 0.5, "cups"),
+								new Ingredient("ketchup", 0.5, "cups"),
+								new Ingredient("honey", 0.33, "cups"),
+								new Ingredient("garlic, minced", 3, "cloves"),
+								new Ingredient("dried basil", 1, "tsp")
+						),
+						4,
+						Arrays.asList("Dinner", "Chicken", "Slow Cooker")
+				)
+		);
 
 		System.out.println("Opened " +dbType +" database " +dbName);
 	}
@@ -75,143 +87,69 @@ public class DataAccessStub
 		System.out.println("Closed " +dbType +" database " +dbName);
 	}
 
-	public String getStudentSequential(List<Student> studentResult)
-	{
-        studentResult.addAll(students);
+	public String getAllRecipes(List<Recipe> recipes) {
+		recipes.addAll(this.recipes);
 		return null;
 	}
 
-	public ArrayList<Student> getStudentRandom(Student currentStudent)
-	{
-		ArrayList<Student> newStudents;
-		int index;
-		
-		newStudents = new ArrayList<Student>();
-		index = students.indexOf(currentStudent);
-		if (index >= 0)
-		{
-			newStudents.add(students.get(index));
-		}
-		return newStudents;
-	}
-
-	public String insertStudent(Student currentStudent)
-	{
-		// don't bother checking for duplicates
-		students.add(currentStudent);
+	public String insertRecipe(Recipe recipe) {
+		recipes.add(recipe);
 		return null;
 	}
 
-	public String updateStudent(Student currentStudent)
-	{
-		int index;
-		
-		index = students.indexOf(currentStudent);
-		if (index >= 0)
-		{
-			students.set(index, currentStudent);
-		}
-		return null;
-	}
-
-	public String deleteStudent(Student currentStudent)
-	{
-		int index;
-		
-		index = students.indexOf(currentStudent);
-		if (index >= 0)
-		{
-			students.remove(index);
-		}
-		return null;
-	}
-
-	public String getCourseSequential(List<Course> courseResult)
-	{
-        courseResult.addAll(courses);
-		return null;
-	}
-
-	public ArrayList<Course> getCourseRandom(Course currentCourse)
-	{
-		ArrayList<Course> newCourses;
-		int index;
-		
-		newCourses = new ArrayList<Course>();
-		index = courses.indexOf(currentCourse);
-		if (index >= 0)
-		{
-			newCourses.add(courses.get(index));
-		}
-		return newCourses;
-	}
-
-	public String insertCourse(Course currentCourse)
-	{
-		// don't bother checking for duplicates
-		courses.add(currentCourse);
-		return null;
-	}
-
-	public String updateCourse(Course currentCourse)
-	{
-		int index;
-		
-		index = courses.indexOf(currentCourse);
-		if (index >= 0)
-		{
-			courses.set(index, currentCourse);
-		}
-		return null;
-	}
-
-	public String deleteCourse(Course currentCourse)
-	{
-		int index;
-		
-		index = courses.indexOf(currentCourse);
-		if (index >= 0)
-		{
-			courses.remove(index);
-		}
-		return null;
-	}
-
-	public ArrayList<SC> getSC(SC currentSC)
-	{
-		ArrayList<SC> newSCs;
-		SC sc;
-		int counter;
-		
-		// get the SC objects with the same studentID as currentSC
-		newSCs = new ArrayList<SC>();
-		for (counter=0; counter<scs.size(); counter++)
-		{
-			sc = scs.get(counter);
-			if (sc.getStudentID().equals(currentSC.getStudentID()))
-			{
-				newSCs.add(scs.get(counter));
+	public String updateRecipe(Recipe recipe) {
+		for(int i = 0; i < recipes.size(); i++) {
+			if (recipes.get(i).getId().equals(recipe.getId())) {
+				recipes.set(i, recipe);
+				break;
 			}
 		}
-		return newSCs;
+
+		return null;
 	}
 
-	public ArrayList<SC> getCS(SC currentSC)
-	{
-		ArrayList<SC> newSCs;
-		SC cs;
-		int counter;
-		
-		// get the SC objects with the same courseID as currentSC
-		newSCs = new ArrayList<SC>();
-		for (counter=0; counter<scs.size(); counter++)
-		{
-			cs = scs.get(counter);
-			if (cs.getCourseID().equals(currentSC.getCourseID()))
-			{
-				newSCs.add(scs.get(counter));
+	public String deleteRecipe(Recipe recipe) {
+		for(int i = 0; i < recipes.size(); i++) {
+			if (recipes.get(i).getId().equals(recipe.getId())) {
+				recipes.remove(i);
+				break;
 			}
 		}
-		return newSCs;
+
+		return null;
 	}
+
+	public String getAllAuthors(List<Author> authors) {
+		authors.addAll(this.authors);
+		return null;
+	}
+
+	public String insertAuthor(Author author) {
+		authors.add(author);
+		return null;
+	}
+
+	public String updateAuthor(Author author) {
+		for(int i = 0; i < authors.size(); i++) {
+			if (authors.get(i).getId().equals(author.getId())) {
+				authors.set(i, author);
+				break;
+			}
+		}
+
+		return null;
+	}
+
+	public String deleteAuthor(Author author) {
+		for(int i = 0; i < authors.size(); i++) {
+			if (authors.get(i).getId().equals(author.getId())) {
+				authors.remove(i);
+				break;
+			}
+		}
+
+		return null;
+	}
+
+
 }
