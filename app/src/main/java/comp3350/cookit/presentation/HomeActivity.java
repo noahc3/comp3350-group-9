@@ -43,14 +43,4 @@ public class HomeActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    public void buttonStudentsOnClick(View v) {
-        Intent studentsIntent = new Intent(HomeActivity.this, StudentsActivity.class);
-        HomeActivity.this.startActivity(studentsIntent);
-    }
-
-    public void buttonCoursesOnClick(View v) {
-        Intent coursesIntent = new Intent(HomeActivity.this, CoursesActivity.class);
-        HomeActivity.this.startActivity(coursesIntent);
-    }
 }

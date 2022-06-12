@@ -12,8 +12,8 @@ public class Recipe {
     private float baseServingSize;
     private List<String> tags;
 
-    public Recipe(String title, String authorId, String content, IngredientList ingredients, float baseServingSize, List<String> tags) {
-        this.id = UUID.randomUUID().toString();
+    public Recipe(String id, String title, String authorId, String content, IngredientList ingredients, float baseServingSize, List<String> tags) {
+        this.id = id;
         this.title = title;
         this.authorId = authorId;
         this.content = content;

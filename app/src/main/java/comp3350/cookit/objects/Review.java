@@ -1,24 +1,30 @@
 package comp3350.cookit.objects;
 
 public class Review {
+    private String id;
+    private String recipeId;
     private String author;
-    private String summary;
     private String content;
     private int rating;
 
-    public Review(String author, String summary, String content, int rating) {
+    public Review(String id, String recipeId, String author, String content, int rating) {
+        this.id = id;
+        this.recipeId = recipeId;
         this.author = author;
-        this.summary = summary;
         this.content = content;
         this.rating = rating;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getId() {
+        return id;
     }
 
-    public String getSummary() {
-        return summary;
+    public String getRecipeId() {
+        return recipeId;
+    }
+
+    public String getAuthor() {
+        return author;
     }
 
     public String getContent() {

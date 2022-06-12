@@ -10,34 +10,33 @@ import comp3350.cookit.persistence.DataAccessStub;
 public class AccessRecipes
 {
     private DataAccessStub dataAccess;
-    private List<Recipe> recipes;
-    private Recipe recipe;
-    private int currentRecipe;
 
     public AccessRecipes()
     {
         dataAccess = Services.getDataAccess(Main.dbName);
-        recipes = null;
     }
 
-    public String getRecipes(List<Recipe> recipes)
+    public List<Recipe> getRecipes()
     {
-        recipes.clear();
-        return dataAccess.getAllRecipes(recipes);
+        return dataAccess.getAllRecipes();
     }
 
-    public String insertRecipe(Recipe recipe)
-    {
-        return dataAccess.insertRecipe(recipe);
+    public Recipe getRecipeById(String id) {
+        return dataAccess.getRecipeById(id);
     }
 
-    public String updateRecipe(Recipe recipe)
+    public void insertRecipe(Recipe recipe)
     {
-        return dataAccess.updateRecipe(recipe);
+        dataAccess.insertRecipe(recipe);
     }
 
-    public String deleteRecipe(Recipe recipe)
+    public void updateRecipe(Recipe recipe)
     {
-        return dataAccess.deleteRecipe(recipe);
+        dataAccess.updateRecipe(recipe);
+    }
+
+    public void deleteRecipe(Recipe recipe)
+    {
+        dataAccess.deleteRecipe(recipe);
     }
 }

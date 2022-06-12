@@ -4,40 +4,40 @@ import java.util.List;
 
 import comp3350.cookit.application.Main;
 import comp3350.cookit.application.Services;
+import comp3350.cookit.objects.Author;
 import comp3350.cookit.objects.Recipe;
 import comp3350.cookit.persistence.DataAccessStub;
 
 public class AccessAuthors
 {
     private DataAccessStub dataAccess;
-    private List<Recipe> recipes;
-    private Recipe recipe;
-    private int currentRecipe;
 
     public AccessAuthors()
     {
         dataAccess = Services.getDataAccess(Main.dbName);
-        recipes = null;
     }
 
-    public String getRecipes(List<Recipe> recipes)
+    public List<Author> getAuthors()
     {
-        recipes.clear();
-        return dataAccess.getAllRecipes(recipes);
+        return dataAccess.getAllAuthors();
     }
 
-    public String insertRecipe(Recipe recipe)
-    {
-        return dataAccess.insertRecipe(recipe);
+    public Author getAuthorById(String id) {
+        return dataAccess.getAuthorById(id);
     }
 
-    public String updateRecipe(Recipe recipe)
+    public void insertRecipe(Author author)
     {
-        return dataAccess.updateRecipe(recipe);
+        dataAccess.insertAuthor(author);
     }
 
-    public String deleteRecipe(Recipe recipe)
+    public void updateRecipe(Author author)
     {
-        return dataAccess.deleteRecipe(recipe);
+        dataAccess.updateAuthor(author);
+    }
+
+    public void deleteRecipe(Author author)
+    {
+        dataAccess.deleteAuthor(author);
     }
 }

@@ -9,9 +9,7 @@ import comp3350.cookit.objects.Author;
 import comp3350.cookit.objects.Ingredient;
 import comp3350.cookit.objects.IngredientList;
 import comp3350.cookit.objects.Recipe;
-import comp3350.cookit.objects.Student;
-import comp3350.cookit.objects.Course;
-import comp3350.cookit.objects.SC;
+import comp3350.cookit.objects.Review;
 
 public class DataAccessStub
 {
@@ -20,6 +18,7 @@ public class DataAccessStub
 
 	private List<Author> authors;
 	private List<Recipe> recipes;
+	private List<Review> reviews;
 
 	public DataAccessStub(String dbName)
 	{
@@ -33,10 +32,6 @@ public class DataAccessStub
 
 	public void open(String dbName)
 	{
-		Student student;
-		Course course;
-		SC mySC;
-
 		authors = Arrays.asList(
 				new Author("0", "bobpiazza", "I love making muffins. Find me on allrecipes: https://www.allrecipes.com/cook/2955506"),
 				new Author("1", "Myrna", "Find me on allrecipes: https://www.allrecipes.com/cook/2792648?content=recipes")
@@ -44,6 +39,7 @@ public class DataAccessStub
 
 		recipes = Arrays.asList(
 				new Recipe(
+						"0",
 						"Lemon Cranberry Muffins",
 						"0",
 						"1. Preheat oven to 400F. Grease 12 muffin cups, or line with paper muffin liners.\n2. Combine flour, sugar, baking powder, and salt in a large bowl. Mix lemon juice and milk in a measuring cup, to sour milk; beat eggs, oil, and milk mixture in a bowl. Stir egg mixture into flour mixture until just moistened; fold in cranberries. Fill prepared muffin cups two-thirds full; sprinkle with almonds.\n3. Bake in preheated oven until a toothpick inserted into a muffin comes out clean, 18 to 20 minutes. Cool for 5 minutes before removing from pan to wire rack.",
@@ -63,6 +59,7 @@ public class DataAccessStub
 						Arrays.asList("Breakfast", "Comfort Food", "Easy", "Snack")
 					),
 				new Recipe(
+						"1",
 						"Honey-Garlic Slow Cooker Chicken Thighs",
 						"1",
 						"1. Lay chicken thighs into the bottom of a 4-quart slow cooker.\n2. Whisk soy sauce, ketchup, honey, garlic, and basil together in a bowl; pour over the chicken.\n3. Cook on Low for 6 hours.",
@@ -79,6 +76,12 @@ public class DataAccessStub
 				)
 		);
 
+		reviews = Arrays.asList(
+				new Review("0", "0", "Neo Colwyn", "These muffins are really good!", 5),
+				new Review("1", "0", "Padma Gauthier", "Should up the cranberry count a little bit, otherwise awesome!", 4),
+				new Review("2", "1", "Lara Hanna", "Too much ketchup.", 2)
+		);
+
 		System.out.println("Opened " +dbType +" database " +dbName);
 	}
 
@@ -87,68 +90,121 @@ public class DataAccessStub
 		System.out.println("Closed " +dbType +" database " +dbName);
 	}
 
-	public String getAllRecipes(List<Recipe> recipes) {
-		recipes.addAll(this.recipes);
-		return null;
+	public List<Recipe> getAllRecipes() {
+		return new ArrayList<>(this.recipes);
 	}
 
-	public String insertRecipe(Recipe recipe) {
+	public Recipe getRecipeById(String id) {
+		Recipe result = null;
+
+		for (Recipe r : recipes) {
+			if (r.getId().equals(id)) {
+				result = r;
+				break;
+			}
+		}
+
+		return result;
+	}
+
+	public void insertRecipe(Recipe recipe) {
 		recipes.add(recipe);
-		return null;
 	}
 
-	public String updateRecipe(Recipe recipe) {
+	public void updateRecipe(Recipe recipe) {
 		for(int i = 0; i < recipes.size(); i++) {
 			if (recipes.get(i).getId().equals(recipe.getId())) {
 				recipes.set(i, recipe);
 				break;
 			}
 		}
-
-		return null;
 	}
 
-	public String deleteRecipe(Recipe recipe) {
+	public void deleteRecipe(Recipe recipe) {
 		for(int i = 0; i < recipes.size(); i++) {
 			if (recipes.get(i).getId().equals(recipe.getId())) {
 				recipes.remove(i);
 				break;
 			}
 		}
-
-		return null;
 	}
 
-	public String getAllAuthors(List<Author> authors) {
-		authors.addAll(this.authors);
-		return null;
+	public List<Author> getAllAuthors() {
+		return new ArrayList<>(this.authors);
 	}
 
-	public String insertAuthor(Author author) {
+	public Author getAuthorById(String id) {
+		Author result = null;
+
+		for (Author a : authors) {
+			if (a.getId().equals(id)) {
+				result = a;
+				break;
+			}
+		}
+
+		return result;
+	}
+
+	public void insertAuthor(Author author) {
 		authors.add(author);
-		return null;
 	}
 
-	public String updateAuthor(Author author) {
+	public void updateAuthor(Author author) {
 		for(int i = 0; i < authors.size(); i++) {
 			if (authors.get(i).getId().equals(author.getId())) {
 				authors.set(i, author);
 				break;
 			}
 		}
-
-		return null;
 	}
 
-	public String deleteAuthor(Author author) {
+	public void deleteAuthor(Author author) {
 		for(int i = 0; i < authors.size(); i++) {
 			if (authors.get(i).getId().equals(author.getId())) {
 				authors.remove(i);
 				break;
 			}
 		}
+	}
 
-		return null;
+	public List<Review> getAllReviews() {
+		return new ArrayList<>(this.reviews);
+	}
+
+	public Review getReviewById(String id) {
+		Review result = null;
+
+		for (Review r : reviews) {
+			if (r.getId().equals(id)) {
+				result = r;
+				break;
+			}
+		}
+
+		return result;
+	}
+
+	public void insertReview(Review review) {
+		reviews.add(review);
+	}
+
+	public void updateReview(Review review) {
+		for(int i = 0; i < reviews.size(); i++) {
+			if (reviews.get(i).getId().equals(review.getId())) {
+				reviews.set(i, review);
+				break;
+			}
+		}
+	}
+
+	public void deleteReview(Review review) {
+		for(int i = 0; i < authors.size(); i++) {
+			if (reviews.get(i).getId().equals(review.getId())) {
+				reviews.remove(i);
+				break;
+			}
+		}
 	}
 
 
