@@ -314,12 +314,12 @@ public class fractionTests {
         Assert.assertEquals(0.0, f.getDouble(), 0.005);
     }
 
-    @Test(expected = NumberFormatException.class)
+    @Test(expected = ArithmeticException.class)
     public void testNegativeValue() {
         new Fraction(-0.50);
     }
 
-    @Test(expected = NumberFormatException.class)
+    @Test(expected = ArithmeticException.class)
     public void testMultiplyByNegative() {
         new Fraction(1.5).multiply(-2);
     }
@@ -329,49 +329,49 @@ public class fractionTests {
         try {
             new Fraction(0.429); // 3/7
             Assert.fail("Expected NumberFormatException");
-        } catch (NumberFormatException ignored) {
+        } catch (ArithmeticException ignored) {
 
         }
 
         try {
             new Fraction(0.6); // 3/5
             Assert.fail("Expected NumberFormatException");
-        } catch (NumberFormatException ignored) {
+        } catch (ArithmeticException ignored) {
 
         }
 
         try {
             new Fraction(0.454545); // 5/11
             Assert.fail("Expected NumberFormatException");
-        } catch (NumberFormatException ignored) {
+        } catch (ArithmeticException ignored) {
 
         }
 
         try {
             new Fraction(0.0625); // 1/16
             Assert.fail("Expected NumberFormatException");
-        } catch (NumberFormatException ignored) {
+        } catch (ArithmeticException ignored) {
 
         }
 
         try {
             new Fraction(0.1875); // 3/16
             Assert.fail("Expected NumberFormatException");
-        } catch (NumberFormatException ignored) {
+        } catch (ArithmeticException ignored) {
 
         }
 
         try {
             new Fraction(0.11111111111); // 1/9
             Assert.fail("Expected NumberFormatException");
-        } catch (NumberFormatException ignored) {
+        } catch (ArithmeticException ignored) {
 
         }
 
         try {
             new Fraction(0.22222222222); // 2/9
             Assert.fail("Expected NumberFormatException");
-        } catch (NumberFormatException ignored) {
+        } catch (ArithmeticException ignored) {
 
         }
     }

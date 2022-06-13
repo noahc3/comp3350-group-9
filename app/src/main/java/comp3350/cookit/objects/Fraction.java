@@ -8,7 +8,7 @@ public class Fraction {
 
     public Fraction(double value) {
         if (value < 0) {
-            throw new NumberFormatException("Negative values are not supported.");
+            throw new ArithmeticException("Negative values are not supported.");
         }
 
         numerator = 0;
@@ -35,7 +35,7 @@ public class Fraction {
             }
         } else {
             // the decimal cannot be expressed as wholes, thirds, or eighths, therefore it is unsupported.
-            throw new NumberFormatException("Double value must be expressible as a whole, thirds, or eighths.");
+            throw new ArithmeticException("Double value must be expressible as a whole, thirds, or eighths.");
         }
 
         numerator += ((int) Math.floor(value)) * denominator;
@@ -43,7 +43,7 @@ public class Fraction {
 
     public Fraction multiply(int factor) {
         if (factor < 0) {
-            throw new NumberFormatException("Negative values are not supported.");
+            throw new ArithmeticException("Negative values are not supported.");
         }
 
         numerator *= factor;
