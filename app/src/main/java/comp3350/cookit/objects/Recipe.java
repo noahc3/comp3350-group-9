@@ -1,7 +1,6 @@
 package comp3350.cookit.objects;
 
 import java.util.List;
-import java.util.UUID;
 
 public class Recipe {
     private String id;
@@ -9,16 +8,16 @@ public class Recipe {
     private String authorId;
     private String content;
     private IngredientList ingredients;
-    private float baseServingSize;
+    private double servingSize;
     private List<String> tags;
 
-    public Recipe(String id, String title, String authorId, String content, IngredientList ingredients, float baseServingSize, List<String> tags) {
+    public Recipe(String id, String title, String authorId, String content, IngredientList ingredients, double servingSize, List<String> tags) {
         this.id = id;
         this.title = title;
         this.authorId = authorId;
         this.content = content;
         this.ingredients = ingredients;
-        this.baseServingSize = baseServingSize;
+        this.servingSize = servingSize;
         this.tags = tags;
     }
 
@@ -38,12 +37,12 @@ public class Recipe {
         return content;
     }
 
-    public IngredientList getIngredients() {
+    public IngredientList getIngredientList() {
         return ingredients;
     }
 
-    public float getBaseServingSize() {
-        return baseServingSize;
+    public double getServingSize() {
+        return servingSize;
     }
 
     public List<String> getTags() {
