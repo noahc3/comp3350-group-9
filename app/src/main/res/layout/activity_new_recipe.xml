@@ -10,16 +10,16 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/new_recipe"
-        android:textSize="50dp"
-        android:textColor="@color/colorPrimaryDark"
         android:fontFamily="sans-serif-black"
+        android:text="@string/new_recipe"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.112"
+        app:layout_constraintHorizontal_bias="0.092"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.042" />
+        app:layout_constraintVertical_bias="0.054" />
 
     <EditText
         android:id="@+id/recipeName"
@@ -190,4 +190,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/directionList"
         tools:ignore="TextContrastCheck" />
+
 </android.support.constraint.ConstraintLayout>
