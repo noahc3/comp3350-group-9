@@ -11,10 +11,16 @@ import comp3350.cookit.persistence.DataAccessStub;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class DisplayRecipeActivity extends Activity {
+    private Spinner spinner;
+    private TextView d_result;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,5 +44,27 @@ public class DisplayRecipeActivity extends Activity {
             text.setText(getString(R.string.ingredient_format, new Fraction(i.getQuantity()).getMixedFraction(), i.getMeasurement(), i.getName()));
             ingredientLayout.addView(text);
         }
+
+
+
+        spinner = (Spinner)findViewById(R.id.spinner);
+        d_result = (TextView)findViewById(R.id.d_result);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+//            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                d_result.setText(parent.getItemAtPosition(position).toString());
+            }
+
+//            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
+
+
+
 }
