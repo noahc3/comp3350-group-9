@@ -22,4 +22,12 @@ public class Ingredient {
     public String getMeasurement() {
         return measurement;
     }
+
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
+    }
+
+    public Ingredient copy() {
+        return new Ingredient(name, quantity, measurement);
+    }
 }
