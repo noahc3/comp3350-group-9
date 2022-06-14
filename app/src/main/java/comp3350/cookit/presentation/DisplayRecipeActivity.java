@@ -3,6 +3,7 @@ package comp3350.cookit.presentation;
 import comp3350.cookit.R;
 import comp3350.cookit.application.Main;
 import comp3350.cookit.application.Services;
+import comp3350.cookit.business.Convert;
 import comp3350.cookit.objects.Author;
 import comp3350.cookit.objects.Fraction;
 import comp3350.cookit.objects.Ingredient;
@@ -47,6 +48,7 @@ public class DisplayRecipeActivity extends Activity {
 
 
 
+
         spinner = (Spinner)findViewById(R.id.spinner);
         d_result = (TextView)findViewById(R.id.d_result);
 
@@ -55,6 +57,21 @@ public class DisplayRecipeActivity extends Activity {
 //            @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 d_result.setText(parent.getItemAtPosition(position).toString());
+
+
+                DataAccessStub dataAccessStub = Services.getDataAccess(Main.dbName);
+                String recipeId = getIntent().getExtras().getString("recipeId");
+                Recipe recipe = dataAccessStub.getRecipeById(recipeId);
+                recipe = Convert.multiplyServingSize(recipe,position+1);
+                LinearLayout ingredientLayout = findViewById(R.id.ingredientList);
+                ingredientLayout.removeAllViews();
+                for (Ingredient i : recipe.getIngredientList().getIngredients()) {
+                    TextView text = new TextView(DisplayRecipeActivity.this);
+                    text.setText(getString(R.string.ingredient_format, new Fraction(i.getQuantity()).getMixedFraction(), i.getMeasurement(), i.getName()));
+                    ingredientLayout.addView(text);
+                }
+
+                ingredientLayout.requestLayout();
             }
 
 //            @Override
@@ -62,6 +79,11 @@ public class DisplayRecipeActivity extends Activity {
 
             }
         });
+
+
+
+
+
 
     }
 
