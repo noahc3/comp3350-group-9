@@ -20,6 +20,8 @@
     <string name="add_ingredient">Add to Ingredient List</string>
     <string name="ingredients_format">Use this form to keep adding ingredients to the list:</string>
     <string name="ingredients_list">Ingredient List:</string>
+    <string name="ingredient_format">%1$s %2$s %3$s</string>
+
 
     <!-- Direction-Related -->
     <string name="directions">Directions</string>
@@ -30,6 +32,7 @@
     <string name="authors">Authors</string>
     <string name="author">Author</string>
     <string name="add_author">Add Author</string>
+    <string name="written_by">Written by %s</string>
 
     <!-- Review-Related -->
     <string name="reviews">Reviews</string>
