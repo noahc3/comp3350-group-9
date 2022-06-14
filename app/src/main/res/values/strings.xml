@@ -1,25 +1,48 @@
 <resources>
+    <!-- Activity-Related -->
     <string name="app_name">Cookit</string>
-    <string name="recipes">Recipes</string>
-    <string name="recipe">Recipe</string>
-    <string name="ingredients">Ingredients</string>
-    <string name="ingredient">Ingredient</string>
-    <string name="directions">Directions</string>
-    <string name="authors">Authors</string>
-    <string name="author">Author</string>
-    <string name="reviews">Reviews</string>
-    <string name="review">Review</string>
-    <string name="view_recipes">View Recipes</string>
-    <string name="new_recipe">New Recipe</string>
-    <string name="add_ingredient">Add Ingredient</string>
-    <string name="_add_author">Add Author</string>
     <string name="title_activity_home">Home</string>
     <string name="title_activity_new_recipe">New Recipe</string>
 
+    <!-- Recipe-Related -->
+    <string name="recipes">Recipes</string>
+    <string name="recipe">Recipe</string>
+    <string name="view_recipes">View Recipes</string>
+    <string name="new_recipe">New Recipe</string>
+    <string name="recipe_name">Recipe Name</string>
+
+    <!-- Ingredient-Related -->
+    <string name="ingredients">Ingredients</string>
+    <string name="ingredient">Ingredient</string>
+    <string name="ingredient_name">Ingredient Name</string>
+    <string name="amount">Amt.</string>
+    <string name="measurement_units">Units</string>
+    <string name="add_ingredient">Add to Ingredient List</string>
+    <string name="ingredients_format">Use this form to keep adding ingredients to the list:</string>
+    <string name="ingredients_list">Ingredient List:</string>
+
+    <!-- Direction-Related -->
+    <string name="directions">Directions</string>
+    <string name="directions_format">List Directions Here:</string>
+    <string name="directions_example">e.g.\n1. Mix all ingredients in a bowl\n2. Transfer to a baking pan\n3. etc.</string>
+
+    <!-- Author-Related -->
+    <string name="authors">Authors</string>
+    <string name="author">Author</string>
+    <string name="add_author">Add Author</string>
+
+    <!-- Review-Related -->
+    <string name="reviews">Reviews</string>
+    <string name="review">Review</string>
+    <string name="write_review">Review</string>
+
+    <!-- System-Related -->
     <string name="fatalError">Fatal error</string>
     <string name="warning">Warning</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
-
+    <string name="publish">Publish</string>
+    <string name="add">Add</string>
+    <string name="create">Create</string>
+    <string name="cancel">Cancel</string>
 </resources>
