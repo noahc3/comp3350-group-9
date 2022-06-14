@@ -27,7 +27,7 @@ public class HomeActivity extends Activity {
     }
 
     public void newRecipesOnClick(View v) {
-        Intent recipeIntent = new Intent(HomeActivity.this, RecipesDetail.class);
-        HomeActivity.this.startActivity(recipeIntent);
+        Intent newRecipesIntent = new Intent(this, NewRecipeActivity.class);
+        startActivity(newRecipesIntent);
     }
 }
