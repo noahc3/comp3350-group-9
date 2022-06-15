@@ -1,15 +1,16 @@
 package comp3350.cookit.objects;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Recipe {
-    private String id;
-    private String title;
-    private String authorId;
-    private String content;
-    private IngredientList ingredients;
-    private double servingSize;
-    private List<String> tags;
+    private final String id;
+    private final String title;
+    private final String authorId;
+    private final String content;
+    private final IngredientList ingredients;
+    private final double servingSize;
+    private final List<String> tags;
 
     public Recipe(String id, String title, String authorId, String content, IngredientList ingredients, double servingSize, List<String> tags) {
         this.id = id;
@@ -47,5 +48,18 @@ public class Recipe {
 
     public List<String> getTags() {
         return tags;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
+        Recipe recipe = (Recipe) other;
+        return Objects.equals(id, recipe.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

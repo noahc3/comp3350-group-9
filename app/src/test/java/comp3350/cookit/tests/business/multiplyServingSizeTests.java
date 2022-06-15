@@ -1,5 +1,7 @@
 package comp3350.cookit.tests.business;
 
+import android.annotation.SuppressLint;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -196,7 +198,8 @@ public class multiplyServingSizeTests {
         Convert.multiplyServingSize(recipe, 2);
     }
 
-    @Test(expected=NullPointerException.class)
+    @SuppressWarnings("ConstantConditions")
+    @Test(expected = NullPointerException.class)
     public void testNullRecipe() {
         Convert.multiplyServingSize(null, 2);
     }

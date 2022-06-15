@@ -3,6 +3,7 @@ package comp3350.cookit.presentation;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+
 import comp3350.cookit.R;
 
 public class Messages {
@@ -13,7 +14,7 @@ public class Messages {
         alertDialog.setMessage(message);
         alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             public void onCancel(DialogInterface dialog) {
-            	owner.finish();
+                owner.finish();
             }
         });
 

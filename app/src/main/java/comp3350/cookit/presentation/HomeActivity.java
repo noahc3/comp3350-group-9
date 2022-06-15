@@ -1,13 +1,12 @@
 package comp3350.cookit.presentation;
 
-import comp3350.cookit.R;
-import comp3350.cookit.application.Main;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+
+import comp3350.cookit.R;
+import comp3350.cookit.application.Main;
 
 public class HomeActivity extends Activity {
 

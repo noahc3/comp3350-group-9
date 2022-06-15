@@ -1,21 +1,18 @@
 package comp3350.cookit.presentation;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+
+import java.util.List;
+
 import comp3350.cookit.R;
 import comp3350.cookit.application.Main;
 import comp3350.cookit.application.Services;
 import comp3350.cookit.objects.Recipe;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import java.util.List;
 
 public class HomeListActivity extends Activity {
 

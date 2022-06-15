@@ -1,9 +1,11 @@
 package comp3350.cookit.objects;
 
+import java.util.Objects;
+
 public class Ingredient {
-    private String name;
+    private final String name;
+    private final String measurement;
     private double quantity;
-    private String measurement;
 
     public Ingredient(String name, double quantity, String measurement) {
         this.name = name;
@@ -29,5 +31,20 @@ public class Ingredient {
 
     public Ingredient copy() {
         return new Ingredient(name, quantity, measurement);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
+        Ingredient that = (Ingredient) other;
+        return Double.compare(that.quantity, quantity) == 0 &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(measurement, that.measurement);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, quantity, measurement);
     }
 }

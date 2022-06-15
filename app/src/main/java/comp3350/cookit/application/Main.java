@@ -2,27 +2,23 @@ package comp3350.cookit.application;
 
 import comp3350.cookit.presentation.CLI;
 
-public class Main
-{
-	public static final String dbName="SC";
+public class Main {
+    public static final String dbName = "SC";
 
-	public static void main(String[] args)
-	{
-		startUp();
+    public static void main(String[] args) {
+        startUp();
 
-		CLI.run();
-		
-		shutDown();
-		System.out.println("All done");
-	}
+        CLI.run();
 
-	public static void startUp()
-	{
-		Services.createDataAccess(dbName);
-	}
+        shutDown();
+        System.out.println("All done");
+    }
 
-	public static void shutDown()
-	{
-		Services.closeDataAccess();
-	}
+    public static void startUp() {
+        Services.createDataAccess(dbName);
+    }
+
+    public static void shutDown() {
+        Services.closeDataAccess();
+    }
 }

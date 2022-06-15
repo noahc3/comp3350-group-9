@@ -29,7 +29,7 @@ public class Fraction {
             denominator = 8;
 
             // reduce fraction to quarters or halves if possible
-            while(numerator % 2 == 0 && denominator % 2 == 0) {
+            while (numerator % 2 == 0 && denominator % 2 == 0) {
                 numerator /= 2;
                 denominator /= 2;
             }
@@ -49,13 +49,13 @@ public class Fraction {
         numerator *= factor;
 
         // reduce fraction to quarters, halves, or whole if possible
-        while(numerator % 2 == 0 && denominator % 2 == 0) {
+        while (numerator % 2 == 0 && denominator % 2 == 0) {
             numerator /= 2;
             denominator /= 2;
         }
 
         // try reduce a fraction of thirds to whole if possible
-        while(numerator % 3 == 0 && denominator % 3 == 0) {
+        while (numerator % 3 == 0 && denominator % 3 == 0) {
             numerator /= 3;
             denominator /= 3;
         }

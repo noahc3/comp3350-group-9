@@ -1,19 +1,15 @@
 package comp3350.cookit.presentation;
 
+import android.app.Activity;
+import android.os.Bundle;
+
 import comp3350.cookit.R;
 import comp3350.cookit.business.AccessAuthors;
 import comp3350.cookit.business.AccessRecipes;
 import comp3350.cookit.business.AccessReviews;
-import comp3350.cookit.application.Main;
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
 
-public class RecipesDetail extends Activity{
+public class RecipesDetail extends Activity {
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
