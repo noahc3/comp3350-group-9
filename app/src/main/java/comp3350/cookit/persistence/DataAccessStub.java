@@ -38,7 +38,7 @@ public class DataAccessStub {
                         "0",
                         "Lemon Cranberry Muffins",
                         "0",
-                        "1. Preheat oven to 400F. Grease 12 muffin cups, or line with paper muffin liners.\n2. Combine flour, sugar, baking powder, and salt in a large bowl. Mix lemon juice and milk in a measuring cup, to sour milk; beat eggs, oil, and milk mixture in a bowl. Stir egg mixture into flour mixture until just moistened; fold in cranberries. Fill prepared muffin cups two-thirds full; sprinkle with almonds.\n3. Bake in preheated oven until a toothpick inserted into a muffin comes out clean, 18 to 20 minutes. Cool for 5 minutes before removing from pan to wire rack.",
+                        "1. Preheat oven to 400F. Grease 12 muffin cups, or line with paper muffin liners.\n\n2. Combine flour, sugar, baking powder, and salt in a large bowl. Mix lemon juice and milk in a measuring cup, to sour milk; beat eggs, oil, and milk mixture in a bowl. Stir egg mixture into flour mixture until just moistened; fold in cranberries. Fill prepared muffin cups two-thirds full; sprinkle with almonds.\n\n3. Bake in preheated oven until a toothpick inserted into a muffin comes out clean, 18 to 20 minutes. Cool for 5 minutes before removing from pan to wire rack.",
                         IngredientList.Create(
                                 new Ingredient("all-purpose flour", 2, "cups"),
                                 new Ingredient("white sugar", 1.25, "cups"),
@@ -58,7 +58,7 @@ public class DataAccessStub {
                         "1",
                         "Honey-Garlic Slow Cooker Chicken Thighs",
                         "1",
-                        "1. Lay chicken thighs into the bottom of a 4-quart slow cooker.\n2. Whisk soy sauce, ketchup, honey, garlic, and basil together in a bowl; pour over the chicken.\n3. Cook on Low for 6 hours.",
+                        "1. Lay chicken thighs into the bottom of a 4-quart slow cooker.\n\n2. Whisk soy sauce, ketchup, honey, garlic, and basil together in a bowl; pour over the chicken.\n\n3. Cook on Low for 6 hours.",
                         IngredientList.Create(
                                 new Ingredient("boneless, skinless chicken thighs", 4, "whole"),
                                 new Ingredient("soy sauce", 0.5, "cups"),

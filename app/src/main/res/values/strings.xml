@@ -10,6 +10,8 @@
     <string name="view_recipes">View Recipes</string>
     <string name="new_recipe">New Recipe</string>
     <string name="recipe_name">Recipe Name</string>
+    <string name="serving_size_select">Multiply serving amount: </string>
+    <string name="creates_servings">Creates %d servings</string>
 
     <!-- Ingredient-Related -->
     <string name="ingredients">Ingredients</string>

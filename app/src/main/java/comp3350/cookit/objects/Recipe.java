@@ -9,10 +9,10 @@ public class Recipe {
     private final String authorId;
     private final String content;
     private final IngredientList ingredients;
-    private final double servingSize;
+    private final int servingSize;
     private final List<String> tags;
 
-    public Recipe(String id, String title, String authorId, String content, IngredientList ingredients, double servingSize, List<String> tags) {
+    public Recipe(String id, String title, String authorId, String content, IngredientList ingredients, int servingSize, List<String> tags) {
         this.id = id;
         this.title = title;
         this.authorId = authorId;
@@ -42,7 +42,7 @@ public class Recipe {
         return ingredients;
     }
 
-    public double getServingSize() {
+    public int getServingSize() {
         return servingSize;
     }
 
