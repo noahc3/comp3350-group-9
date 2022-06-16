@@ -1,5 +1,6 @@
 package comp3350.cookit.persistence;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,12 +29,12 @@ public class DataAccessStub {
     }
 
     public void open(String dbName) {
-        authors = Arrays.asList(
+        authors = new ArrayList<>(Arrays.asList(
                 new Author("0", "bobpiazza", "I love making muffins. Find me on allrecipes: https://www.allrecipes.com/cook/2955506"),
                 new Author("1", "Myrna", "Find me on allrecipes: https://www.allrecipes.com/cook/2792648?content=recipes")
-        );
+        ));
 
-        recipes = Arrays.asList(
+        recipes = new ArrayList<>(Arrays.asList(
                 new Recipe(
                         "0",
                         "Lemon Cranberry Muffins",
@@ -70,13 +71,13 @@ public class DataAccessStub {
                         4,
                         Arrays.asList("Dinner", "Chicken", "Slow Cooker")
                 )
-        );
+        ));
 
-        reviews = Arrays.asList(
+        reviews = new ArrayList<>(Arrays.asList(
                 new Review("0", "0", "Neo Colwyn", "These muffins are really good!", 5),
                 new Review("1", "0", "Padma Gauthier", "Should up the cranberry count a little bit, otherwise awesome!", 4),
                 new Review("2", "1", "Lara Hanna", "Too much ketchup.", 2)
-        );
+        ));
 
         System.out.println("Opened " + dbType + " database " + dbName);
     }

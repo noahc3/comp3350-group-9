@@ -22,15 +22,15 @@ public class AccessAuthors {
         return dataAccess.getAuthorById(id);
     }
 
-    public void insertRecipe(Author author) {
+    public void insertAuthor(Author author) {
         dataAccess.insertAuthor(author);
     }
 
-    public void updateRecipe(Author author) {
+    public void updateAuthor(Author author) {
         dataAccess.updateAuthor(author);
     }
 
-    public void deleteRecipe(Author author) {
+    public void deleteAuthor(Author author) {
         dataAccess.deleteAuthor(author);
     }
 }

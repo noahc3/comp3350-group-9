@@ -8,6 +8,10 @@ import java.util.Objects;
 public class IngredientList {
     private final List<Ingredient> ingredients;
 
+    public IngredientList() {
+        this.ingredients = new ArrayList<Ingredient>();
+    }
+
     public IngredientList(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }

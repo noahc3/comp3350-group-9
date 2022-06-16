@@ -26,11 +26,11 @@ public class AccessReviews {
         dataAccess.insertReview(review);
     }
 
-    public void updateRecipe(Review review) {
+    public void updateReview(Review review) {
         dataAccess.updateReview(review);
     }
 
-    public void deleteRecipe(Review review) {
+    public void deleteReview(Review review) {
         dataAccess.deleteReview(review);
     }
 }
