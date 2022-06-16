@@ -22,19 +22,18 @@ import comp3350.cookit.objects.IngredientList;
 import comp3350.cookit.objects.Recipe;
 
 public class NewRecipeActivity extends Activity {
-    List<Ingredient> list = new ArrayList<>();
-    ArrayList<String> ingredientListLayout = new ArrayList<>();
+    private final List<Ingredient> list = new ArrayList<>();
+    private final ArrayList<String> ingredientListLayout = new ArrayList<>();
 
-    LinearLayout ingredientLayout;
-    Spinner fractionDropdown;
-
-    EditText recipeName;
-    EditText author;
-    EditText servingSize;
-    EditText ingredientName;
-    EditText amountWhole;
-    EditText units;
-    EditText directions;
+    private LinearLayout ingredientLayout;
+    private Spinner fractionDropdown;
+    private EditText recipeName;
+    private EditText author;
+    private EditText servingSize;
+    private EditText ingredientName;
+    private EditText amountWhole;
+    private EditText units;
+    private EditText directions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -15,7 +15,7 @@
         android:entries="@array/fraction_dropdown"
         app:layout_constraintBottom_toBottomOf="@+id/amountWhole"
         app:layout_constraintStart_toEndOf="@+id/amountWhole"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"></Spinner>
+        app:layout_constraintTop_toBottomOf="@+id/textView9"/>
 
     <TextView
         android:id="@+id/textView2"
