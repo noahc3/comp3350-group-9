@@ -16,6 +16,8 @@ import comp3350.cookit.objects.Recipe;
 
 public class HomeListActivity extends Activity {
 
+    LinearLayout recipeList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +25,8 @@ public class HomeListActivity extends Activity {
         Main.startUp();
 
         setContentView(R.layout.activity_home_list);
+
+        recipeList = findViewById(R.id.recipeList);
 
         showRecipeButtons();
     }
@@ -34,25 +38,24 @@ public class HomeListActivity extends Activity {
     }
 
     public void showRecipeButtons() {
-        LinearLayout ll = findViewById(R.id.recipeList);
         List<Recipe> recipes = Services.getDataAccess(Main.dbName).getAllRecipes();
 
-        ll.removeAllViews();
+        recipeList.removeAllViews();
 
-        for (Recipe r : recipes) {
+        for (Recipe recipe : recipes) {
             Button button = new Button(this);
-            button.setText(r.getTitle());
-            button.setTag(r.getId());
+            button.setText(recipe.getTitle());
+            button.setTag(recipe.getId());
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     displayRecipe(v);
                 }
             });
-            ll.addView(button);
+            recipeList.addView(button);
         }
 
-        ll.requestLayout();
+        recipeList.requestLayout();
     }
 
     public void newRecipesOnClick(View v) {

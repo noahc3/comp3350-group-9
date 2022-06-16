@@ -26,13 +26,13 @@ public class NewRecipeActivity extends Activity {
     ArrayList<String> ingredientListLayout = new ArrayList<>();
 
     LinearLayout ingredientLayout;
-    Spinner fraction_dropdown;
+    Spinner fractionDropdown;
 
-    EditText recipe_name;
+    EditText recipeName;
     EditText author;
-    EditText serving_size;
-    EditText ingredient_name;
-    EditText amount_whole;
+    EditText servingSize;
+    EditText ingredientName;
+    EditText amountWhole;
     EditText units;
     EditText directions;
 
@@ -42,23 +42,23 @@ public class NewRecipeActivity extends Activity {
         setContentView(R.layout.activity_new_recipe);
 
         ingredientLayout = findViewById(R.id.ingredientList);
-        fraction_dropdown = findViewById(R.id.amountFraction);
-        fraction_dropdown.setSelection(0);
+        fractionDropdown = findViewById(R.id.amountFraction);
+        fractionDropdown.setSelection(0);
 
-        recipe_name = findViewById(R.id.recipeName);
+        recipeName = findViewById(R.id.recipeName);
         author = findViewById(R.id.authorName);
-        serving_size = findViewById(R.id.servingSize);
-        ingredient_name = findViewById(R.id.ingredientName);
-        amount_whole = findViewById(R.id.amountWhole);
+        servingSize = findViewById(R.id.servingSize);
+        ingredientName = findViewById(R.id.ingredientName);
+        amountWhole = findViewById(R.id.amountWhole);
         units = findViewById(R.id.units);
         directions = findViewById(R.id.directionList);
     }
 
     public void onAddToList(View v) {
-        String amountWhole = amount_whole.getText().toString();
-        String amountFraction = fraction_dropdown.getSelectedItem().toString();
+        String amountWhole = this.amountWhole.getText().toString();
+        String amountFraction = fractionDropdown.getSelectedItem().toString();
         String unitsString = units.getText().toString();
-        String ingredientName = ingredient_name.getText().toString();
+        String ingredientName = this.ingredientName.getText().toString();
         double amount = (double) Integer.parseInt(amountWhole) + getDouble(amountFraction);
 
         // Display nothing if selected == "none"
@@ -83,10 +83,10 @@ public class NewRecipeActivity extends Activity {
         String recipeId = UUID.randomUUID().toString();
         String authorId = UUID.randomUUID().toString();
 
-        int servingSize = Integer.parseInt(serving_size.getText().toString());
+        int servingSize = Integer.parseInt(this.servingSize.getText().toString());
 
         Author newAuthor = new Author(authorId, author.getText().toString(), "");
-        Recipe newRecipe = new Recipe(recipeId, recipe_name.getText().toString(), authorId, directions.getText().toString(), new IngredientList(list), servingSize, new ArrayList<String>());
+        Recipe newRecipe = new Recipe(recipeId, recipeName.getText().toString(), authorId, directions.getText().toString(), new IngredientList(list), servingSize, new ArrayList<String>());
 
         accessAuthors.insertAuthor(newAuthor);
         accessRecipes.insertRecipe(newRecipe);
@@ -120,9 +120,9 @@ public class NewRecipeActivity extends Activity {
     }
 
     public void clearIngredientFields() {
-        ingredient_name.getText().clear();
-        amount_whole.getText().clear();
-        fraction_dropdown.setSelection(0);
+        ingredientName.getText().clear();
+        amountWhole.getText().clear();
+        fractionDropdown.setSelection(0);
         units.getText().clear();
     }
 
