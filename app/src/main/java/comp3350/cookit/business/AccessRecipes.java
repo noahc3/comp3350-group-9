@@ -8,7 +8,7 @@ import comp3350.cookit.objects.Recipe;
 import comp3350.cookit.persistence.DataAccessStub;
 
 public class AccessRecipes {
-    private DataAccessStub dataAccess;
+    private final DataAccessStub dataAccess;
 
     public AccessRecipes() {
         dataAccess = Services.getDataAccess(Main.dbName);

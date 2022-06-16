@@ -8,7 +8,7 @@ import comp3350.cookit.objects.Author;
 import comp3350.cookit.persistence.DataAccessStub;
 
 public class AccessAuthors {
-    private DataAccessStub dataAccess;
+    private final DataAccessStub dataAccess;
 
     public AccessAuthors() {
         dataAccess = Services.getDataAccess(Main.dbName);

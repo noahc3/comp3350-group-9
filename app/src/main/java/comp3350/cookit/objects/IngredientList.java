@@ -7,10 +7,6 @@ import java.util.List;
 public class IngredientList {
     private final List<Ingredient> ingredients;
 
-    public IngredientList() {
-        this.ingredients = new ArrayList<Ingredient>();
-    }
-
     public IngredientList(List<Ingredient> ingredients) {
         if (ingredients == null) {
             throw new NullPointerException("Ingredients list cannot be null.");

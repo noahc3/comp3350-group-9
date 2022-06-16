@@ -1,11 +1,9 @@
 package comp3350.cookit.persistence;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import comp3350.cookit.application.Main;
 import comp3350.cookit.objects.Author;
 import comp3350.cookit.objects.Ingredient;
 import comp3350.cookit.objects.IngredientList;
@@ -13,8 +11,8 @@ import comp3350.cookit.objects.Recipe;
 import comp3350.cookit.objects.Review;
 
 public class DataAccessStub {
-    private String dbName;
-    private String dbType = "stub";
+    private final String dbName;
+    private final String dbType = "stub";
 
     private List<Author> authors;
     private List<Recipe> recipes;
@@ -22,10 +20,6 @@ public class DataAccessStub {
 
     public DataAccessStub(String dbName) {
         this.dbName = dbName;
-    }
-
-    public DataAccessStub() {
-        this(Main.dbName);
     }
 
     public void open(String dbName) {

@@ -1,14 +1,10 @@
 package comp3350.cookit.application;
 
-import comp3350.cookit.presentation.CLI;
-
 public class Main {
     public static final String dbName = "SC";
 
     public static void main(String[] args) {
         startUp();
-
-        CLI.run();
 
         shutDown();
         System.out.println("All done");
