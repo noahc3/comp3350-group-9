@@ -42,9 +42,4 @@ public class Ingredient {
                 Objects.equals(name, that.name) &&
                 Objects.equals(measurement, that.measurement);
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, quantity, measurement);
-    }
 }

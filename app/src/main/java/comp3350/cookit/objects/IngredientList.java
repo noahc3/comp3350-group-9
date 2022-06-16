@@ -3,7 +3,6 @@ package comp3350.cookit.objects;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class IngredientList {
     private final List<Ingredient> ingredients;
@@ -13,6 +12,10 @@ public class IngredientList {
     }
 
     public IngredientList(List<Ingredient> ingredients) {
+        if (ingredients == null) {
+            throw new NullPointerException("Ingredients list cannot be null.");
+        }
+
         this.ingredients = ingredients;
     }
 
@@ -29,11 +32,6 @@ public class IngredientList {
         if (this == other) return true;
         if (other == null || getClass() != other.getClass()) return false;
         IngredientList that = (IngredientList) other;
-        return ingredients.containsAll(that.getIngredients());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(ingredients);
+        return ingredients.size() == that.getIngredients().size() && ingredients.containsAll(that.getIngredients());
     }
 }

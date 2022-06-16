@@ -1,27 +1,26 @@
 package comp3350.cookit.tests;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
-public class AllTests extends TestCase
-{
-	public static TestSuite suite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-    public static Test suite()
-    {
-        System.out.println("Launching Test Suite.");
-        suite = new TestSuite("All tests");
-        tObjects();
-        tBusiness();
-        return suite;
-    }
+import comp3350.cookit.tests.business.MultiplyServingSizeTests;
+import comp3350.cookit.tests.objects.AuthorTests;
+import comp3350.cookit.tests.objects.FractionTests;
+import comp3350.cookit.tests.objects.IngredientListTests;
+import comp3350.cookit.tests.objects.IngredientTests;
+import comp3350.cookit.tests.objects.RecipeTests;
+import comp3350.cookit.tests.objects.ReviewTests;
 
-    private static void tObjects()
-    {
-    }
-
-    private static void tBusiness()
-    {
-    }
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        AuthorTests.class,
+        FractionTests.class,
+        IngredientListTests.class,
+        IngredientTests.class,
+        RecipeTests.class,
+        ReviewTests.class,
+        MultiplyServingSizeTests.class})
+public class AllTests extends TestCase {
 }

@@ -1,7 +1,5 @@
 package comp3350.cookit.tests.business;
 
-import android.annotation.SuppressLint;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,7 +13,7 @@ import comp3350.cookit.objects.Ingredient;
 import comp3350.cookit.objects.IngredientList;
 import comp3350.cookit.objects.Recipe;
 
-public class multiplyServingSizeTests {
+public class MultiplyServingSizeTests {
     @Test
     public void testTypical() {
         Recipe recipe = createRecipeFromTemplate(

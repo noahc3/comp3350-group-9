@@ -33,7 +33,7 @@ public class DisplayRecipeActivity extends Activity {
         Spinner spinner = findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                displayRecipe(position+1);
+                displayRecipe(position + 1);
             }
 
             public void onNothingSelected(AdapterView<?> parent) {

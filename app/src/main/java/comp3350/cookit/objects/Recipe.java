@@ -69,9 +69,4 @@ public class Recipe {
         Recipe recipe = (Recipe) other;
         return Objects.equals(id, recipe.id);
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

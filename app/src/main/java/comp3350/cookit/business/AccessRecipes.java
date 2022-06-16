@@ -7,17 +7,14 @@ import comp3350.cookit.application.Services;
 import comp3350.cookit.objects.Recipe;
 import comp3350.cookit.persistence.DataAccessStub;
 
-public class AccessRecipes
-{
+public class AccessRecipes {
     private DataAccessStub dataAccess;
 
-    public AccessRecipes()
-    {
+    public AccessRecipes() {
         dataAccess = Services.getDataAccess(Main.dbName);
     }
 
-    public List<Recipe> getRecipes()
-    {
+    public List<Recipe> getRecipes() {
         return dataAccess.getAllRecipes();
     }
 
@@ -25,18 +22,15 @@ public class AccessRecipes
         return dataAccess.getRecipeById(id);
     }
 
-    public void insertRecipe(Recipe recipe)
-    {
+    public void insertRecipe(Recipe recipe) {
         dataAccess.insertRecipe(recipe);
     }
 
-    public void updateRecipe(Recipe recipe)
-    {
+    public void updateRecipe(Recipe recipe) {
         dataAccess.updateRecipe(recipe);
     }
 
-    public void deleteRecipe(Recipe recipe)
-    {
+    public void deleteRecipe(Recipe recipe) {
         dataAccess.deleteRecipe(recipe);
     }
 }

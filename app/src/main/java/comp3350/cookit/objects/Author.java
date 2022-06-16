@@ -32,9 +32,4 @@ public class Author {
         Author author = (Author) other;
         return Objects.equals(id, author.id);
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

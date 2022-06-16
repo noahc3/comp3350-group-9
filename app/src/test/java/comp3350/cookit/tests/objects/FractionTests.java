@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import comp3350.cookit.objects.Fraction;
 
-public class fractionTests {
+public class FractionTests {
 
     @Test
     public void testTypicalEighthsNoWhole() {

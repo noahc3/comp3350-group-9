@@ -44,9 +44,4 @@ public class Review {
         Review review = (Review) other;
         return Objects.equals(id, review.id);
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }
