@@ -2,13 +2,13 @@
     <!-- Activity-Related -->
     <string name="app_name">Cookit</string>
     <string name="title_activity_home">Home</string>
-    <string name="title_activity_new_recipe">New Recipe</string>
+    <string name="title_activity_new_recipe">Submit New Recipe</string>
 
     <!-- Recipe-Related -->
     <string name="recipes">Recipes</string>
     <string name="recipe">Recipe</string>
     <string name="view_recipes">View Recipes</string>
-    <string name="new_recipe">New Recipe</string>
+    <string name="new_recipe">Submit New Recipe</string>
     <string name="recipe_name">Recipe Name</string>
     <string name="serving_size">Serving Size</string>
     <string name="serving_size_select">Multiply serving amount: </string>
@@ -34,7 +34,7 @@
     <!-- Direction-Related -->
     <string name="directions">Directions</string>
     <string name="directions_format">List Directions Here:</string>
-    <string name="directions_hint">e.g.\n1. Mix all ingredients in a bowl\n2. Transfer to a baking pan... etc.</string>
+    <string name="directions_hint">e.g.\n1. Mix all ingredients in a bowl\n2. Transfer to a baking pan. etc.</string>
 
     <!-- Author-Related -->
     <string name="authors">Authors</string>

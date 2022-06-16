@@ -22,8 +22,7 @@ import comp3350.cookit.objects.IngredientList;
 import comp3350.cookit.objects.Recipe;
 
 public class NewRecipeActivity extends Activity {
-    IngredientList ingredientList = new IngredientList();
-    List<Ingredient> list = ingredientList.getIngredients();
+    List<Ingredient> list = new ArrayList<>();
     ArrayList<String> ingredientListLayout = new ArrayList<>();
 
     LinearLayout ingredientLayout;
@@ -37,26 +36,22 @@ public class NewRecipeActivity extends Activity {
     EditText units;
     EditText directions;
 
-    String recipeName;
-    String authorName;
-    String directionList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_recipe);
 
         ingredientLayout = findViewById(R.id.ingredientList);
-        fraction_dropdown = (Spinner) findViewById(R.id.amountFraction);
+        fraction_dropdown = findViewById(R.id.amountFraction);
         fraction_dropdown.setSelection(0);
 
-        recipe_name = (EditText) findViewById(R.id.recipeName);
-        author = (EditText) findViewById(R.id.authorName);
-        serving_size = (EditText) findViewById(R.id.servingSize);
-        ingredient_name = (EditText) findViewById(R.id.ingredientName);
-        amount_whole = (EditText) findViewById(R.id.amountWhole);
-        units = (EditText) findViewById(R.id.units);
-        directions = (EditText) findViewById(R.id.directionList);
+        recipe_name = findViewById(R.id.recipeName);
+        author = findViewById(R.id.authorName);
+        serving_size = findViewById(R.id.servingSize);
+        ingredient_name = findViewById(R.id.ingredientName);
+        amount_whole = findViewById(R.id.amountWhole);
+        units = findViewById(R.id.units);
+        directions = findViewById(R.id.directionList);
     }
 
     public void onAddToList(View v) {
@@ -67,9 +62,8 @@ public class NewRecipeActivity extends Activity {
         double amount = (double) Integer.parseInt(amountWhole) + getDouble(amountFraction);
 
         // Display nothing if selected == "none"
-        String fraction = !amountFraction.equals("none")? amountFraction + " " : "";
-        String ingredientString = amountWhole + " " + fraction + unitsString.toLowerCase()
-                                  + " " + toCapitalized(ingredientName);
+        String fraction = !amountFraction.equals("none") ? amountFraction + " " : "";
+        String ingredientString = amountWhole + " " + fraction + unitsString.toLowerCase() + " " + toCapitalized(ingredientName);
         ingredientListLayout.add(ingredientString);
 
         Ingredient ingredient = new Ingredient(ingredientName, amount, unitsString);
@@ -91,11 +85,11 @@ public class NewRecipeActivity extends Activity {
 
         int servingSize = Integer.parseInt(serving_size.getText().toString());
 
-        Author newAuthor = new Author(authorId, authorName, "");
-        Recipe newRecipe = new Recipe(recipeId, recipeName, authorName, directionList, ingredientList, servingSize);
+        Author newAuthor = new Author(authorId, author.getText().toString(), "");
+        Recipe newRecipe = new Recipe(recipeId, recipe_name.getText().toString(), authorId, directions.getText().toString(), new IngredientList(list), servingSize, new ArrayList<String>());
 
-        accessRecipes.insertRecipe(newRecipe);
         accessAuthors.insertAuthor(newAuthor);
+        accessRecipes.insertRecipe(newRecipe);
         finish();
     }
 
@@ -104,7 +98,7 @@ public class NewRecipeActivity extends Activity {
         int numerator;
         int denominator;
 
-        if(selected != null && !selected.equals("none")){
+        if (selected != null && !selected.equals("none")) {
             numerator = selected.charAt(0) - '0';
             denominator = selected.charAt(2) - '0';
             doubleVal = (double) numerator / (double) denominator;
@@ -134,12 +128,12 @@ public class NewRecipeActivity extends Activity {
 
     public String toCapitalized(String string) {
         String[] words = string.split("\\s");
-        String capitalized = "";
+        StringBuilder capitalized = new StringBuilder();
 
-        for(String word : words) {
-            capitalized += word.toUpperCase().charAt(0) + word.substring(1) + " ";
+        for (String word : words) {
+            capitalized.append(word.toUpperCase().charAt(0)).append(word.substring(1)).append(" ");
         }
 
-        return capitalized.trim();
+        return capitalized.toString().trim();
     }
 }

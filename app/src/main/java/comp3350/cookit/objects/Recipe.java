@@ -24,16 +24,6 @@ public class Recipe {
         this.tags = tags;
     }
 
-    public Recipe(String id, String title, String authorId, String content, IngredientList ingredients, int servingSize) {
-        this.id = id;
-        this.title = title;
-        this.authorId = authorId;
-        this.content = content;
-        this.ingredients = ingredients;
-        this.servingSize = servingSize;
-        this.tags = new ArrayList<String>();
-    }
-
     public String getId() {
         return id;
     }

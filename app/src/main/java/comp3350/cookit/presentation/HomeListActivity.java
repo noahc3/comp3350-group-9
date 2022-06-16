@@ -24,8 +24,20 @@ public class HomeListActivity extends Activity {
 
         setContentView(R.layout.activity_home_list);
 
+        showRecipeButtons();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showRecipeButtons();
+    }
+
+    public void showRecipeButtons() {
         LinearLayout ll = findViewById(R.id.recipeList);
         List<Recipe> recipes = Services.getDataAccess(Main.dbName).getAllRecipes();
+
+        ll.removeAllViews();
 
         for (Recipe r : recipes) {
             Button button = new Button(this);
@@ -39,6 +51,8 @@ public class HomeListActivity extends Activity {
             });
             ll.addView(button);
         }
+
+        ll.requestLayout();
     }
 
     public void newRecipesOnClick(View v) {
