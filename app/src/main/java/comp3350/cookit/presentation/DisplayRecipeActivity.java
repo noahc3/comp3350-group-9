@@ -20,7 +20,14 @@ import comp3350.cookit.objects.Recipe;
 import comp3350.cookit.persistence.DataAccessStub;
 
 public class DisplayRecipeActivity extends Activity {
-    private final int defaultServingSize = 1;
+    private static final int defaultServingSize = 1;
+
+    TextView recipeTitle;
+    TextView recipeAuthor;
+    TextView servingsText;
+    TextView recipeInstructions;
+    LinearLayout ingredientsList;
+    Spinner servingsDropdown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +35,16 @@ public class DisplayRecipeActivity extends Activity {
         Main.startUp();
         setContentView(R.layout.activity_display_recipe);
 
+        recipeTitle = findViewById(R.id.recipeTitle);
+        recipeAuthor = findViewById(R.id.recipeAuthor);
+        servingsText = findViewById(R.id.servingsText);
+        recipeInstructions = findViewById(R.id.recipeInstructions);
+        ingredientsList = findViewById(R.id.ingredientList);
+        servingsDropdown = findViewById(R.id.servingsDropdown);
+
         displayRecipe(defaultServingSize);
 
-        Spinner spinner = findViewById(R.id.spinner);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        servingsDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 displayRecipe(position + 1);
             }
@@ -50,21 +63,19 @@ public class DisplayRecipeActivity extends Activity {
         Author author = dataAccessStub.getAuthorById(recipe.getAuthorId());
         recipe = Convert.multiplyServingSize(recipe, servingSize);
 
-        ((TextView) findViewById(R.id.recipeTitle)).setText(recipe.getTitle());
-        ((TextView) findViewById(R.id.recipeAuthor)).setText(getString(R.string.written_by, author.getName()));
-        ((TextView) findViewById(R.id.servingsText)).setText(getString(R.string.creates_servings, recipe.getServingSize()));
-        ((TextView) findViewById(R.id.recipeInstructions)).setText(recipe.getContent());
+        recipeTitle.setText(recipe.getTitle());
+        recipeAuthor.setText(getString(R.string.written_by, author.getName()));
+        servingsText.setText(getString(R.string.creates_servings, recipe.getServingSize()));
+        recipeInstructions.setText(recipe.getContent());
 
-        LinearLayout ingredientLayout = findViewById(R.id.ingredientList);
-        ingredientLayout.removeAllViews();
+        ingredientsList.removeAllViews();
         for (Ingredient i : recipe.getIngredientList().getIngredients()) {
             TextView text = new TextView(DisplayRecipeActivity.this);
             text.setText(getString(R.string.ingredient_format, new Fraction(i.getQuantity()).getMixedFraction(), i.getMeasurement(), i.getName()));
-            ingredientLayout.addView(text);
+            ingredientsList.addView(text);
             text.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
         }
-
-        ingredientLayout.requestLayout();
+        ingredientsList.requestLayout();
     }
 
 

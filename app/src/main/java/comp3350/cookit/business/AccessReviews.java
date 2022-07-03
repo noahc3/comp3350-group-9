@@ -8,7 +8,7 @@ import comp3350.cookit.objects.Review;
 import comp3350.cookit.persistence.DataAccessStub;
 
 public class AccessReviews {
-    private DataAccessStub dataAccess;
+    private final DataAccessStub dataAccess;
 
     public AccessReviews() {
         dataAccess = Services.getDataAccess(Main.dbName);

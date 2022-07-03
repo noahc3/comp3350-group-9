@@ -10,6 +10,7 @@ public class Services {
             dataAccessService = new DataAccessStub(dbName);
             dataAccessService.open(Main.dbName);
         }
+
         return dataAccessService;
     }
 

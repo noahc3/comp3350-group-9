@@ -1,9 +1,7 @@
 package comp3350.cookit.objects;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 public class Recipe {
     private final String id;
