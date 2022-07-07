@@ -19,4 +19,18 @@
         <item>5/8</item>
         <item>7/8</item>
     </string-array>
+
+    <string-array name="tags">
+        <item>Pastry</item>
+        <item>Culinary</item>
+        <item>Sweet</item>
+        <item>Savory</item>
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+        <item>Snack</item>
+        <item>Appetizer</item>
+        <item>Entree</item>
+        <item>Dessert</item>
+    </string-array>
 </resources>

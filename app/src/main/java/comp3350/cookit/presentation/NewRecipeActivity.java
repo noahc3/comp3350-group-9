@@ -1,7 +1,9 @@
 package comp3350.cookit.presentation;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.EditText;
@@ -35,6 +37,9 @@ public class NewRecipeActivity extends Activity {
     private EditText units;
     private EditText directions;
 
+    private AccessRecipes accessRecipes = new AccessRecipes();
+    private AccessAuthors accessAuthors = new AccessAuthors();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +59,11 @@ public class NewRecipeActivity extends Activity {
     }
 
     public void onAddToList(View v) {
+        // Will only be entered if we are inserting into an "empty" list with an error message:
+        // Clear the ingredient list to get rid of the error message
+        if(ingredientListLayout.get(0).contains("You must"))
+            ingredientListLayout.clear();
+
         String amountWhole = this.amountWhole.getText().toString();
         String amountFraction = fractionDropdown.getSelectedItem().toString();
         String unitsString = units.getText().toString();
@@ -77,22 +87,58 @@ public class NewRecipeActivity extends Activity {
     }
 
     public void onSubmit(View v) {
-        AccessRecipes accessRecipes = new AccessRecipes();
-        AccessAuthors accessAuthors = new AccessAuthors();
-        String recipeId = UUID.randomUUID().toString();
-        String authorId = UUID.randomUUID().toString();
+        if(validateInput()) {
+            String recipeId = UUID.randomUUID().toString();
+            String authorId = UUID.randomUUID().toString();
 
-        int servingSize = Integer.parseInt(this.servingSize.getText().toString());
+            int servingSize = Integer.parseInt(this.servingSize.getText().toString());
 
-        Author newAuthor = new Author(authorId, author.getText().toString(), "");
-        Recipe newRecipe = new Recipe(recipeId, recipeName.getText().toString(), authorId, directions.getText().toString(), new IngredientList(list), servingSize, new ArrayList<String>());
+            Author newAuthor = new Author(authorId, author.getText().toString(), "");
+            Recipe newRecipe = new Recipe(recipeId, recipeName.getText().toString(), authorId, directions.getText().toString(), new IngredientList(list), servingSize, new ArrayList<String>());
 
-        accessAuthors.insertAuthor(newAuthor);
-        accessRecipes.insertRecipe(newRecipe);
-        finish();
+            accessAuthors.insertAuthor(newAuthor);
+            accessRecipes.insertRecipe(newRecipe);
+            finish();
+        }
+        else {
+            showTextInputErrors();
+        }
     }
 
-    public double getDouble(String selected) {
+    // private as these are helper methods
+
+    private boolean validateInput() { // verify if every required field is filled
+        boolean isValid = true; // initially true
+
+        if (TextUtils.isEmpty(recipeName.getText()) || TextUtils.isEmpty(author.getText())
+                || TextUtils.isEmpty(servingSize.getText()) || TextUtils.isEmpty(directions.getText())
+                || ingredientListLayout.isEmpty())
+            isValid = false; // change to false if one of the fields are empty
+
+        return isValid;
+    }
+
+    private void showTextInputErrors() {
+        // Show an error message for each text input that is missing
+        if(TextUtils.isEmpty(recipeName.getText()))
+            recipeName.setError("You must provide a name for the recipe");
+
+        if(TextUtils.isEmpty(author.getText()))
+            author.setError("You must provide an author");
+
+        if(TextUtils.isEmpty(servingSize.getText()))
+            servingSize.setError("You must provide a serving size");
+
+        if(TextUtils.isEmpty(directions.getText()))
+            directions.setError("You must give directions");
+
+        if(ingredientListLayout.isEmpty()) {
+            ingredientListLayout.add("You must add at least one (1) ingredient");
+            displayIngredients();
+        }
+    }
+
+    private double getDouble(String selected) {
         double doubleVal = 0;
         int numerator;
         int denominator;
@@ -106,11 +152,15 @@ public class NewRecipeActivity extends Activity {
         return doubleVal;
     }
 
-    public void displayIngredients() {
+    private void displayIngredients() {
         ingredientLayout.removeAllViews();
         for (String i : ingredientListLayout) {
             TextView text = new TextView(NewRecipeActivity.this);
             text.setText(i);
+
+            if(i.contains("You must")) // i is an error message
+                text.setTextColor(Color.RED);
+
             ingredientLayout.addView(text);
             text.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
         }
@@ -118,14 +168,14 @@ public class NewRecipeActivity extends Activity {
         ingredientLayout.requestLayout();
     }
 
-    public void clearIngredientFields() {
+    private void clearIngredientFields() {
         ingredientName.getText().clear();
         amountWhole.getText().clear();
         fractionDropdown.setSelection(0);
         units.getText().clear();
     }
 
-    public String toCapitalized(String string) {
+    private String toCapitalized(String string) {
         String[] words = string.split("\\s");
         StringBuilder capitalized = new StringBuilder();
 
