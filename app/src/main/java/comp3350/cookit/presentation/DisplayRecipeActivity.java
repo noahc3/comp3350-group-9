@@ -11,13 +11,13 @@ import android.widget.TextView;
 
 import comp3350.cookit.R;
 import comp3350.cookit.application.Main;
-import comp3350.cookit.application.Services;
+import comp3350.cookit.business.AccessAuthors;
+import comp3350.cookit.business.AccessRecipes;
 import comp3350.cookit.business.Convert;
 import comp3350.cookit.objects.Author;
 import comp3350.cookit.objects.Fraction;
 import comp3350.cookit.objects.Ingredient;
 import comp3350.cookit.objects.Recipe;
-import comp3350.cookit.persistence.DataAccessStub;
 
 public class DisplayRecipeActivity extends Activity {
     private static final int defaultServingSize = 1;
@@ -57,10 +57,11 @@ public class DisplayRecipeActivity extends Activity {
     }
 
     public void displayRecipe(int servingSize) {
-        DataAccessStub dataAccessStub = Services.getDataAccess(Main.dbName);
+        AccessRecipes recipes = new AccessRecipes();
+        AccessAuthors authors = new AccessAuthors();
         String recipeId = getIntent().getExtras().getString("recipeId");
-        Recipe recipe = dataAccessStub.getRecipeById(recipeId);
-        Author author = dataAccessStub.getAuthorById(recipe.getAuthorId());
+        Recipe recipe = recipes.getRecipeById(recipeId);
+        Author author = authors.getAuthorById(recipe.getAuthorId());
         recipe = Convert.multiplyServingSize(recipe, servingSize);
 
         recipeTitle.setText(recipe.getTitle());

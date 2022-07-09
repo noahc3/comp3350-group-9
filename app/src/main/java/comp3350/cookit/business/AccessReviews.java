@@ -5,32 +5,32 @@ import java.util.List;
 import comp3350.cookit.application.Main;
 import comp3350.cookit.application.Services;
 import comp3350.cookit.objects.Review;
-import comp3350.cookit.persistence.DataAccessStub;
+import comp3350.cookit.persistence.IDataStore;
 
 public class AccessReviews {
-    private final DataAccessStub dataAccess;
+    private final IDataStore dataStore;
 
     public AccessReviews() {
-        dataAccess = Services.getDataAccess(Main.dbName);
+        dataStore = Services.getDataAccess(Main.dbName);
     }
 
     public List<Review> getReviews() {
-        return dataAccess.getAllReviews();
+        return dataStore.getAllReviews();
     }
 
     public Review getReviewById(String id) {
-        return dataAccess.getReviewById(id);
+        return dataStore.getReviewById(id);
     }
 
     public void insertReview(Review review) {
-        dataAccess.insertReview(review);
+        dataStore.insertReview(review);
     }
 
     public void updateReview(Review review) {
-        dataAccess.updateReview(review);
+        dataStore.updateReview(review);
     }
 
     public void deleteReview(Review review) {
-        dataAccess.deleteReview(review);
+        dataStore.deleteReview(review);
     }
 }

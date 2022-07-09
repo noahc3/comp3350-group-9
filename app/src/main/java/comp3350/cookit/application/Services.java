@@ -1,31 +1,39 @@
 package comp3350.cookit.application;
 
-import comp3350.cookit.persistence.DataAccessStub;
+import comp3350.cookit.persistence.HsqldbDataStore;
+import comp3350.cookit.persistence.IDataStore;
 
 public class Services {
-    private static DataAccessStub dataAccessService = null;
+    private static IDataStore activeDataStore = null;
 
-    public static DataAccessStub createDataAccess(String dbName) {
-        if (dataAccessService == null) {
-            dataAccessService = new DataAccessStub(dbName);
-            dataAccessService.open(Main.dbName);
+    public static IDataStore createDataStore(String dbName) {
+        if (activeDataStore == null) {
+            activeDataStore = new HsqldbDataStore(dbName);
+            activeDataStore.open(Main.getDBPath());
         }
-
-        return dataAccessService;
+        return activeDataStore;
     }
 
-    public static DataAccessStub getDataAccess(String dbName) {
-        if (dataAccessService == null) {
+    public static IDataStore createDataStore(IDataStore alternateDataStore) {
+        if (activeDataStore == null) {
+            activeDataStore = alternateDataStore;
+            activeDataStore.open(Main.getDBPath());
+        }
+        return activeDataStore;
+    }
+
+    public static IDataStore getDataAccess(String dbName) {
+        if (activeDataStore == null) {
             System.out.println("Connection to data access has not been established.");
             System.exit(1);
         }
-        return dataAccessService;
+        return activeDataStore;
     }
 
     public static void closeDataAccess() {
-        if (dataAccessService != null) {
-            dataAccessService.close();
+        if (activeDataStore != null) {
+            activeDataStore.close();
         }
-        dataAccessService = null;
+        activeDataStore = null;
     }
 }
