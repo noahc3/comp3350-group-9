@@ -33,4 +33,18 @@
         <item>Entree</item>
         <item>Dessert</item>
     </string-array>
+
+    <string-array name="difficulty_dropdown">
+        <item>EASY</item>
+        <item>MODERATE</item>
+        <item>CHALLENGING</item>
+        <item>PROFESSIONAL</item>
+    </string-array>
+
+    <string-array name="difficulties">
+        <item>EASY</item>
+        <item>MODERATE</item>
+        <item>CHALLENGING</item>
+        <item>PROFESSIONAL</item>
+    </string-array>
 </resources>

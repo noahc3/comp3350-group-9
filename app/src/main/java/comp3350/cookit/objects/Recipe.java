@@ -11,8 +11,11 @@ public class Recipe {
     private final IngredientList ingredients;
     private final int servingSize;
     private final List<String> tags;
+    private final int prepTime;
+    private final int cookTime;
+    private final String difficulty;
 
-    public Recipe(String id, String title, String authorId, String content, IngredientList ingredients, int servingSize, List<String> tags) {
+    public Recipe(String id, String title, String authorId, String content, IngredientList ingredients, int servingSize, List<String> tags, int prepTime, int cookTime, String difficulty) {
         this.id = id;
         this.title = title;
         this.authorId = authorId;
@@ -20,6 +23,9 @@ public class Recipe {
         this.ingredients = ingredients;
         this.servingSize = servingSize;
         this.tags = tags;
+        this.cookTime = cookTime;
+        this.prepTime = prepTime;
+        this.difficulty = difficulty;
     }
 
     public String getId() {
@@ -49,6 +55,8 @@ public class Recipe {
     public List<String> getTags() {
         return tags;
     }
+
+    public String getDifficulty() { return difficulty; }
 
     @Override
     public boolean equals(Object other) {

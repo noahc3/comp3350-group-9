@@ -36,6 +36,9 @@ public class NewRecipeActivity extends Activity {
     private EditText amountWhole;
     private EditText units;
     private EditText directions;
+    private EditText prepTime;
+    private EditText cookTime;
+    private EditText difficulty;
 
     private AccessRecipes accessRecipes = new AccessRecipes();
     private AccessAuthors accessAuthors = new AccessAuthors();
@@ -56,6 +59,10 @@ public class NewRecipeActivity extends Activity {
         amountWhole = findViewById(R.id.amountWhole);
         units = findViewById(R.id.units);
         directions = findViewById(R.id.directionList);
+        prepTime = findViewById(R.id.prepTime);
+        cookTime = findViewById(R.id.cookTime);
+        difficulty = findViewById(R.id.difficulty);
+
     }
 
     public void onAddToList(View v) {
@@ -94,7 +101,7 @@ public class NewRecipeActivity extends Activity {
             int servingSize = Integer.parseInt(this.servingSize.getText().toString());
 
             Author newAuthor = new Author(authorId, author.getText().toString(), "");
-            Recipe newRecipe = new Recipe(recipeId, recipeName.getText().toString(), authorId, directions.getText().toString(), new IngredientList(list), servingSize, new ArrayList<String>());
+            Recipe newRecipe = new Recipe(recipeId, recipeName.getText().toString(), authorId, directions.getText().toString(), new IngredientList(list), servingSize, new ArrayList<String>(), prepTime, cookTime, difficulty);
 
             accessAuthors.insertAuthor(newAuthor);
             accessRecipes.insertRecipe(newRecipe);
