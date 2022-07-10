@@ -15,10 +15,8 @@ public class Services {
     }
 
     public static IDataStore createDataStore(IDataStore alternateDataStore) {
-        if (activeDataStore == null) {
-            activeDataStore = alternateDataStore;
-            activeDataStore.open(Main.getDBPath());
-        }
+        activeDataStore = alternateDataStore;
+        activeDataStore.open(Main.getDBPath());
         return activeDataStore;
     }
 
