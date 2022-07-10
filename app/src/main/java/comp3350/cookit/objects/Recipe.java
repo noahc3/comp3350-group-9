@@ -23,8 +23,8 @@ public class Recipe {
         this.ingredients = ingredients;
         this.servingSize = servingSize;
         this.tags = tags;
-        this.cookTime = cookTime;
         this.prepTime = prepTime;
+        this.cookTime = cookTime;
         this.difficulty = difficulty;
     }
 
@@ -54,6 +54,14 @@ public class Recipe {
 
     public List<String> getTags() {
         return tags;
+    }
+
+    public int getPrepTime() {
+        return prepTime;
+    }
+
+    public int getCookTime() {
+        return prepTime;
     }
 
     public String getDifficulty() { return difficulty; }

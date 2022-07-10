@@ -47,7 +47,11 @@ public class DataAccessStub {
                                 new Ingredient("toasted slivered almonds", 0.33, "cups")
                         ),
                         12,
-                        Arrays.asList("Breakfast", "Comfort Food", "Easy", "Snack")
+                        Arrays.asList("Breakfast", "Comfort Food", "Easy", "Snack"),
+                        60,
+                        60,
+                        "EASY"
+
                 ),
                 new Recipe(
                         "1",
@@ -63,7 +67,10 @@ public class DataAccessStub {
                                 new Ingredient("dried basil", 1, "tsp")
                         ),
                         4,
-                        Arrays.asList("Dinner", "Chicken", "Slow Cooker")
+                        Arrays.asList("Dinner", "Chicken", "Slow Cooker"),
+                        80,
+                        120,
+                        "CHALLENGING"
                 )
         ));
 

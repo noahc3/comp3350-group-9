@@ -104,6 +104,8 @@ public class NewRecipeActivity extends Activity {
             int prepTime = Integer.parseInt(this.prepTime.getText().toString());
             int cookTime = Integer.parseInt(this.cookTime.getText().toString());
 
+            String difficulty = this.difficulty.getSelectedItem().toString();
+
 
             Author newAuthor = new Author(authorId, author.getText().toString(), "");
             Recipe newRecipe = new Recipe(recipeId, recipeName.getText().toString(), authorId, directions.getText().toString(), new IngredientList(list), servingSize, new ArrayList<String>(), prepTime, cookTime, difficulty);
