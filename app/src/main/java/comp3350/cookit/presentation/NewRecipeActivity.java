@@ -1,5 +1,6 @@
 package comp3350.cookit.presentation;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -38,11 +39,12 @@ public class NewRecipeActivity extends Activity {
     private EditText directions;
     private EditText prepTime;
     private EditText cookTime;
-    private EditText difficulty;
+    private Spinner difficulty;
 
     private AccessRecipes accessRecipes = new AccessRecipes();
     private AccessAuthors accessAuthors = new AccessAuthors();
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +101,9 @@ public class NewRecipeActivity extends Activity {
             String authorId = UUID.randomUUID().toString();
 
             int servingSize = Integer.parseInt(this.servingSize.getText().toString());
+            int prepTime = Integer.parseInt(this.prepTime.getText().toString());
+            int cookTime = Integer.parseInt(this.cookTime.getText().toString());
+
 
             Author newAuthor = new Author(authorId, author.getText().toString(), "");
             Recipe newRecipe = new Recipe(recipeId, recipeName.getText().toString(), authorId, directions.getText().toString(), new IngredientList(list), servingSize, new ArrayList<String>(), prepTime, cookTime, difficulty);
