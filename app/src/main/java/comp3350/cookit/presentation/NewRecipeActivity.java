@@ -146,6 +146,11 @@ public class NewRecipeActivity extends Activity {
         }
     }
 
+    public void AddPhotos(View v) {
+        // TODO: Replace with Yash's AddPhotos code
+        System.out.println("Replace with Yash's AddPhotos code");
+    }
+
     // private as these are helper methods
     private boolean validateInput() { // verify if every required field is filled
         boolean isValid = true; // initially true

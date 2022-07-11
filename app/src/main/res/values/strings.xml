@@ -17,6 +17,8 @@
     <string name="prep_time">Prep Time</string>
     <string name="cook_time">Cook Time</string>
     <string name="difficulty">Difficulty</string>
+    <string name="attach_photo">Attach Photos</string>
+    <string name="add_photos">Add Photo</string>
 
     <!-- Hints -->
     <string name="time_hint">(in minutes)</string>

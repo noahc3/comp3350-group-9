@@ -147,6 +147,28 @@
             android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
             android:fontFamily="sans-serif-black"
+            android:text="@string/attach_photo"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="24sp"/>
+
+        <Button
+            android:id="@+id/addPhoto"
+            android:layout_width="144dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="6dp"
+            android:onClick="AddPhotos"
+            android:text="@string/add_photos"/>
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-black"
             android:text="@string/tags_optional"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="24sp"/>
