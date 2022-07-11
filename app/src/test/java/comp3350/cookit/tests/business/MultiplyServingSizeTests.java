@@ -191,7 +191,7 @@ public class MultiplyServingSizeTests {
 
     @Test(expected = NullPointerException.class)
     public void testNullIngredientList() {
-        Recipe recipe = new Recipe("0", "Test", "0", "1. This is an example recipe.\n2. It has no real content.", null, 10, new ArrayList<String>());
+        Recipe recipe = new Recipe("0", "Test", "0", "1. This is an example recipe.\n2. It has no real content.", null, 10, new ArrayList<String>(), 10, 10, "Easy");
 
         Convert.multiplyServingSize(recipe, 2);
     }
@@ -210,7 +210,10 @@ public class MultiplyServingSizeTests {
                 "1. This is an example recipe.\n2. It has no real content.",
                 new IngredientList(ingredients),
                 servingCount,
-                new ArrayList<String>());
+                new ArrayList<String>(),
+                10,
+                10,
+                "Easy");
     }
 
 }

@@ -48,10 +48,10 @@ public class StubDataStore implements IDataStore {
                                 new Ingredient("toasted slivered almonds", 0.33, "cups")
                         ),
                         12,
-                        Arrays.asList("Breakfast", "Comfort Food", "Easy", "Snack"),
-                        60,
-                        60,
-                        "EASY"
+                        Arrays.asList("Pastry", "Sweet", "Snack", "All Day"),
+                        30,
+                        20,
+                        "Medium"
 
                 ),
                 new Recipe(
@@ -68,10 +68,10 @@ public class StubDataStore implements IDataStore {
                                 new Ingredient("dried basil", 1, "tsp")
                         ),
                         4,
-                        Arrays.asList("Dinner", "Chicken", "Slow Cooker"),
-                        80,
-                        120,
-                        "CHALLENGING"
+                        Arrays.asList("Culinary", "Savory", "Entree", "Dinner"),
+                        30,
+                        360,
+                        "Easy"
                 )
         ));
 

@@ -7,13 +7,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import comp3350.cookit.application.Services;
-import comp3350.cookit.business.AccessAuthors;
 import comp3350.cookit.business.AccessRecipes;
-import comp3350.cookit.objects.Author;
 import comp3350.cookit.objects.Ingredient;
 import comp3350.cookit.objects.IngredientList;
 import comp3350.cookit.objects.Recipe;
-import comp3350.cookit.persistence.IDataStore;
 import comp3350.cookit.tests.persistence.StubDataStore;
 
 public class AccessRecipesTests {
@@ -46,10 +43,10 @@ public class AccessRecipesTests {
 
         List<String> tags = recipes.get(0).getTags();
         Assert.assertEquals(4, tags.size());
-        Assert.assertEquals("Breakfast", tags.get(0));
-        Assert.assertEquals("Comfort Food", tags.get(1));
-        Assert.assertEquals("Easy", tags.get(2));
-        Assert.assertEquals("Snack", tags.get(3));
+        Assert.assertEquals("Pastry", tags.get(0));
+        Assert.assertEquals("Sweet", tags.get(1));
+        Assert.assertEquals("Snack", tags.get(2));
+        Assert.assertEquals("All Day", tags.get(3));
 
 
         Assert.assertEquals("1", recipes.get(1).getId());
@@ -68,10 +65,11 @@ public class AccessRecipesTests {
         Assert.assertEquals(new Ingredient("dried basil", 1, "tsp"), ingredients.get(5));
 
         tags = recipes.get(1).getTags();
-        Assert.assertEquals(3, tags.size());
-        Assert.assertEquals("Dinner", tags.get(0));
-        Assert.assertEquals("Chicken", tags.get(1));
-        Assert.assertEquals("Slow Cooker", tags.get(2));
+        Assert.assertEquals(4, tags.size());
+        Assert.assertEquals("Culinary", tags.get(0));
+        Assert.assertEquals("Savory", tags.get(1));
+        Assert.assertEquals("Entree", tags.get(2));
+        Assert.assertEquals("Dinner", tags.get(3));
     }
 
     @Test
@@ -82,7 +80,7 @@ public class AccessRecipesTests {
         Assert.assertEquals(2, recipes.size());
 
         IngredientList il = IngredientList.Create(new Ingredient("all-purpose flour", 10.0, "cups"));
-        Recipe r = new Recipe("3", "Title", "5", "Content", il, 2, Arrays.asList("Some", "Tags"));
+        Recipe r = new Recipe("3", "Title", "5", "Content", il, 2, Arrays.asList("Some", "Tags"), 10, 20, "Easy");
 
         ar.insertRecipe(r);
 
@@ -95,6 +93,9 @@ public class AccessRecipesTests {
         Assert.assertEquals(r.getContent(), recipes.get(2).getContent());
         Assert.assertEquals(r.getIngredientList(), recipes.get(2).getIngredientList());
         Assert.assertEquals(r.getServingSize(), recipes.get(2).getServingSize());
+        Assert.assertEquals(r.getPrepTime(), recipes.get(2).getPrepTime());
+        Assert.assertEquals(r.getCookTime(), recipes.get(2).getCookTime());
+        Assert.assertEquals(r.getDifficulty(), recipes.get(2).getDifficulty());
 
         Assert.assertEquals(2, recipes.get(2).getTags().size());
         Assert.assertEquals("Some", recipes.get(2).getTags().get(0));
@@ -110,7 +111,7 @@ public class AccessRecipesTests {
         Assert.assertEquals("Lemon Cranberry Muffins", dbRecipe.getTitle());
         Assert.assertEquals(12, dbRecipe.getServingSize());
 
-        Recipe modifiedRecipe = new Recipe(dbRecipe.getId(), "Bran Muffins", dbRecipe.getAuthorId(), dbRecipe.getContent(), dbRecipe.getIngredientList(), dbRecipe.getServingSize(), dbRecipe.getTags());
+        Recipe modifiedRecipe = new Recipe(dbRecipe.getId(), "Bran Muffins", dbRecipe.getAuthorId(), dbRecipe.getContent(), dbRecipe.getIngredientList(), dbRecipe.getServingSize(), dbRecipe.getTags(), dbRecipe.getPrepTime(), dbRecipe.getCookTime(), dbRecipe.getDifficulty());
         ar.updateRecipe(modifiedRecipe);
 
         dbRecipe = ar.getRecipeById("0");
@@ -118,7 +119,7 @@ public class AccessRecipesTests {
         Assert.assertEquals("Bran Muffins", dbRecipe.getTitle());
         Assert.assertEquals(12, dbRecipe.getServingSize());
 
-        modifiedRecipe = new Recipe(dbRecipe.getId(), dbRecipe.getTitle(), dbRecipe.getAuthorId(), dbRecipe.getContent(), dbRecipe.getIngredientList(), 3, dbRecipe.getTags());
+        modifiedRecipe = new Recipe(dbRecipe.getId(), dbRecipe.getTitle(), dbRecipe.getAuthorId(), dbRecipe.getContent(), dbRecipe.getIngredientList(), 3, dbRecipe.getTags(), dbRecipe.getPrepTime(), dbRecipe.getCookTime(), dbRecipe.getDifficulty());
         ar.updateRecipe(modifiedRecipe);
 
         dbRecipe = ar.getRecipeById("0");
@@ -138,7 +139,7 @@ public class AccessRecipesTests {
         Assert.assertEquals("1. Lay chicken thighs into the bottom of a 4-quart slow cooker.\n\n2. Whisk soy sauce, ketchup, honey, garlic, and basil together in a bowl; pour over the chicken.\n\n3. Cook on Low for 6 hours.", dbRecipe.getContent());
 
 
-        Recipe modifiedRecipe = new Recipe(dbRecipe.getId(), "Blackened Chicken Breast", dbRecipe.getAuthorId(), "Some new content", dbRecipe.getIngredientList(), 1, dbRecipe.getTags());
+        Recipe modifiedRecipe = new Recipe(dbRecipe.getId(), "Blackened Chicken Breast", dbRecipe.getAuthorId(), "Some new content", dbRecipe.getIngredientList(), 1, dbRecipe.getTags(), dbRecipe.getPrepTime(), dbRecipe.getCookTime(), dbRecipe.getDifficulty());
         ar.updateRecipe(modifiedRecipe);
 
         dbRecipe = ar.getRecipeById("1");
@@ -157,7 +158,7 @@ public class AccessRecipesTests {
         Assert.assertEquals("Lemon Cranberry Muffins", recipes.get(0).getTitle());
         Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(1).getTitle());
 
-        Recipe invalid = new Recipe("3", "Recipe with non-existant ID", "0", "Some content", recipes.get(0).getIngredientList(), 1, Arrays.asList("Some", "tags"));
+        Recipe invalid = new Recipe("3", "Recipe with non-existant ID", "0", "Some content", recipes.get(0).getIngredientList(), 1, Arrays.asList("Some", "tags"), 120, 30, "Hard");
         ar.updateRecipe(invalid);
 
         recipes = ar.getRecipes();
@@ -211,7 +212,7 @@ public class AccessRecipesTests {
         Assert.assertEquals("0", recipes.get(0).getId());
         Assert.assertEquals("1", recipes.get(1).getId());
 
-        Recipe invalid = new Recipe("3", "Recipe with non-existant ID", "0", "Some content", recipes.get(0).getIngredientList(), 1, Arrays.asList("Some", "tags"));
+        Recipe invalid = new Recipe("3", "Recipe with non-existant ID", "0", "Some content", recipes.get(0).getIngredientList(), 1, Arrays.asList("Some", "tags"), 40, 360, "Easy");
         ar.deleteRecipe(invalid);
 
         recipes = ar.getRecipes();
