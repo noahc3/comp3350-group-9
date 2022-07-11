@@ -2,15 +2,13 @@ package comp3350.cookit.presentation;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.text.TextUtils;
-import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,21 +26,26 @@ public class NewRecipeActivity extends Activity {
     private final List<Ingredient> list = new ArrayList<>();
     private final ArrayList<String> ingredientListLayout = new ArrayList<>();
 
-    private LinearLayout ingredientLayout;
-    private Spinner fractionDropdown;
-    private EditText recipeName;
-    private EditText author;
-    private EditText servingSize;
-    private EditText ingredientName;
-    private EditText amountWhole;
-    private EditText units;
-    private EditText directions;
-    private EditText prepTime;
-    private EditText cookTime;
-    private Spinner difficulty;
+    private AutoCompleteTextView fraction;
+    private AutoCompleteTextView units;
+    private AutoCompleteTextView difficulty;
+    private AutoCompleteTextView tagsType;
+    private AutoCompleteTextView tagsTaste;
+    private AutoCompleteTextView tagsTime;
+    private AutoCompleteTextView tagsCourse;
 
-    private AccessRecipes accessRecipes = new AccessRecipes();
-    private AccessAuthors accessAuthors = new AccessAuthors();
+    private TextInputEditText recipeName;
+    private TextInputEditText author;
+    private TextInputEditText servingSize;
+    private TextInputEditText ingredientName;
+    private TextInputEditText ingredientLayout;
+    private TextInputEditText amountWhole;
+    private TextInputEditText directions;
+    private TextInputEditText prepTime;
+    private TextInputEditText cookTime;
+
+    private final AccessRecipes accessRecipes = new AccessRecipes();
+    private final AccessAuthors accessAuthors = new AccessAuthors();
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -50,45 +53,69 @@ public class NewRecipeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_recipe);
 
-        ingredientLayout = findViewById(R.id.ingredientList);
-        fractionDropdown = findViewById(R.id.amountFraction);
-        fractionDropdown.setSelection(0);
+
+        fraction = findViewById(R.id.amountFraction);
+        initializeDropdowns(fraction, R.array.fraction_dropdown);
+
+        units = findViewById(R.id.units);
+        initializeDropdowns(units, R.array.unit_dropdown);
+
+        difficulty = findViewById(R.id.difficulty);
+        initializeDropdowns(difficulty, R.array.difficulty_dropdown);
+
+        tagsType = findViewById(R.id.tagsType);
+        initializeDropdowns(tagsType, R.array.tags_type);
+
+        tagsTaste = findViewById(R.id.tagsTaste);
+        initializeDropdowns(tagsTaste, R.array.tags_taste);
+
+        tagsTime = findViewById(R.id.tagsTimeOfDay);
+        initializeDropdowns(tagsTime, R.array.tags_time_of_day);
+
+        tagsCourse = findViewById(R.id.tagsCourse);
+        initializeDropdowns(tagsCourse, R.array.tags_course);
 
         recipeName = findViewById(R.id.recipeName);
         author = findViewById(R.id.authorName);
         servingSize = findViewById(R.id.servingSize);
         ingredientName = findViewById(R.id.ingredientName);
+        ingredientLayout = findViewById(R.id.ingredientList);
         amountWhole = findViewById(R.id.amountWhole);
-        units = findViewById(R.id.units);
         directions = findViewById(R.id.directionList);
         prepTime = findViewById(R.id.prepTime);
         cookTime = findViewById(R.id.cookTime);
-        difficulty = findViewById(R.id.difficulty);
-
     }
 
     public void onAddToList(View v) {
-        // Will only be entered if we are inserting into an "empty" list with an error message:
-        // Clear the ingredient list to get rid of the error message
-        if(ingredientListLayout.get(0).contains("You must"))
-            ingredientListLayout.clear();
+        if(validateIngredient()) {
+            // Assume numWhole = 0 if the field is empty AND a numFraction is provided
+            // validateIngredient() ensures this is never reached if both amountWhole and amountFraction are empty
+            String numWhole = TextUtils.isEmpty(amountWhole.getText())? "0" : amountWhole.getText().toString();
+            String numFraction = fraction.getText().toString();
+            String strUnits = units.getText().toString();
 
-        String amountWhole = this.amountWhole.getText().toString();
-        String amountFraction = fractionDropdown.getSelectedItem().toString();
-        String unitsString = units.getText().toString();
-        String ingredientName = this.ingredientName.getText().toString();
-        double amount = (double) Integer.parseInt(amountWhole) + getDouble(amountFraction);
+            double amount = (double) Integer.parseInt(numWhole) + getDouble(numFraction);
 
-        // Display nothing if selected == "none"
-        String fraction = !amountFraction.equals("none") ? amountFraction + " " : "";
-        String ingredientString = amountWhole + " " + fraction + unitsString.toLowerCase() + " " + toCapitalized(ingredientName);
-        ingredientListLayout.add(ingredientString);
+            // Display nothing if selected == "none"
+            String wholeString = !numWhole.equals("0")? numWhole + " " : "";
+            String fractionString = !numFraction.equals("")? numFraction + " " : "";
+            String ingredientString = ingredientName.getText().toString();
 
-        Ingredient ingredient = new Ingredient(ingredientName, amount, unitsString);
-        list.add(ingredient);
+            String currIngredients = !TextUtils.isEmpty(ingredientLayout.getText())? ingredientLayout.getText().toString() + "\n" : "";
+            String newIngredient = wholeString + fractionString + strUnits + " " + toCapitalized(ingredientString);
+            String ingredientDisplay = currIngredients + newIngredient;
+            ingredientLayout.setText(ingredientDisplay);
+            ingredientLayout.setError(null);
+            ingredientListLayout.add(newIngredient);
 
-        displayIngredients();
-        clearIngredientFields();
+            Ingredient ingredient = new Ingredient(currIngredients, amount, strUnits);
+            list.add(ingredient);
+
+            clearIngredientFields();
+        }
+        else {
+            showIngredientErrors();
+        }
     }
 
     public void onCancel(View v) {
@@ -104,11 +131,11 @@ public class NewRecipeActivity extends Activity {
             int prepTime = Integer.parseInt(this.prepTime.getText().toString());
             int cookTime = Integer.parseInt(this.cookTime.getText().toString());
 
-            String difficulty = this.difficulty.getSelectedItem().toString();
-
+            String difficulty = this.difficulty.getText().toString();
+            List<String> tagList = attachTags();
 
             Author newAuthor = new Author(authorId, author.getText().toString(), "");
-            Recipe newRecipe = new Recipe(recipeId, recipeName.getText().toString(), authorId, directions.getText().toString(), new IngredientList(list), servingSize, new ArrayList<String>(), prepTime, cookTime, difficulty);
+            Recipe newRecipe = new Recipe(recipeId, recipeName.getText().toString(), authorId, directions.getText().toString(), new IngredientList(list), servingSize, tagList, prepTime, cookTime, difficulty);
 
             accessAuthors.insertAuthor(newAuthor);
             accessRecipes.insertRecipe(newRecipe);
@@ -120,14 +147,33 @@ public class NewRecipeActivity extends Activity {
     }
 
     // private as these are helper methods
-
     private boolean validateInput() { // verify if every required field is filled
         boolean isValid = true; // initially true
 
-        if (TextUtils.isEmpty(recipeName.getText()) || TextUtils.isEmpty(author.getText())
-                || TextUtils.isEmpty(servingSize.getText()) || TextUtils.isEmpty(directions.getText())
+        if (TextUtils.isEmpty(recipeName.getText())
+                || TextUtils.isEmpty(author.getText())
+                || TextUtils.isEmpty(servingSize.getText())
+                || TextUtils.isEmpty(directions.getText())
+                || TextUtils.isEmpty(prepTime.getText())
+                || TextUtils.isEmpty(cookTime.getText())
+                || TextUtils.isEmpty(difficulty.getText())
                 || ingredientListLayout.isEmpty())
             isValid = false; // change to false if one of the fields are empty
+
+        return isValid;
+    }
+
+    private boolean validateIngredient() { // verify if every required ingredient field is filled
+        boolean isValid = true; // initially true
+
+        if (TextUtils.isEmpty(ingredientName.getText()) || TextUtils.isEmpty(units.getText()))
+            isValid = false; // change to false if one of the fields are empty
+
+        // Positive integer + no fraction is valid,
+        // Empty whole number field (assumed 0) + fraction is valid,
+        // Empty whole number field + no fraction is invalid
+        if (TextUtils.isEmpty(amountWhole.getText()) && TextUtils.isEmpty(fraction.getText()))
+            isValid = false;
 
         return isValid;
     }
@@ -144,12 +190,52 @@ public class NewRecipeActivity extends Activity {
             servingSize.setError("You must provide a serving size");
 
         if(TextUtils.isEmpty(directions.getText()))
-            directions.setError("You must give directions");
+            directions.setError("You must give directions for the recipe");
 
-        if(ingredientListLayout.isEmpty()) {
-            ingredientListLayout.add("You must add at least one (1) ingredient");
-            displayIngredients();
+        if(ingredientListLayout.isEmpty())
+            ingredientLayout.setError("You must add at least one (1) ingredient");
+
+        if(TextUtils.isEmpty(prepTime.getText()))
+            prepTime.setError("You must specify the prep time");
+
+        if(TextUtils.isEmpty(cookTime.getText()))
+            cookTime.setError("You must specify the cook time");
+
+        if(TextUtils.isEmpty(difficulty.getText()))
+            difficulty.setError("You must indicate the difficulty level of the recipe");
+    }
+
+    private void showIngredientErrors() {
+        // Show an error message for each text input that is missing
+        if(TextUtils.isEmpty(ingredientName.getText()))
+            ingredientName.setError("You must provide an ingredient");
+
+        if (TextUtils.isEmpty(amountWhole.getText()) && TextUtils.isEmpty(fraction.getText())) {
+            String errorMsg = "You must provide one or both of a whole number and/or a fraction";
+            amountWhole.setError(errorMsg);
+            fraction.setError(errorMsg);
         }
+
+        if(TextUtils.isEmpty(units.getText()))
+            units.setError("You must provide a unit of measurement");
+    }
+
+    private ArrayList<String> attachTags() {
+        ArrayList<String> tagList = new ArrayList<>();
+
+        if(TextUtils.isEmpty(tagsType.getText()))
+            tagList.add(tagsType.getText().toString());
+
+        if(TextUtils.isEmpty(tagsTaste.getText()))
+            tagList.add(tagsTaste.getText().toString());
+
+        if(TextUtils.isEmpty(tagsTime.getText()))
+            tagList.add(tagsTime.getText().toString());
+
+        if(TextUtils.isEmpty(tagsCourse.getText()))
+            tagList.add(tagsCourse.getText().toString());
+
+        return tagList;
     }
 
     private double getDouble(String selected) {
@@ -157,7 +243,7 @@ public class NewRecipeActivity extends Activity {
         int numerator;
         int denominator;
 
-        if (selected != null && !selected.equals("none")) {
+        if (selected != null && !selected.equals("")) {
             numerator = selected.charAt(0) - '0';
             denominator = selected.charAt(2) - '0';
             doubleVal = (double) numerator / (double) denominator;
@@ -166,26 +252,29 @@ public class NewRecipeActivity extends Activity {
         return doubleVal;
     }
 
-    private void displayIngredients() {
-        ingredientLayout.removeAllViews();
-        for (String i : ingredientListLayout) {
-            TextView text = new TextView(NewRecipeActivity.this);
-            text.setText(i);
+    private void initializeDropdowns(final AutoCompleteTextView dropdown, int id) {
+        String[] dropdownOptions = getResources().getStringArray(id);
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, R.layout.dropdown_option, dropdownOptions);
+        dropdown.setAdapter(adapter);
 
-            if(i.contains("You must")) // i is an error message
-                text.setTextColor(Color.RED);
+        // Show all text suggestions to mimic a dropdown list's behavior
+        dropdown.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    dropdown.showDropDown(); // show all dropdown options
+                    dropdown.setError(null); // clear any preexisting error indicators
+                }
 
-            ingredientLayout.addView(text);
-            text.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
-        }
-
-        ingredientLayout.requestLayout();
+                return false;
+            }
+        });
     }
 
     private void clearIngredientFields() {
         ingredientName.getText().clear();
         amountWhole.getText().clear();
-        fractionDropdown.setSelection(0);
+        fraction.getText().clear();
         units.getText().clear();
     }
 
@@ -194,7 +283,8 @@ public class NewRecipeActivity extends Activity {
         StringBuilder capitalized = new StringBuilder();
 
         for (String word : words) {
-            capitalized.append(word.toUpperCase().charAt(0)).append(word.substring(1)).append(" ");
+            if(!word.isEmpty())
+                capitalized.append(word.toUpperCase().charAt(0)).append(word.substring(1)).append(" ");
         }
 
         return capitalized.toString().trim();

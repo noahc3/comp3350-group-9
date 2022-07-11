@@ -7,34 +7,44 @@
     <!-- Recipe-Related -->
     <string name="recipes">Recipes</string>
     <string name="recipe">Recipe</string>
+    <string name="recipe_section">Recipe Information</string>
     <string name="view_recipes">View Recipes</string>
-    <string name="new_recipe">Submit New Recipe</string>
+    <string name="new_recipe">Publish New Recipe</string>
     <string name="recipe_name">Recipe Name</string>
     <string name="serving_size">Serving Size</string>
     <string name="serving_size_select">Multiply serving amount: </string>
     <string name="creates_servings">Creates %d servings</string>
+    <string name="prep_time">Prep Time</string>
+    <string name="cook_time">Cook Time</string>
+    <string name="difficulty">Difficulty</string>
+
+    <!-- Hints -->
+    <string name="time_hint">(in minutes)</string>
+    <string name="optional_hint">(optional)</string>
 
     <!-- Ingredient-Related -->
     <string name="ingredients">Ingredients</string>
     <string name="ingredient">Ingredient</string>
     <string name="ingredient_name">Ingredient Name</string>
-    <string name="ingredients_format">Use this form to keep adding ingredients to the list:</string>
-    <string name="ingredients_list">Ingredient List:</string>
+    <string name="ingredients_format">Use the fields above to add ingredients to this list</string>
+    <string name="ingredients_list">Ingredient List</string>
     <string name="ingredient_format">%1$s %2$s %3$s</string>
-    <string name="add_ingredient">Add to Ingredient List</string>
+    <string name="add_ingredient">Add Ingredient</string>
 
     <!-- Measurement-Related -->
     <string name="measurement">Measurement</string>
+    <string name="measurements">Measurements</string>
     <string name="measurement_units">Units</string>
     <string name="amount">Amount</string>
     <string name="amount_whole">Whole</string>
     <string name="amount_whole_hint">e.g. 2</string>
     <string name="amount_fraction">Fraction</string>
+    <string name="not_applicable">N/A</string>
 
     <!-- Direction-Related -->
     <string name="directions">Directions</string>
-    <string name="directions_format">List Directions Here:</string>
-    <string name="directions_hint">e.g.\n1. Mix all ingredients in a bowl\n2. Transfer to a baking pan. etc.</string>
+    <string name="directions_format">Direction List</string>
+    <string name="directions_hint">e.g.\n1. Mix all ingredients in a bowl\n2. Transfer to a baking pan... etc.</string>
 
     <!-- Author-Related -->
     <string name="authors">Authors</string>
@@ -46,6 +56,14 @@
     <string name="reviews">Reviews</string>
     <string name="review">Review</string>
     <string name="write_review">Review</string>
+
+    <!-- Tag-Related -->
+    <string name="tags">Tags</string>
+    <string name="tags_optional">Attach Tags (Optional)</string>
+    <string name="tags_time_of_day">Time of Day</string>
+    <string name="tags_type">Type</string>
+    <string name="tags_taste">Taste</string>
+    <string name="tags_course">Course</string>
 
     <!-- System-Related -->
     <string name="fatalError">Fatal error</string>
