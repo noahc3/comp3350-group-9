@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/recipes"
+        android:textColor="@color/colorPrimary"
+        android:textSize="50dp" />
+
+    <LinearLayout
+        android:id="@+id/recipeList"
+        android:layout_width="598dp"
+        android:layout_height="731dp"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/addRecipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="newRecipesOnClick"
+            android:text="@string/new_recipe" />
+    </LinearLayout>
+</LinearLayout>
