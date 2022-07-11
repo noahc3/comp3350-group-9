@@ -10,9 +10,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.util.List;
 
 import comp3350.cookit.R;
@@ -28,7 +28,8 @@ public class HomeListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        copyDatabaseToDevice();
+        initDatabase();
+        copyAssetFolderToDevice(Main.getImgAssetsPath());
 
         Main.startUp();
 
@@ -77,24 +78,27 @@ public class HomeListActivity extends Activity {
         startActivity(displayRecipeIntent);
     }
 
-    private void copyDatabaseToDevice() {
-        final String DB_PATH = "db";
+    private void initDatabase() {
+        Context context = getApplicationContext();
+        File dataDirectory = context.getDir(Main.getDbAssetsPath(), Context.MODE_PRIVATE);
+        Main.setDBPath(dataDirectory.toString() + "/" + Main.dbName);
 
+        copyAssetFolderToDevice(Main.getDbAssetsPath());
+    }
+
+    private void copyAssetFolderToDevice(String assetsPath) {
         String[] assetNames;
         Context context = getApplicationContext();
-        File dataDirectory = context.getDir(DB_PATH, Context.MODE_PRIVATE);
+        File dataDirectory = context.getDir(assetsPath, Context.MODE_PRIVATE);
         AssetManager assetManager = getAssets();
 
         try {
-            assetNames = assetManager.list(DB_PATH);
+            assetNames = assetManager.list(assetsPath);
             for (int i = 0; i < assetNames.length; i++) {
-                assetNames[i] = DB_PATH + "/" + assetNames[i];
+                assetNames[i] = assetsPath + "/" + assetNames[i];
             }
 
             copyAssetsToDirectory(assetNames, dataDirectory);
-
-            Main.setDBPath(dataDirectory.toString() + "/" + Main.dbName);
-
         } catch (IOException ioe) {
             Messages.warning(this, "Unable to access application data: " + ioe.getMessage());
         }
@@ -106,14 +110,14 @@ public class HomeListActivity extends Activity {
         for (String asset : assets) {
             String[] components = asset.split("/");
             String copyPath = directory.toString() + "/" + components[components.length - 1];
-            char[] buffer = new char[1024];
+            byte[] buffer = new byte[1024];
             int count;
 
             File outFile = new File(copyPath);
 
             if (!outFile.exists()) {
-                InputStreamReader in = new InputStreamReader(assetManager.open(asset));
-                FileWriter out = new FileWriter(outFile);
+                InputStream in = assetManager.open(asset);
+                FileOutputStream out = new FileOutputStream(outFile);
 
                 count = in.read(buffer);
                 while (count != -1) {

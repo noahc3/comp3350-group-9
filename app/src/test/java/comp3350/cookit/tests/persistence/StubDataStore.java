@@ -51,8 +51,8 @@ public class StubDataStore implements IDataStore {
                         Arrays.asList("Pastry", "Sweet", "Snack", "All Day"),
                         30,
                         20,
-                        "Medium"
-
+                        "Medium",
+                        Arrays.asList("muffin0", "muffin1")
                 ),
                 new Recipe(
                         "1",
@@ -71,7 +71,8 @@ public class StubDataStore implements IDataStore {
                         Arrays.asList("Culinary", "Savory", "Entree", "Dinner"),
                         30,
                         360,
-                        "Easy"
+                        "Easy",
+                        Arrays.asList("chicken0", "chicken1")
                 )
         ));
 

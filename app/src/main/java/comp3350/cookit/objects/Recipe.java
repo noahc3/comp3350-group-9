@@ -1,5 +1,7 @@
 package comp3350.cookit.objects;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,8 +16,9 @@ public class Recipe {
     private final int prepTime;
     private final int cookTime;
     private final String difficulty;
+    private final List<String> images;
 
-    public Recipe(String id, String title, String authorId, String content, IngredientList ingredients, int servingSize, List<String> tags, int prepTime, int cookTime, String difficulty) {
+    public Recipe(String id, String title, String authorId, String content, IngredientList ingredients, int servingSize, List<String> tags, int prepTime, int cookTime, String difficulty, List<String> images) {
         this.id = id;
         this.title = title;
         this.authorId = authorId;
@@ -26,6 +29,7 @@ public class Recipe {
         this.prepTime = prepTime;
         this.cookTime = cookTime;
         this.difficulty = difficulty;
+        this.images = images;
     }
 
     public String getId() {
@@ -53,7 +57,7 @@ public class Recipe {
     }
 
     public List<String> getTags() {
-        return tags;
+        return tags == null ? new ArrayList<String>() : new ArrayList<>(tags);
     }
 
     public int getPrepTime() {
@@ -66,6 +70,10 @@ public class Recipe {
 
     public String getDifficulty() {
         return difficulty;
+    }
+
+    public List<String> getImages() {
+        return images == null ? new ArrayList<String>() : new ArrayList<>(images);
     }
 
     @Override

@@ -94,7 +94,7 @@ public class HsqldbDataStore implements IDataStore {
     @Override
     public void insertRecipe(Recipe recipe) {
         try {
-            PreparedStatement st = db.prepareStatement("INSERT INTO RECIPES VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement st = db.prepareStatement("INSERT INTO RECIPES VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             st.setString(1, recipe.getId());
             st.setString(2, recipe.getTitle());
             st.setString(3, recipe.getAuthorId());
@@ -105,6 +105,7 @@ public class HsqldbDataStore implements IDataStore {
             st.setInt(8, recipe.getPrepTime());
             st.setInt(9, recipe.getCookTime());
             st.setString(10, recipe.getDifficulty());
+            st.setObject(11, recipe.getImages().toArray());
 
             int updateCount = st.executeUpdate();
             checkWarning(st, updateCount);
@@ -118,7 +119,7 @@ public class HsqldbDataStore implements IDataStore {
     @Override
     public void updateRecipe(Recipe recipe) {
         try {
-            PreparedStatement st = db.prepareStatement("UPDATE RECIPES SET TITLE = ?, AUTHORID = ?, CONTENT = ?, INGREDIENTS = ?, SERVINGSIZE = ?, TAGS = ?, PREPTIME = ?, COOKTIME = ?, DIFFICULTY = ? WHERE ID = ?");
+            PreparedStatement st = db.prepareStatement("UPDATE RECIPES SET TITLE = ?, AUTHORID = ?, CONTENT = ?, INGREDIENTS = ?, SERVINGSIZE = ?, TAGS = ?, PREPTIME = ?, COOKTIME = ?, DIFFICULTY = ?, IMAGES = ? WHERE ID = ?");
             st.setString(1, recipe.getTitle());
             st.setString(2, recipe.getAuthorId());
             st.setString(3, recipe.getContent());
@@ -128,7 +129,8 @@ public class HsqldbDataStore implements IDataStore {
             st.setInt(7, recipe.getPrepTime());
             st.setInt(8, recipe.getCookTime());
             st.setString(9, recipe.getDifficulty());
-            st.setString(10, recipe.getId());
+            st.setObject(10, recipe.getImages());
+            st.setString(11, recipe.getId());
 
             int updateCount = st.executeUpdate();
             checkWarning(st, updateCount);
@@ -356,7 +358,12 @@ public class HsqldbDataStore implements IDataStore {
         String[] tagsArr = Arrays.copyOf(objArr, objArr.length, String[].class);
         Collections.addAll(tags, tagsArr);
 
-        return new Recipe(id, title, authorId, content, new IngredientList(ingredients), servingSize, tags, prepTime, cookTime, difficulty);
+        List<String> images = new ArrayList<>();
+        objArr = (Object[]) rs.getObject("IMAGES");
+        String[] imagesArr = Arrays.copyOf(objArr, objArr.length, String[].class);
+        Collections.addAll(images, imagesArr);
+
+        return new Recipe(id, title, authorId, content, new IngredientList(ingredients), servingSize, tags, prepTime, cookTime, difficulty, images);
     }
 
     private Author parseAuthorFromResult(ResultSet rs) throws SQLException {

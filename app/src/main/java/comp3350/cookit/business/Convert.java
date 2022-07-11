@@ -20,7 +20,7 @@ public class Convert {
         }
 
         newIngredientList = new IngredientList(increasedIngredients);
-        newRecipe = new Recipe(recipe.getId(), recipe.getTitle(), recipe.getAuthorId(), recipe.getContent(), newIngredientList, recipe.getServingSize() * factor, recipe.getTags(), recipe.getPrepTime(), recipe.getCookTime(), recipe.getDifficulty());
+        newRecipe = new Recipe(recipe.getId(), recipe.getTitle(), recipe.getAuthorId(), recipe.getContent(), newIngredientList, recipe.getServingSize() * factor, recipe.getTags(), recipe.getPrepTime(), recipe.getCookTime(), recipe.getDifficulty(), recipe.getImages());
 
         return newRecipe;
     }
