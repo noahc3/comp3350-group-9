@@ -61,10 +61,12 @@ public class Recipe {
     }
 
     public int getCookTime() {
-        return prepTime;
+        return cookTime;
     }
 
-    public String getDifficulty() { return difficulty; }
+    public String getDifficulty() {
+        return difficulty;
+    }
 
     @Override
     public boolean equals(Object other) {

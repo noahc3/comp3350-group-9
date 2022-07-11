@@ -5,32 +5,32 @@ import java.util.List;
 import comp3350.cookit.application.Main;
 import comp3350.cookit.application.Services;
 import comp3350.cookit.objects.Recipe;
-import comp3350.cookit.persistence.DataAccessStub;
+import comp3350.cookit.persistence.IDataStore;
 
 public class AccessRecipes {
-    private final DataAccessStub dataAccess;
+    private final IDataStore dataStore;
 
     public AccessRecipes() {
-        dataAccess = Services.getDataAccess(Main.dbName);
+        dataStore = Services.getDataAccess(Main.dbName);
     }
 
     public List<Recipe> getRecipes() {
-        return dataAccess.getAllRecipes();
+        return dataStore.getAllRecipes();
     }
 
     public Recipe getRecipeById(String id) {
-        return dataAccess.getRecipeById(id);
+        return dataStore.getRecipeById(id);
     }
 
     public void insertRecipe(Recipe recipe) {
-        dataAccess.insertRecipe(recipe);
+        dataStore.insertRecipe(recipe);
     }
 
     public void updateRecipe(Recipe recipe) {
-        dataAccess.updateRecipe(recipe);
+        dataStore.updateRecipe(recipe);
     }
 
     public void deleteRecipe(Recipe recipe) {
-        dataAccess.deleteRecipe(recipe);
+        dataStore.deleteRecipe(recipe);
     }
 }

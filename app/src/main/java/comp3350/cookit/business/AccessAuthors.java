@@ -5,32 +5,32 @@ import java.util.List;
 import comp3350.cookit.application.Main;
 import comp3350.cookit.application.Services;
 import comp3350.cookit.objects.Author;
-import comp3350.cookit.persistence.DataAccessStub;
+import comp3350.cookit.persistence.IDataStore;
 
 public class AccessAuthors {
-    private final DataAccessStub dataAccess;
+    private final IDataStore dataStore;
 
     public AccessAuthors() {
-        dataAccess = Services.getDataAccess(Main.dbName);
+        dataStore = Services.getDataAccess(Main.dbName);
     }
 
     public List<Author> getAuthors() {
-        return dataAccess.getAllAuthors();
+        return dataStore.getAllAuthors();
     }
 
     public Author getAuthorById(String id) {
-        return dataAccess.getAuthorById(id);
+        return dataStore.getAuthorById(id);
     }
 
     public void insertAuthor(Author author) {
-        dataAccess.insertAuthor(author);
+        dataStore.insertAuthor(author);
     }
 
     public void updateAuthor(Author author) {
-        dataAccess.updateAuthor(author);
+        dataStore.updateAuthor(author);
     }
 
     public void deleteAuthor(Author author) {
-        dataAccess.deleteAuthor(author);
+        dataStore.deleteAuthor(author);
     }
 }

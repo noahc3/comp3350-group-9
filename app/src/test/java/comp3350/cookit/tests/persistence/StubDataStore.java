@@ -1,4 +1,4 @@
-package comp3350.cookit.persistence;
+package comp3350.cookit.tests.persistence;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,8 +9,9 @@ import comp3350.cookit.objects.Ingredient;
 import comp3350.cookit.objects.IngredientList;
 import comp3350.cookit.objects.Recipe;
 import comp3350.cookit.objects.Review;
+import comp3350.cookit.persistence.IDataStore;
 
-public class DataAccessStub {
+public class StubDataStore implements IDataStore {
     private final String dbName;
     private final String dbType = "stub";
 
@@ -18,11 +19,11 @@ public class DataAccessStub {
     private List<Recipe> recipes;
     private List<Review> reviews;
 
-    public DataAccessStub(String dbName) {
+    public StubDataStore(String dbName) {
         this.dbName = dbName;
     }
 
-    public void open(String dbName) {
+    public void open(String dbPath) {
         authors = new ArrayList<>(Arrays.asList(
                 new Author("0", "bobpiazza", "I love making muffins. Find me on allrecipes: https://www.allrecipes.com/cook/2955506"),
                 new Author("1", "Myrna", "Find me on allrecipes: https://www.allrecipes.com/cook/2792648?content=recipes")
@@ -47,10 +48,10 @@ public class DataAccessStub {
                                 new Ingredient("toasted slivered almonds", 0.33, "cups")
                         ),
                         12,
-                        Arrays.asList("Breakfast", "Comfort Food", "Easy", "Snack"),
-                        60,
-                        60,
-                        "EASY"
+                        Arrays.asList("Pastry", "Sweet", "Snack", "All Day"),
+                        30,
+                        20,
+                        "Medium"
 
                 ),
                 new Recipe(
@@ -67,10 +68,10 @@ public class DataAccessStub {
                                 new Ingredient("dried basil", 1, "tsp")
                         ),
                         4,
-                        Arrays.asList("Dinner", "Chicken", "Slow Cooker"),
-                        80,
-                        120,
-                        "CHALLENGING"
+                        Arrays.asList("Culinary", "Savory", "Entree", "Dinner"),
+                        30,
+                        360,
+                        "Easy"
                 )
         ));
 
@@ -80,7 +81,7 @@ public class DataAccessStub {
                 new Review("2", "1", "Lara Hanna", "Too much ketchup.", 2)
         ));
 
-        System.out.println("Opened " + dbType + " database " + dbName);
+        System.out.println("Opened stub database " + dbPath);
     }
 
     public void close() {
@@ -109,19 +110,23 @@ public class DataAccessStub {
     }
 
     public void updateRecipe(Recipe recipe) {
-        for (int i = 0; i < recipes.size(); i++) {
-            if (recipes.get(i).getId().equals(recipe.getId())) {
-                recipes.set(i, recipe);
-                break;
+        if (recipe != null) {
+            for (int i = 0; i < recipes.size(); i++) {
+                if (recipes.get(i).getId().equals(recipe.getId())) {
+                    recipes.set(i, recipe);
+                    break;
+                }
             }
         }
     }
 
     public void deleteRecipe(Recipe recipe) {
-        for (int i = 0; i < recipes.size(); i++) {
-            if (recipes.get(i).getId().equals(recipe.getId())) {
-                recipes.remove(i);
-                break;
+        if (recipe != null) {
+            for (int i = 0; i < recipes.size(); i++) {
+                if (recipes.get(i).getId().equals(recipe.getId())) {
+                    recipes.remove(i);
+                    break;
+                }
             }
         }
     }
@@ -148,19 +153,23 @@ public class DataAccessStub {
     }
 
     public void updateAuthor(Author author) {
-        for (int i = 0; i < authors.size(); i++) {
-            if (authors.get(i).getId().equals(author.getId())) {
-                authors.set(i, author);
-                break;
+        if (author != null) {
+            for (int i = 0; i < authors.size(); i++) {
+                if (authors.get(i).getId().equals(author.getId())) {
+                    authors.set(i, author);
+                    break;
+                }
             }
         }
     }
 
     public void deleteAuthor(Author author) {
-        for (int i = 0; i < authors.size(); i++) {
-            if (authors.get(i).getId().equals(author.getId())) {
-                authors.remove(i);
-                break;
+        if (author != null) {
+            for (int i = 0; i < authors.size(); i++) {
+                if (authors.get(i).getId().equals(author.getId())) {
+                    authors.remove(i);
+                    break;
+                }
             }
         }
     }
@@ -187,19 +196,23 @@ public class DataAccessStub {
     }
 
     public void updateReview(Review review) {
-        for (int i = 0; i < reviews.size(); i++) {
-            if (reviews.get(i).getId().equals(review.getId())) {
-                reviews.set(i, review);
-                break;
+        if (review != null) {
+            for (int i = 0; i < reviews.size(); i++) {
+                if (reviews.get(i).getId().equals(review.getId())) {
+                    reviews.set(i, review);
+                    break;
+                }
             }
         }
     }
 
     public void deleteReview(Review review) {
-        for (int i = 0; i < authors.size(); i++) {
-            if (reviews.get(i).getId().equals(review.getId())) {
-                reviews.remove(i);
-                break;
+        if (review != null) {
+            for (int i = 0; i < authors.size(); i++) {
+                if (reviews.get(i).getId().equals(review.getId())) {
+                    reviews.remove(i);
+                    break;
+                }
             }
         }
     }

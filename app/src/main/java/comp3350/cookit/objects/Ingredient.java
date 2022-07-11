@@ -1,8 +1,9 @@
 package comp3350.cookit.objects;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Ingredient {
+public class Ingredient implements Serializable {
     private final String name;
     private final String measurement;
     private double quantity;
