@@ -66,6 +66,7 @@
     <string name="tags_type">Type</string>
     <string name="tags_taste">Taste</string>
     <string name="tags_course">Course</string>
+    <string name="tags_none_attached">(no tags have been attached)</string>
 
     <!-- System-Related -->
     <string name="fatalError">Fatal error</string>

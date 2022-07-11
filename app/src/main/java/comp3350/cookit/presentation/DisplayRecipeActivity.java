@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -35,6 +37,7 @@ public class DisplayRecipeActivity extends Activity {
     TextView servingsText;
     TextView recipeInstructions;
     LinearLayout ingredientsList;
+    LinearLayout tagsList;
     Spinner servingsDropdown;
     LinearLayout imageViewLayout;
     LinearLayout imageButtonsLayout;
@@ -54,6 +57,7 @@ public class DisplayRecipeActivity extends Activity {
         servingsText = findViewById(R.id.servingsText);
         recipeInstructions = findViewById(R.id.recipeInstructions);
         ingredientsList = findViewById(R.id.ingredientList);
+        tagsList = findViewById(R.id.tagsList);
         servingsDropdown = findViewById(R.id.servingsDropdown);
         imageViewLayout = findViewById(R.id.recipeImageLayout);
         imageButtonsLayout = findViewById(R.id.recipeImageButtonsLayout);
@@ -83,6 +87,7 @@ public class DisplayRecipeActivity extends Activity {
 
         recipeTitle.setText(recipe.getTitle());
         recipeAuthor.setText(getString(R.string.written_by, author.getName()));
+        displayTags(recipe);
         servingsText.setText(getString(R.string.creates_servings, recipe.getServingSize()));
         recipeInstructions.setText(recipe.getContent());
 
@@ -142,5 +147,30 @@ public class DisplayRecipeActivity extends Activity {
         }
     }
 
+    public void displayTags(Recipe recipe) {
+        if(!recipe.getTags().isEmpty()) {
+            tagsList.removeAllViews();
+            for (String tag : recipe.getTags()) {
+                // Create a button programmatically to act as a tag
+                Button btnTag = new Button(DisplayRecipeActivity.this);
 
+                // Set the parameters for the button programmatically
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                layoutParams.setMarginEnd(6);
+                btnTag.setLayoutParams(layoutParams);
+                btnTag.setText(tag);
+                btnTag.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+                btnTag.setTextColor(getResources().getColor(R.color.colorWhite));
+                btnTag.getBackground().setColorFilter(btnTag.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
+                btnTag.setClickable(false);
+                btnTag.setPadding(1, 1, 1, 1);
+
+                tagsList.addView(btnTag);
+            }
+            tagsList.requestLayout();
+        }
+        // else do nothing and retain the "no tags have been attached" message
+    }
 }
