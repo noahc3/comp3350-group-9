@@ -18,7 +18,10 @@
     <string name="cook_time">Cook Time</string>
     <string name="difficulty">Difficulty</string>
     <string name="attach_photo">Attach Photos</string>
-    <string name="add_photos">Add Photo</string>
+    <string name="add_photos">Add Photos</string>
+    <string name="reselect_photos">Reselect Photos</string>
+    <string name="zero_photo_count">(0 photo(s) selected)</string>=
+    <string name="selected_photo_count">(%d photo(s) selected)</string>
 
     <!-- Hints -->
     <string name="time_hint">(in minutes)</string>

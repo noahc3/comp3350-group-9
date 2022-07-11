@@ -29,15 +29,15 @@ android:padding="15dp">
         android:textSize="20dp"
         android:textColor="@color/colorAccent" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="15dp" />
-
     <LinearLayout
         android:id="@+id/recipeImageLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp" />
 
         <ImageView
             android:id="@+id/recipeImageView"
@@ -71,6 +71,10 @@ android:padding="15dp">
         </LinearLayout>
 
     </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="15dp" />
 
     <TextView
         android:id="@+id/tagsHeader"

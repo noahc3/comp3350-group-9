@@ -16,6 +16,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -55,6 +57,9 @@ public class NewRecipeActivity extends Activity {
     private TextInputEditText directions;
     private TextInputEditText prepTime;
     private TextInputEditText cookTime;
+
+    private Button addPhotosButton;
+    private TextView numPhotosText;
 
     private List<Uri> photos;
 
@@ -98,6 +103,9 @@ public class NewRecipeActivity extends Activity {
         directions = findViewById(R.id.directionList);
         prepTime = findViewById(R.id.prepTime);
         cookTime = findViewById(R.id.cookTime);
+
+        addPhotosButton = findViewById(R.id.addPhoto);
+        numPhotosText = findViewById(R.id.numPhotosDisplay);
     }
 
     public void onAddToList(View v) {
@@ -202,22 +210,28 @@ public class NewRecipeActivity extends Activity {
                 photos.add(data.getData());
             }
         }
+
+        addPhotosButton.setText(getString(R.string.reselect_photos));
+        numPhotosText.setText(getString(R.string.selected_photo_count, photos.size()));
     }
 
     private List<String> importPhotosToApplicationData(List<Uri> photos) {
         List<String> resultIds = new ArrayList<>();
-        Context context = getApplicationContext();
-        File dataDirectory = context.getDir(Main.getImgAssetsPath(), Context.MODE_PRIVATE);
 
-        for (Uri uri : photos) {
-            String fileName = UUID.randomUUID().toString();
-            String filePath = dataDirectory.getPath() + "/" + fileName;
+        if (photos != null && photos.size() > 0) {
+            Context context = getApplicationContext();
+            File dataDirectory = context.getDir(Main.getImgAssetsPath(), Context.MODE_PRIVATE);
 
-            try {
-                copyFile(uri, filePath);
-                resultIds.add(fileName);
-            } catch (IOException e) {
-                e.printStackTrace();
+            for (Uri uri : photos) {
+                String fileName = UUID.randomUUID().toString();
+                String filePath = dataDirectory.getPath() + "/" + fileName;
+
+                try {
+                    copyFile(uri, filePath);
+                    resultIds.add(fileName);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -322,16 +336,16 @@ public class NewRecipeActivity extends Activity {
     private ArrayList<String> attachTags() {
         ArrayList<String> tagList = new ArrayList<>();
 
-        if (TextUtils.isEmpty(tagsType.getText()))
+        if (!TextUtils.isEmpty(tagsType.getText()))
             tagList.add(tagsType.getText().toString());
 
-        if (TextUtils.isEmpty(tagsTaste.getText()))
+        if (!TextUtils.isEmpty(tagsTaste.getText()))
             tagList.add(tagsTaste.getText().toString());
 
-        if (TextUtils.isEmpty(tagsTime.getText()))
+        if (!TextUtils.isEmpty(tagsTime.getText()))
             tagList.add(tagsTime.getText().toString());
 
-        if (TextUtils.isEmpty(tagsCourse.getText()))
+        if (!TextUtils.isEmpty(tagsCourse.getText()))
             tagList.add(tagsCourse.getText().toString());
 
         return tagList;
