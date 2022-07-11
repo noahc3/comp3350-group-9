@@ -31,6 +31,9 @@ public class IDataStoreTests {
         Assert.assertEquals("0", recipes.get(0).getAuthorId());
         Assert.assertEquals("1. Preheat oven to 400F. Grease 12 muffin cups, or line with paper muffin liners.\n\n2. Combine flour, sugar, baking powder, and salt in a large bowl. Mix lemon juice and milk in a measuring cup, to sour milk; beat eggs, oil, and milk mixture in a bowl. Stir egg mixture into flour mixture until just moistened; fold in cranberries. Fill prepared muffin cups two-thirds full; sprinkle with almonds.\n\n3. Bake in preheated oven until a toothpick inserted into a muffin comes out clean, 18 to 20 minutes. Cool for 5 minutes before removing from pan to wire rack.", recipes.get(0).getContent());
         Assert.assertEquals(12, recipes.get(0).getServingSize());
+        Assert.assertEquals(30, recipes.get(0).getPrepTime());
+        Assert.assertEquals(20, recipes.get(0).getCookTime());
+        Assert.assertEquals("Medium", recipes.get(0).getDifficulty());
 
         List<Ingredient> ingredients = recipes.get(0).getIngredientList().getIngredients();
         Assert.assertEquals(10, ingredients.size());
@@ -52,12 +55,20 @@ public class IDataStoreTests {
         Assert.assertEquals("Snack", tags.get(2));
         Assert.assertEquals("All Day", tags.get(3));
 
+        List<String> images = recipes.get(0).getImages();
+        Assert.assertEquals(2, images.size());
+        Assert.assertEquals("muffin0", images.get(0));
+        Assert.assertEquals("muffin1", images.get(1));
+
 
         Assert.assertEquals("1", recipes.get(1).getId());
         Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(1).getTitle());
         Assert.assertEquals("1", recipes.get(1).getAuthorId());
         Assert.assertEquals("1. Lay chicken thighs into the bottom of a 4-quart slow cooker.\n\n2. Whisk soy sauce, ketchup, honey, garlic, and basil together in a bowl; pour over the chicken.\n\n3. Cook on Low for 6 hours.", recipes.get(1).getContent());
         Assert.assertEquals(4, recipes.get(1).getServingSize());
+        Assert.assertEquals(30, recipes.get(1).getPrepTime());
+        Assert.assertEquals(360, recipes.get(1).getCookTime());
+        Assert.assertEquals("Easy", recipes.get(1).getDifficulty());
 
         ingredients = recipes.get(1).getIngredientList().getIngredients();
         Assert.assertEquals(6, ingredients.size());
@@ -74,6 +85,11 @@ public class IDataStoreTests {
         Assert.assertEquals("Savory", tags.get(1));
         Assert.assertEquals("Entree", tags.get(2));
         Assert.assertEquals("Dinner", tags.get(3));
+
+        images = recipes.get(1).getImages();
+        Assert.assertEquals(2, images.size());
+        Assert.assertEquals("chicken0", images.get(0));
+        Assert.assertEquals("chicken1", images.get(1));
     }
 
     @Test
@@ -132,7 +148,7 @@ public class IDataStoreTests {
 
         IngredientList il = IngredientList.Create(new Ingredient("all-purpose flour", 10.0, "cups"));
         Author a = new Author("5", "An Author", "Hi, I am an author!");
-        Recipe r = new Recipe("3", "Title", "5", "Content", il, 2, Arrays.asList("Some", "Tags"), 10, 20, "Easy");
+        Recipe r = new Recipe("3", "Title", "5", "Content", il, 2, Arrays.asList("Some", "Tags"), 10, 20, "Easy", Arrays.asList("Image1", "Image2"));
 
         dataStore.insertAuthor(a);
         dataStore.insertRecipe(r);
@@ -160,6 +176,10 @@ public class IDataStoreTests {
         Assert.assertEquals(2, recipes.get(2).getTags().size());
         Assert.assertEquals("Some", recipes.get(2).getTags().get(0));
         Assert.assertEquals("Tags", recipes.get(2).getTags().get(1));
+
+        Assert.assertEquals(2, recipes.get(2).getImages().size());
+        Assert.assertEquals("Image1", recipes.get(2).getImages().get(0));
+        Assert.assertEquals("Image2", recipes.get(2).getImages().get(1));
     }
 
     @Test
@@ -191,7 +211,7 @@ public class IDataStoreTests {
         Assert.assertEquals("Lemon Cranberry Muffins", dbRecipe.getTitle());
         Assert.assertEquals(12, dbRecipe.getServingSize());
 
-        Recipe modifiedRecipe = new Recipe(dbRecipe.getId(), "Bran Muffins", dbRecipe.getAuthorId(), dbRecipe.getContent(), dbRecipe.getIngredientList(), dbRecipe.getServingSize(), dbRecipe.getTags(), dbRecipe.getPrepTime(), dbRecipe.getCookTime(), dbRecipe.getDifficulty());
+        Recipe modifiedRecipe = new Recipe(dbRecipe.getId(), "Bran Muffins", dbRecipe.getAuthorId(), dbRecipe.getContent(), dbRecipe.getIngredientList(), dbRecipe.getServingSize(), dbRecipe.getTags(), dbRecipe.getPrepTime(), dbRecipe.getCookTime(), dbRecipe.getDifficulty(), dbRecipe.getImages());
         dataStore.updateRecipe(modifiedRecipe);
 
         dbRecipe = dataStore.getRecipeById("0");
@@ -199,7 +219,7 @@ public class IDataStoreTests {
         Assert.assertEquals("Bran Muffins", dbRecipe.getTitle());
         Assert.assertEquals(12, dbRecipe.getServingSize());
 
-        modifiedRecipe = new Recipe(dbRecipe.getId(), dbRecipe.getTitle(), dbRecipe.getAuthorId(), dbRecipe.getContent(), dbRecipe.getIngredientList(), 3, dbRecipe.getTags(), dbRecipe.getPrepTime(), dbRecipe.getCookTime(), dbRecipe.getDifficulty());
+        modifiedRecipe = new Recipe(dbRecipe.getId(), dbRecipe.getTitle(), dbRecipe.getAuthorId(), dbRecipe.getContent(), dbRecipe.getIngredientList(), 3, dbRecipe.getTags(), dbRecipe.getPrepTime(), dbRecipe.getCookTime(), dbRecipe.getDifficulty(), dbRecipe.getImages());
         dataStore.updateRecipe(modifiedRecipe);
 
         dbRecipe = dataStore.getRecipeById("0");
@@ -219,7 +239,7 @@ public class IDataStoreTests {
         Assert.assertEquals("1. Lay chicken thighs into the bottom of a 4-quart slow cooker.\n\n2. Whisk soy sauce, ketchup, honey, garlic, and basil together in a bowl; pour over the chicken.\n\n3. Cook on Low for 6 hours.", dbRecipe.getContent());
 
 
-        Recipe modifiedRecipe = new Recipe(dbRecipe.getId(), "Blackened Chicken Breast", dbRecipe.getAuthorId(), "Some new content", dbRecipe.getIngredientList(), 1, dbRecipe.getTags(), dbRecipe.getPrepTime(), dbRecipe.getCookTime(), dbRecipe.getDifficulty());
+        Recipe modifiedRecipe = new Recipe(dbRecipe.getId(), "Blackened Chicken Breast", dbRecipe.getAuthorId(), "Some new content", dbRecipe.getIngredientList(), 1, dbRecipe.getTags(), dbRecipe.getPrepTime(), dbRecipe.getCookTime(), dbRecipe.getDifficulty(), dbRecipe.getImages());
         dataStore.updateRecipe(modifiedRecipe);
 
         dbRecipe = dataStore.getRecipeById("1");
@@ -238,7 +258,7 @@ public class IDataStoreTests {
         Assert.assertEquals("Lemon Cranberry Muffins", recipes.get(0).getTitle());
         Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(1).getTitle());
 
-        Recipe invalid = new Recipe("3", "Recipe with non-existent ID", "0", "Some content", recipes.get(0).getIngredientList(), 1, Arrays.asList("Some", "tags"), 20, 40, "Hard");
+        Recipe invalid = new Recipe("3", "Recipe with non-existent ID", "0", "Some content", recipes.get(0).getIngredientList(), 1, Arrays.asList("Some", "tags"), 20, 40, "Hard", Arrays.asList("img1", "img2"));
         dataStore.updateRecipe(invalid);
 
         recipes = dataStore.getAllRecipes();
@@ -292,7 +312,7 @@ public class IDataStoreTests {
         Assert.assertEquals("0", recipes.get(0).getId());
         Assert.assertEquals("1", recipes.get(1).getId());
 
-        Recipe invalid = new Recipe("3", "Recipe with non-existant ID", "0", "Some content", recipes.get(0).getIngredientList(), 1, Arrays.asList("Some", "tags"), 15, 5, "Impossible");
+        Recipe invalid = new Recipe("3", "Recipe with non-existant ID", "0", "Some content", recipes.get(0).getIngredientList(), 1, Arrays.asList("Some", "tags"), 15, 5, "Impossible", Arrays.asList("img1", "img2"));
         dataStore.deleteRecipe(invalid);
 
         recipes = dataStore.getAllRecipes();

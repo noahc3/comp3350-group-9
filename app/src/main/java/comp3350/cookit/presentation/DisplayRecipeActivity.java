@@ -1,13 +1,21 @@
 package comp3350.cookit.presentation;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import comp3350.cookit.R;
 import comp3350.cookit.application.Main;
@@ -28,6 +36,12 @@ public class DisplayRecipeActivity extends Activity {
     TextView recipeInstructions;
     LinearLayout ingredientsList;
     Spinner servingsDropdown;
+    LinearLayout imageViewLayout;
+    LinearLayout imageButtonsLayout;
+    ImageView imageView;
+
+    int selectedImage = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +55,9 @@ public class DisplayRecipeActivity extends Activity {
         recipeInstructions = findViewById(R.id.recipeInstructions);
         ingredientsList = findViewById(R.id.ingredientList);
         servingsDropdown = findViewById(R.id.servingsDropdown);
+        imageViewLayout = findViewById(R.id.recipeImageLayout);
+        imageButtonsLayout = findViewById(R.id.recipeImageButtonsLayout);
+        imageView = findViewById(R.id.recipeImageView);
 
         displayRecipe(defaultServingSize);
 
@@ -69,6 +86,16 @@ public class DisplayRecipeActivity extends Activity {
         servingsText.setText(getString(R.string.creates_servings, recipe.getServingSize()));
         recipeInstructions.setText(recipe.getContent());
 
+        if (recipe.getImages().size() == 0) {
+            imageViewLayout.removeAllViews();
+        } else {
+            if (recipe.getImages().size() == 1) {
+                imageViewLayout.removeView(imageButtonsLayout);
+            }
+
+            displaySelectedImage(recipe);
+        }
+
         ingredientsList.removeAllViews();
         for (Ingredient i : recipe.getIngredientList().getIngredients()) {
             TextView text = new TextView(DisplayRecipeActivity.this);
@@ -77,6 +104,42 @@ public class DisplayRecipeActivity extends Activity {
             text.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
         }
         ingredientsList.requestLayout();
+
+
+    }
+
+    public void prevPhoto(View view) {
+        AccessRecipes recipes = new AccessRecipes();
+        String recipeId = getIntent().getExtras().getString("recipeId");
+        Recipe recipe = recipes.getRecipeById(recipeId);
+
+        selectedImage = (selectedImage + recipe.getImages().size() - 1) % recipe.getImages().size();
+
+        displaySelectedImage(recipe);
+    }
+
+    public void nextPhoto(View view) {
+        AccessRecipes recipes = new AccessRecipes();
+        String recipeId = getIntent().getExtras().getString("recipeId");
+        Recipe recipe = recipes.getRecipeById(recipeId);
+
+        selectedImage = (selectedImage + 1) % recipe.getImages().size();
+
+        displaySelectedImage(recipe);
+    }
+
+    private void displaySelectedImage(Recipe recipe) {
+
+        Context context = getApplicationContext();
+        File dataDirectory = context.getDir(Main.getImgAssetsPath(), Context.MODE_PRIVATE);
+        String imageName = recipe.getImages().get(selectedImage);
+        try {
+            InputStream in = getContentResolver().openInputStream(Uri.fromFile(new File(dataDirectory.getPath(), imageName)));
+            imageView.setImageBitmap(BitmapFactory.decodeStream(in));
+        } catch (IOException e) {
+            Messages.warning(this, "Failed to display image " + imageName + ": " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 

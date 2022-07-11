@@ -1,20 +1,32 @@
 package comp3350.cookit.presentation;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import comp3350.cookit.R;
+import comp3350.cookit.application.Main;
 import comp3350.cookit.business.AccessAuthors;
 import comp3350.cookit.business.AccessRecipes;
 import comp3350.cookit.objects.Author;
@@ -43,6 +55,8 @@ public class NewRecipeActivity extends Activity {
     private TextInputEditText directions;
     private TextInputEditText prepTime;
     private TextInputEditText cookTime;
+
+    private List<Uri> photos;
 
     private final AccessRecipes accessRecipes = new AccessRecipes();
     private final AccessAuthors accessAuthors = new AccessAuthors();
@@ -87,21 +101,21 @@ public class NewRecipeActivity extends Activity {
     }
 
     public void onAddToList(View v) {
-        if(validateIngredient()) {
+        if (validateIngredient()) {
             // Assume numWhole = 0 if the field is empty AND a numFraction is provided
             // validateIngredient() ensures this is never reached if both amountWhole and amountFraction are empty
-            String numWhole = TextUtils.isEmpty(amountWhole.getText())? "0" : amountWhole.getText().toString();
+            String numWhole = TextUtils.isEmpty(amountWhole.getText()) ? "0" : amountWhole.getText().toString();
             String numFraction = fraction.getText().toString();
             String strUnits = units.getText().toString();
 
             double amount = (double) Integer.parseInt(numWhole) + getDouble(numFraction);
 
             // Display nothing if selected == "none"
-            String wholeString = !numWhole.equals("0")? numWhole + " " : "";
-            String fractionString = !numFraction.equals("")? numFraction + " " : "";
+            String wholeString = !numWhole.equals("0") ? numWhole + " " : "";
+            String fractionString = !numFraction.equals("") ? numFraction + " " : "";
             String ingredientString = ingredientName.getText().toString();
 
-            String currIngredients = !TextUtils.isEmpty(ingredientLayout.getText())? ingredientLayout.getText().toString() + "\n" : "";
+            String currIngredients = !TextUtils.isEmpty(ingredientLayout.getText()) ? ingredientLayout.getText().toString() + "\n" : "";
             String newIngredient = wholeString + fractionString + strUnits + " " + toCapitalized(ingredientString);
             String ingredientDisplay = currIngredients + newIngredient;
             ingredientLayout.setText(ingredientDisplay);
@@ -112,8 +126,7 @@ public class NewRecipeActivity extends Activity {
             list.add(ingredient);
 
             clearIngredientFields();
-        }
-        else {
+        } else {
             showIngredientErrors();
         }
     }
@@ -123,7 +136,7 @@ public class NewRecipeActivity extends Activity {
     }
 
     public void onSubmit(View v) {
-        if(validateInput()) {
+        if (validateInput()) {
             String recipeId = UUID.randomUUID().toString();
             String authorId = UUID.randomUUID().toString();
 
@@ -134,21 +147,102 @@ public class NewRecipeActivity extends Activity {
             String difficulty = this.difficulty.getText().toString();
             List<String> tagList = attachTags();
 
+            List<String> images = importPhotosToApplicationData(photos);
+
             Author newAuthor = new Author(authorId, author.getText().toString(), "");
-            Recipe newRecipe = new Recipe(recipeId, recipeName.getText().toString(), authorId, directions.getText().toString(), new IngredientList(list), servingSize, tagList, prepTime, cookTime, difficulty);
+            Recipe newRecipe = new Recipe(recipeId, recipeName.getText().toString(), authorId, directions.getText().toString(), new IngredientList(list), servingSize, tagList, prepTime, cookTime, difficulty, images);
 
             accessAuthors.insertAuthor(newAuthor);
             accessRecipes.insertRecipe(newRecipe);
             finish();
-        }
-        else {
+        } else {
             showTextInputErrors();
         }
     }
 
-    public void AddPhotos(View v) {
-        // TODO: Replace with Yash's AddPhotos code
-        System.out.println("Replace with Yash's AddPhotos code");
+    public void addPhotos(View v) {
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        } else {
+            selectPhotos();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 1) {
+            if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                selectPhotos();
+            }
+        }
+    }
+
+    private void selectPhotos() {
+        Intent choosePhoto = new Intent();
+        choosePhoto.setType("image/*");
+        choosePhoto.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        choosePhoto.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(choosePhoto, "Select Photos"), 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        photos = new ArrayList<>();
+        if (resultCode == RESULT_OK && requestCode == 1 && data.getData() != null) {
+            if (data.getClipData() != null) {
+                int count = data.getClipData().getItemCount();
+                for (int i = 0; i < count; i++) {
+                    if (data.getData() != null)
+                        photos.add(data.getClipData().getItemAt(i).getUri());
+                }
+            } else if (data.getData() != null) {
+                photos.add(data.getData());
+            }
+        }
+    }
+
+    private List<String> importPhotosToApplicationData(List<Uri> photos) {
+        List<String> resultIds = new ArrayList<>();
+        Context context = getApplicationContext();
+        File dataDirectory = context.getDir(Main.getImgAssetsPath(), Context.MODE_PRIVATE);
+
+        for (Uri uri : photos) {
+            String fileName = UUID.randomUUID().toString();
+            String filePath = dataDirectory.getPath() + "/" + fileName;
+
+            try {
+                copyFile(uri, filePath);
+                resultIds.add(fileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return resultIds;
+    }
+
+    private void copyFile(Uri src, String dst) throws IOException {
+        byte[] buffer = new byte[1024];
+        int count;
+
+        File outFile = new File(dst);
+
+        if (!outFile.exists()) {
+            InputStream in = getContentResolver().openInputStream(src);
+            FileOutputStream out = new FileOutputStream(outFile);
+
+            count = in.read(buffer);
+            while (count != -1) {
+                out.write(buffer, 0, count);
+                count = in.read(buffer);
+            }
+
+            out.close();
+            in.close();
+        }
     }
 
     // private as these are helper methods
@@ -185,34 +279,34 @@ public class NewRecipeActivity extends Activity {
 
     private void showTextInputErrors() {
         // Show an error message for each text input that is missing
-        if(TextUtils.isEmpty(recipeName.getText()))
+        if (TextUtils.isEmpty(recipeName.getText()))
             recipeName.setError("You must provide a name for the recipe");
 
-        if(TextUtils.isEmpty(author.getText()))
+        if (TextUtils.isEmpty(author.getText()))
             author.setError("You must provide an author");
 
-        if(TextUtils.isEmpty(servingSize.getText()))
+        if (TextUtils.isEmpty(servingSize.getText()))
             servingSize.setError("You must provide a serving size");
 
-        if(TextUtils.isEmpty(directions.getText()))
+        if (TextUtils.isEmpty(directions.getText()))
             directions.setError("You must give directions for the recipe");
 
-        if(ingredientListLayout.isEmpty())
+        if (ingredientListLayout.isEmpty())
             ingredientLayout.setError("You must add at least one (1) ingredient");
 
-        if(TextUtils.isEmpty(prepTime.getText()))
+        if (TextUtils.isEmpty(prepTime.getText()))
             prepTime.setError("You must specify the prep time");
 
-        if(TextUtils.isEmpty(cookTime.getText()))
+        if (TextUtils.isEmpty(cookTime.getText()))
             cookTime.setError("You must specify the cook time");
 
-        if(TextUtils.isEmpty(difficulty.getText()))
+        if (TextUtils.isEmpty(difficulty.getText()))
             difficulty.setError("You must indicate the difficulty level of the recipe");
     }
 
     private void showIngredientErrors() {
         // Show an error message for each text input that is missing
-        if(TextUtils.isEmpty(ingredientName.getText()))
+        if (TextUtils.isEmpty(ingredientName.getText()))
             ingredientName.setError("You must provide an ingredient");
 
         if (TextUtils.isEmpty(amountWhole.getText()) && TextUtils.isEmpty(fraction.getText())) {
@@ -221,23 +315,23 @@ public class NewRecipeActivity extends Activity {
             fraction.setError(errorMsg);
         }
 
-        if(TextUtils.isEmpty(units.getText()))
+        if (TextUtils.isEmpty(units.getText()))
             units.setError("You must provide a unit of measurement");
     }
 
     private ArrayList<String> attachTags() {
         ArrayList<String> tagList = new ArrayList<>();
 
-        if(TextUtils.isEmpty(tagsType.getText()))
+        if (TextUtils.isEmpty(tagsType.getText()))
             tagList.add(tagsType.getText().toString());
 
-        if(TextUtils.isEmpty(tagsTaste.getText()))
+        if (TextUtils.isEmpty(tagsTaste.getText()))
             tagList.add(tagsTaste.getText().toString());
 
-        if(TextUtils.isEmpty(tagsTime.getText()))
+        if (TextUtils.isEmpty(tagsTime.getText()))
             tagList.add(tagsTime.getText().toString());
 
-        if(TextUtils.isEmpty(tagsCourse.getText()))
+        if (TextUtils.isEmpty(tagsCourse.getText()))
             tagList.add(tagsCourse.getText().toString());
 
         return tagList;
@@ -288,7 +382,7 @@ public class NewRecipeActivity extends Activity {
         StringBuilder capitalized = new StringBuilder();
 
         for (String word : words) {
-            if(!word.isEmpty())
+            if (!word.isEmpty())
                 capitalized.append(word.toUpperCase().charAt(0)).append(word.substring(1)).append(" ");
         }
 
