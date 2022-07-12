@@ -23,9 +23,6 @@
     <string name="reselect_photos">Reselect Photos</string>
     <string name="zero_photo_count">(0 photo(s) selected)</string>=
     <string name="selected_photo_count">(%d photo(s) selected)</string>
-    <string name="prep_time_display">Prep Time: %d minutes</string>
-    <string name="cook_time_display">Cook Time: %d minutes</string>
-    <string name="difficulty_display">Difficulty: %s</string>
 
     <!-- Hints -->
     <string name="time_hint">(in minutes)</string>
