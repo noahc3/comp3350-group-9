@@ -35,6 +35,9 @@ public class DisplayRecipeActivity extends Activity {
 
     TextView recipeTitle;
     TextView recipeAuthor;
+    TextView difficultyText;
+    TextView prepTimeText;
+    TextView cookTimeText;
     TextView servingsText;
     TextView recipeInstructions;
     LinearLayout ingredientsList;
@@ -55,6 +58,9 @@ public class DisplayRecipeActivity extends Activity {
 
         recipeTitle = findViewById(R.id.recipeTitle);
         recipeAuthor = findViewById(R.id.recipeAuthor);
+        difficultyText = findViewById(R.id.difficulty_display);
+        prepTimeText = findViewById(R.id.prep_time_display);
+        cookTimeText = findViewById(R.id.cook_time_display);
         servingsText = findViewById(R.id.servingsText);
         recipeInstructions = findViewById(R.id.recipeInstructions);
         ingredientsList = findViewById(R.id.ingredientList);
@@ -88,6 +94,9 @@ public class DisplayRecipeActivity extends Activity {
 
         recipeTitle.setText(recipe.getTitle());
         recipeAuthor.setText(getString(R.string.written_by, author.getName()));
+        difficultyText.setText(getString(R.string.difficulty_display, recipe.getDifficulty()));
+        prepTimeText.setText(getString(R.string.prep_time_display, recipe.getPrepTime()));
+        cookTimeText.setText(getString(R.string.cook_time_display, recipe.getCookTime()));
         displayTags(recipe);
         servingsText.setText(getString(R.string.creates_servings, recipe.getServingSize()));
         recipeInstructions.setText(recipe.getContent());
