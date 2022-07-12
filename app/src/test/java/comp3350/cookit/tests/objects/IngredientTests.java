@@ -19,7 +19,7 @@ public class IngredientTests {
     }
 
     @Test
-    public void testTypicalFalse() {
+    public void testExpectedMismatches() {
         Ingredient i1 = new Ingredient("all-purpose flour", 10.0, "cups");
         Ingredient i2 = new Ingredient("all-purpose flour", 10.0, "grams");
         Assert.assertNotEquals(i1, i2);

@@ -3,20 +3,15 @@ package comp3350.cookit.presentation;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -135,7 +130,7 @@ public class DisplayRecipeActivity extends Activity {
         Recipe recipe = recipes.getRecipeById(recipeId);
 
         selectedImage = (selectedImage + recipe.getImages().size() - 1) % recipe.getImages().size();
-        imageView.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.left));
+        imageView.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.left));
         displaySelectedImage(recipe);
     }
 
@@ -145,7 +140,7 @@ public class DisplayRecipeActivity extends Activity {
         Recipe recipe = recipes.getRecipeById(recipeId);
 
         selectedImage = (selectedImage + 1) % recipe.getImages().size();
-        imageView.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.right));
+        imageView.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.right));
         displaySelectedImage(recipe);
     }
 

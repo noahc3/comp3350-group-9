@@ -6,10 +6,8 @@ import org.junit.Test;
 import java.util.List;
 
 import comp3350.cookit.application.Services;
-import comp3350.cookit.business.AccessRecipes;
 import comp3350.cookit.business.AccessReviews;
 import comp3350.cookit.objects.Review;
-import comp3350.cookit.persistence.IDataStore;
 import comp3350.cookit.tests.persistence.StubDataStore;
 
 public class AccessReviewsTests {
@@ -42,7 +40,7 @@ public class AccessReviewsTests {
         Assert.assertEquals("Neo Colwyn", dbReview.getAuthor());
         Assert.assertEquals(5, dbReview.getRating());
 
-        Review modifiedReview = new Review(dbReview.getId(), dbReview.getRecipeId(),"New author", dbReview.getContent(), dbReview.getRating());
+        Review modifiedReview = new Review(dbReview.getId(), dbReview.getRecipeId(), "New author", dbReview.getContent(), dbReview.getRating());
         ar.updateReview(modifiedReview);
 
         dbReview = ar.getReviewById("0");
@@ -50,7 +48,7 @@ public class AccessReviewsTests {
         Assert.assertEquals("New author", dbReview.getAuthor());
         Assert.assertEquals(5, dbReview.getRating());
 
-        modifiedReview = new Review(dbReview.getId(), dbReview.getRecipeId(),dbReview.getAuthor(), dbReview.getContent(), 3);
+        modifiedReview = new Review(dbReview.getId(), dbReview.getRecipeId(), dbReview.getAuthor(), dbReview.getContent(), 3);
         ar.updateReview(modifiedReview);
 
         dbReview = ar.getReviewById("0");
@@ -68,7 +66,7 @@ public class AccessReviewsTests {
         Assert.assertEquals("Neo Colwyn", dbReview.getAuthor());
         Assert.assertEquals(5, dbReview.getRating());
 
-        Review modifiedReview = new Review(dbReview.getId(), dbReview.getRecipeId(),"Different author", dbReview.getContent(), 2);
+        Review modifiedReview = new Review(dbReview.getId(), dbReview.getRecipeId(), "Different author", dbReview.getContent(), 2);
         ar.updateReview(modifiedReview);
 
         dbReview = ar.getReviewById("0");

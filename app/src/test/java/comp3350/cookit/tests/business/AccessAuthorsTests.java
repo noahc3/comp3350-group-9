@@ -3,17 +3,11 @@ package comp3350.cookit.tests.business;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
-import comp3350.cookit.application.Main;
 import comp3350.cookit.application.Services;
 import comp3350.cookit.business.AccessAuthors;
 import comp3350.cookit.objects.Author;
-import comp3350.cookit.objects.Ingredient;
-import comp3350.cookit.objects.IngredientList;
-import comp3350.cookit.objects.Recipe;
-import comp3350.cookit.persistence.IDataStore;
 import comp3350.cookit.tests.persistence.StubDataStore;
 
 public class AccessAuthorsTests {

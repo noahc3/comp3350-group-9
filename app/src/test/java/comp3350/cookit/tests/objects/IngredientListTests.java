@@ -23,7 +23,7 @@ public class IngredientListTests {
     }
 
     @Test
-    public void testTypicalFalse() {
+    public void testExpectedMismatches() {
         List<Ingredient> ingredients = Arrays.asList(new Ingredient("all-purpose flour", 1.0, "cups"), new Ingredient("baking soda", 2.0, "tsp"));
         IngredientList il1 = new IngredientList(ingredients);
         Assert.assertNotSame(ingredients, il1.getIngredients());
