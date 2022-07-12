@@ -15,10 +15,9 @@ import comp3350.cookit.business.AccessRecipes;
 import comp3350.cookit.objects.Recipe;
 
 public class TaggedListActivity extends Activity {
-
-    TextView header;
-    LinearLayout taggedRecipeList;
-    String tag;
+    private TextView header;
+    private LinearLayout taggedRecipeList;
+    private String tag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

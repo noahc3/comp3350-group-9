@@ -14,6 +14,7 @@ import comp3350.cookit.objects.Recipe;
 import comp3350.cookit.tests.persistence.StubDataStore;
 
 public class AccessRecipesTests {
+
     @Test
     public void testRecipeList() {
         AccessRecipes ar = initAccessRecipes();
@@ -260,7 +261,7 @@ public class AccessRecipesTests {
     }
 
     private AccessRecipes initAccessRecipes() {
-        Services.createDataStore(new StubDataStore("stub"));
+        Services.createDataStore(new StubDataStore());
         return new AccessRecipes();
     }
 }

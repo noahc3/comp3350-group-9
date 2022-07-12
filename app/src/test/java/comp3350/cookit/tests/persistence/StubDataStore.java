@@ -12,15 +12,12 @@ import comp3350.cookit.objects.Review;
 import comp3350.cookit.persistence.IDataStore;
 
 public class StubDataStore implements IDataStore {
-    private final String dbName;
-    private final String dbType = "stub";
 
     private List<Author> authors;
     private List<Recipe> recipes;
     private List<Review> reviews;
 
-    public StubDataStore(String dbName) {
-        this.dbName = dbName;
+    public StubDataStore() {
     }
 
     @Override
@@ -83,12 +80,12 @@ public class StubDataStore implements IDataStore {
                 new Review("2", "1", "Lara Hanna", "Too much ketchup.", 2)
         ));
 
-        System.out.println("Opened stub database " + dbPath);
+        System.out.println("Opened stub database.");
     }
 
     @Override
     public void close() {
-        System.out.println("Closed " + dbType + " database " + dbName);
+        System.out.println("Closed stub database.");
     }
 
     @Override

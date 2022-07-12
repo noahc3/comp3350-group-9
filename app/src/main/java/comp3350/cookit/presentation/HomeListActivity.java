@@ -21,8 +21,7 @@ import comp3350.cookit.business.AccessRecipes;
 import comp3350.cookit.objects.Recipe;
 
 public class HomeListActivity extends Activity {
-
-    LinearLayout recipeList;
+    private LinearLayout recipeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +80,7 @@ public class HomeListActivity extends Activity {
     private void initDatabase() {
         Context context = getApplicationContext();
         File dataDirectory = context.getDir(Main.getDbAssetsPath(), Context.MODE_PRIVATE);
-        Main.setDBPath(dataDirectory.toString() + "/" + Main.dbName);
+        Main.setDBPath(dataDirectory.toString() + "/" + Main.getDbName());
 
         copyAssetFolderToDevice(Main.getDbAssetsPath());
     }
@@ -100,7 +99,7 @@ public class HomeListActivity extends Activity {
 
             copyAssetsToDirectory(assetNames, dataDirectory);
         } catch (IOException ioe) {
-            Messages.warning(this, "Unable to access application data: " + ioe.getMessage());
+            ioe.printStackTrace();
         }
     }
 

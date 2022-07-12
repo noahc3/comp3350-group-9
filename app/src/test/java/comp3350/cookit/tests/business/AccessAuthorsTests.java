@@ -11,6 +11,7 @@ import comp3350.cookit.objects.Author;
 import comp3350.cookit.tests.persistence.StubDataStore;
 
 public class AccessAuthorsTests {
+
     @Test
     public void testAuthorList() {
         AccessAuthors aa = initAccessAuthors();
@@ -173,7 +174,7 @@ public class AccessAuthorsTests {
     }
 
     private AccessAuthors initAccessAuthors() {
-        Services.createDataStore(new StubDataStore("stub"));
+        Services.createDataStore(new StubDataStore());
         return new AccessAuthors();
     }
 }

@@ -11,7 +11,7 @@ public class AccessReviews {
     private final IDataStore dataStore;
 
     public AccessReviews() {
-        dataStore = Services.getDataStore(Main.dbName);
+        dataStore = Services.getDataStore();
     }
 
     public List<Review> getReviews() {

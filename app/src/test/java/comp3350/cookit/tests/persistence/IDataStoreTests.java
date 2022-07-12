@@ -624,7 +624,7 @@ public class IDataStoreTests {
     }
 
     private IDataStore initDataStore() {
-        IDataStore dataStore = new StubDataStore("stub");
+        IDataStore dataStore = new StubDataStore();
         dataStore.open("stub");
         return dataStore;
     }

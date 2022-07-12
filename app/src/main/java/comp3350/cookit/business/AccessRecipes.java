@@ -11,7 +11,7 @@ public class AccessRecipes {
     private final IDataStore dataStore;
 
     public AccessRecipes() {
-        dataStore = Services.getDataStore(Main.dbName);
+        dataStore = Services.getDataStore();
     }
 
     public List<Recipe> getRecipes() {

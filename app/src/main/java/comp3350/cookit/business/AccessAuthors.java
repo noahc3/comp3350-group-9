@@ -11,7 +11,7 @@ public class AccessAuthors {
     private final IDataStore dataStore;
 
     public AccessAuthors() {
-        dataStore = Services.getDataStore(Main.dbName);
+        dataStore = Services.getDataStore();
     }
 
     public List<Author> getAuthors() {

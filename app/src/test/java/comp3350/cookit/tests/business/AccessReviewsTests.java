@@ -11,6 +11,7 @@ import comp3350.cookit.objects.Review;
 import comp3350.cookit.tests.persistence.StubDataStore;
 
 public class AccessReviewsTests {
+
     @Test
     public void testNewReview() {
         AccessReviews ar = initAccessReviews();
@@ -169,7 +170,7 @@ public class AccessReviewsTests {
     }
 
     private AccessReviews initAccessReviews() {
-        Services.createDataStore(new StubDataStore("stub"));
+        Services.createDataStore(new StubDataStore());
         return new AccessReviews();
     }
 }

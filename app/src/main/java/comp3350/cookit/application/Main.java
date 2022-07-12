@@ -1,10 +1,10 @@
 package comp3350.cookit.application;
 
 public class Main {
-    public static final String dbName = "main";
+    private static final String dbName = "main";
     private static final String imgAssetsPath = "img";
     private static final String dbAssetsPath = "db";
-    private static String dbPath = "database/main";
+    private static String dbPath = "db/main";
 
     public static void main(String[] args) {
         startUp();
@@ -13,18 +13,19 @@ public class Main {
     }
 
     public static void startUp() {
-        Services.createDataStore(dbName);
+        Services.createDataStore();
     }
 
     public static void shutDown() {
         Services.closeDataStore();
     }
 
+    public static String getDbName() {
+        return dbName;
+    }
+
     public static String getDBPath() {
-        if (dbPath == null)
-            return dbName;
-        else
-            return dbPath;
+        return dbPath;
     }
 
     public static String getDbAssetsPath() {

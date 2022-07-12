@@ -19,12 +19,10 @@ import comp3350.cookit.objects.Recipe;
 import comp3350.cookit.objects.Review;
 
 public class HsqldbDataStore implements IDataStore {
-
     private Connection db;
-    private final String dbName;
 
-    public HsqldbDataStore(String dbName) {
-        this.dbName = dbName;
+    public HsqldbDataStore() {
+
     }
 
     @Override
@@ -49,7 +47,7 @@ public class HsqldbDataStore implements IDataStore {
         } catch (Exception e) {
             processSQLError(e);
         }
-        System.out.println("Closed HSQLDB database " + dbName);
+        System.out.println("Closed HSQLDB database");
     }
 
     @Override

@@ -34,22 +34,21 @@ import comp3350.cookit.objects.Recipe;
 public class DisplayRecipeActivity extends Activity {
     private static final int defaultServingSize = 1;
 
-    TextView recipeTitle;
-    TextView recipeAuthor;
-    TextView difficultyText;
-    TextView prepTimeText;
-    TextView cookTimeText;
-    TextView servingsText;
-    TextView recipeInstructions;
-    LinearLayout ingredientsList;
-    LinearLayout tagsList;
-    Spinner servingsDropdown;
-    LinearLayout imageViewLayout;
-    LinearLayout imageButtonsLayout;
-    ImageView imageView;
+    private TextView recipeTitle;
+    private TextView recipeAuthor;
+    private TextView difficultyText;
+    private TextView prepTimeText;
+    private TextView cookTimeText;
+    private TextView servingsText;
+    private TextView recipeInstructions;
+    private LinearLayout ingredientsList;
+    private LinearLayout tagsList;
+    private Spinner servingsDropdown;
+    private LinearLayout imageViewLayout;
+    private LinearLayout imageButtonsLayout;
+    private ImageView imageView;
 
-    int selectedImage = 0;
-
+    private int selectedImage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,7 +153,9 @@ public class DisplayRecipeActivity extends Activity {
     }
 
     private void displaySelectedImage(Recipe recipe) {
-
+        //I would prefer to query the images through the persistence package, but we need the app context
+        //to resolve the file paths, similar to the SQL script init. Android docs strongly discourage
+        //passing contexts outside of activity classes, so we have to load the image files here.
         Context context = getApplicationContext();
         File dataDirectory = context.getDir(Main.getImgAssetsPath(), Context.MODE_PRIVATE);
         String imageName = recipe.getImages().get(selectedImage);
@@ -162,7 +163,6 @@ public class DisplayRecipeActivity extends Activity {
             InputStream in = getContentResolver().openInputStream(Uri.fromFile(new File(dataDirectory.getPath(), imageName)));
             imageView.setImageBitmap(BitmapFactory.decodeStream(in));
         } catch (IOException e) {
-            Messages.warning(this, "Failed to display image " + imageName + ": " + e.getMessage());
             e.printStackTrace();
         }
     }
