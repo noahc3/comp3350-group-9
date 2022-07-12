@@ -76,6 +76,42 @@ android:padding="15dp">
         android:layout_width="match_parent"
         android:layout_height="15dp" />
 
+    <LinearLayout
+        android:id="@+id/difficulty_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/difficulty_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/difficulty_display"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/prep_time_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/prep_time_display"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/cook_time_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cook_time_display"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="15dp" />
+
     <TextView
         android:id="@+id/tagsHeader"
         android:layout_width="match_parent"
