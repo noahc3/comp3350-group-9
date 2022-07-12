@@ -200,11 +200,11 @@ public class NewRecipeActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         photos = new ArrayList<>();
-        if (resultCode == RESULT_OK && requestCode == 1 && data.getData() != null) {
+        if (resultCode == RESULT_OK && requestCode == 1) {
             if (data.getClipData() != null) {
                 int count = data.getClipData().getItemCount();
                 for (int i = 0; i < count; i++) {
-                    if (data.getData() != null)
+                    if (data.getClipData().getItemAt(i) != null)
                         photos.add(data.getClipData().getItemAt(i).getUri());
                 }
             } else if (data.getData() != null) {
