@@ -20,7 +20,7 @@ public class Services {
         return activeDataStore;
     }
 
-    public static IDataStore getDataAccess(String dbName) {
+    public static IDataStore getDataStore(String dbName) {
         if (activeDataStore == null) {
             System.out.println("Connection to data access has not been established.");
             System.exit(1);
@@ -28,7 +28,7 @@ public class Services {
         return activeDataStore;
     }
 
-    public static void closeDataAccess() {
+    public static void closeDataStore() {
         if (activeDataStore != null) {
             activeDataStore.close();
         }

@@ -24,7 +24,7 @@ import comp3350.cookit.R;
 import comp3350.cookit.application.Main;
 import comp3350.cookit.business.AccessAuthors;
 import comp3350.cookit.business.AccessRecipes;
-import comp3350.cookit.business.Convert;
+import comp3350.cookit.business.ServingSizeUtilities;
 import comp3350.cookit.objects.Author;
 import comp3350.cookit.objects.Fraction;
 import comp3350.cookit.objects.Ingredient;
@@ -90,7 +90,7 @@ public class DisplayRecipeActivity extends Activity {
         String recipeId = getIntent().getExtras().getString("recipeId");
         Recipe recipe = recipes.getRecipeById(recipeId);
         Author author = authors.getAuthorById(recipe.getAuthorId());
-        recipe = Convert.multiplyServingSize(recipe, servingSize);
+        recipe = ServingSizeUtilities.multiplyServingSize(recipe, servingSize);
 
         recipeTitle.setText(recipe.getTitle());
         recipeAuthor.setText(getString(R.string.written_by, author.getName()));

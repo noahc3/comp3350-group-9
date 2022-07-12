@@ -31,6 +31,7 @@ import comp3350.cookit.R;
 import comp3350.cookit.application.Main;
 import comp3350.cookit.business.AccessAuthors;
 import comp3350.cookit.business.AccessRecipes;
+import comp3350.cookit.business.StringUtilities;
 import comp3350.cookit.objects.Author;
 import comp3350.cookit.objects.Ingredient;
 import comp3350.cookit.objects.IngredientList;
@@ -124,7 +125,7 @@ public class NewRecipeActivity extends Activity {
             String ingredientString = ingredientName.getText().toString();
 
             String currIngredients = !TextUtils.isEmpty(ingredientLayout.getText()) ? ingredientLayout.getText().toString() + "\n" : "";
-            String newIngredient = wholeString + fractionString + strUnits + " " + toCapitalized(ingredientString);
+            String newIngredient = wholeString + fractionString + strUnits + " " + StringUtilities.toCapitalized(ingredientString);
             String ingredientDisplay = currIngredients + newIngredient;
             ingredientLayout.setText(ingredientDisplay);
             ingredientLayout.setError(null);
@@ -391,15 +392,5 @@ public class NewRecipeActivity extends Activity {
         units.getText().clear();
     }
 
-    private String toCapitalized(String string) {
-        String[] words = string.split("\\s");
-        StringBuilder capitalized = new StringBuilder();
 
-        for (String word : words) {
-            if (!word.isEmpty())
-                capitalized.append(word.toUpperCase().charAt(0)).append(word.substring(1)).append(" ");
-        }
-
-        return capitalized.toString().trim();
-    }
 }

@@ -8,7 +8,8 @@ import org.junit.runners.Suite;
 import comp3350.cookit.tests.business.AccessAuthorsTests;
 import comp3350.cookit.tests.business.AccessRecipesTests;
 import comp3350.cookit.tests.business.AccessReviewsTests;
-import comp3350.cookit.tests.business.MultiplyServingSizeTests;
+import comp3350.cookit.tests.business.ServingSizeUtilitiesTests;
+import comp3350.cookit.tests.business.StringUtilitiesTests;
 import comp3350.cookit.tests.objects.AuthorTests;
 import comp3350.cookit.tests.objects.FractionTests;
 import comp3350.cookit.tests.objects.IngredientListTests;
@@ -25,7 +26,8 @@ import comp3350.cookit.tests.persistence.IDataStoreTests;
         IngredientTests.class,
         RecipeTests.class,
         ReviewTests.class,
-        MultiplyServingSizeTests.class,
+        ServingSizeUtilitiesTests.class,
+        StringUtilitiesTests.class,
         AccessAuthorsTests.class,
         AccessRecipesTests.class,
         AccessReviewsTests.class,

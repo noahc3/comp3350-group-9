@@ -1,13 +1,5 @@
 package comp3350.cookit.application;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import comp3350.cookit.business.AccessRecipes;
-import comp3350.cookit.objects.Ingredient;
-import comp3350.cookit.objects.IngredientList;
-import comp3350.cookit.objects.Recipe;
-
 public class Main {
     public static final String dbName = "main";
     private static final String imgAssetsPath = "img";
@@ -25,7 +17,7 @@ public class Main {
     }
 
     public static void shutDown() {
-        Services.closeDataAccess();
+        Services.closeDataStore();
     }
 
     public static String getDBPath() {

@@ -180,6 +180,18 @@ public class IDataStoreTests {
         Assert.assertEquals(2, recipes.get(2).getImages().size());
         Assert.assertEquals("Image1", recipes.get(2).getImages().get(0));
         Assert.assertEquals("Image2", recipes.get(2).getImages().get(1));
+
+        List<Recipe> taggedRecipes = dataStore.getRecipesWithTag("Some");
+        Assert.assertEquals(1, taggedRecipes.size());
+        Assert.assertTrue(taggedRecipes.contains(r));
+
+        taggedRecipes = dataStore.getRecipesWithTag("Tags");
+        Assert.assertEquals(1, taggedRecipes.size());
+        Assert.assertTrue(taggedRecipes.contains(r));
+
+        taggedRecipes = dataStore.getRecipesWithTag("Breakfast");
+        Assert.assertEquals(0, taggedRecipes.size());
+        Assert.assertFalse(taggedRecipes.contains(r));
     }
 
     @Test
@@ -203,7 +215,7 @@ public class IDataStoreTests {
     }
 
     @Test
-    public void testRecipeUpdateSingleField() {
+    public void testTypicalRecipeUpdateSingleField() {
         IDataStore dataStore = initDataStore();
 
         Recipe dbRecipe = dataStore.getRecipeById("0");
@@ -229,7 +241,7 @@ public class IDataStoreTests {
     }
 
     @Test
-    public void testRecipeUpdateMultiField() {
+    public void testTypicalRecipeUpdateMultiField() {
         IDataStore dataStore = initDataStore();
 
         Recipe dbRecipe = dataStore.getRecipeById("1");
@@ -239,7 +251,9 @@ public class IDataStoreTests {
         Assert.assertEquals("1. Lay chicken thighs into the bottom of a 4-quart slow cooker.\n\n2. Whisk soy sauce, ketchup, honey, garlic, and basil together in a bowl; pour over the chicken.\n\n3. Cook on Low for 6 hours.", dbRecipe.getContent());
 
 
-        Recipe modifiedRecipe = new Recipe(dbRecipe.getId(), "Blackened Chicken Breast", dbRecipe.getAuthorId(), "Some new content", dbRecipe.getIngredientList(), 1, dbRecipe.getTags(), dbRecipe.getPrepTime(), dbRecipe.getCookTime(), dbRecipe.getDifficulty(), dbRecipe.getImages());
+        List<String> newTags = dbRecipe.getTags();
+        newTags.add("Breakfast");
+        Recipe modifiedRecipe = new Recipe(dbRecipe.getId(), "Blackened Chicken Breast", dbRecipe.getAuthorId(), "Some new content", dbRecipe.getIngredientList(), 1, newTags, dbRecipe.getPrepTime(), dbRecipe.getCookTime(), dbRecipe.getDifficulty(), dbRecipe.getImages());
         dataStore.updateRecipe(modifiedRecipe);
 
         dbRecipe = dataStore.getRecipeById("1");
@@ -247,6 +261,10 @@ public class IDataStoreTests {
         Assert.assertEquals("Blackened Chicken Breast", dbRecipe.getTitle());
         Assert.assertEquals(1, dbRecipe.getServingSize());
         Assert.assertEquals("Some new content", dbRecipe.getContent());
+        Assert.assertTrue(dbRecipe.getTags().contains("Breakfast"));
+
+        List<Recipe> taggedRecipes = dataStore.getRecipesWithTag("Breakfast");
+        Assert.assertTrue(taggedRecipes.contains(dbRecipe));
     }
 
     @Test
@@ -283,7 +301,7 @@ public class IDataStoreTests {
     }
 
     @Test
-    public void testRecipeDelete() {
+    public void testTypicalRecipeDelete() {
         IDataStore dataStore = initDataStore();
 
         List<Recipe> recipes = dataStore.getAllRecipes();
@@ -291,16 +309,31 @@ public class IDataStoreTests {
         Assert.assertEquals("0", recipes.get(0).getId());
         Assert.assertEquals("1", recipes.get(1).getId());
 
+        List<Recipe> taggedRecipes = dataStore.getRecipesWithTag("Sweet");
+        Assert.assertEquals(1, taggedRecipes.size());
+        taggedRecipes = dataStore.getRecipesWithTag("Savory");
+        Assert.assertEquals(1, taggedRecipes.size());
+
         dataStore.deleteRecipe(recipes.get(0));
 
         recipes = dataStore.getAllRecipes();
         Assert.assertEquals(1, recipes.size());
         Assert.assertEquals("1", recipes.get(0).getId());
 
+        taggedRecipes = dataStore.getRecipesWithTag("Sweet");
+        Assert.assertEquals(0, taggedRecipes.size());
+        taggedRecipes = dataStore.getRecipesWithTag("Savory");
+        Assert.assertEquals(1, taggedRecipes.size());
+
         dataStore.deleteRecipe(recipes.get(0));
 
         recipes = dataStore.getAllRecipes();
         Assert.assertEquals(0, recipes.size());
+
+        taggedRecipes = dataStore.getRecipesWithTag("Sweet");
+        Assert.assertEquals(0, taggedRecipes.size());
+        taggedRecipes = dataStore.getRecipesWithTag("Savory");
+        Assert.assertEquals(0, taggedRecipes.size());
     }
 
     @Test
@@ -329,7 +362,7 @@ public class IDataStoreTests {
     }
 
     @Test
-    public void testAuthorUpdateSingleField() {
+    public void testTypicalAuthorUpdateSingleField() {
         IDataStore dataStore = initDataStore();
 
         Author dbAuthor = dataStore.getAuthorById("0");
@@ -357,7 +390,7 @@ public class IDataStoreTests {
     }
 
     @Test
-    public void testAuthorUpdateMultiField() {
+    public void testTypicalAuthorUpdateMultiField() {
         IDataStore dataStore = initDataStore();
 
         Author dbAuthor = dataStore.getAuthorById("0");
@@ -408,7 +441,7 @@ public class IDataStoreTests {
     }
 
     @Test
-    public void testAuthorDelete() {
+    public void testTypicalAuthorDelete() {
         IDataStore dataStore = initDataStore();
 
         List<Author> authors = dataStore.getAllAuthors();
@@ -454,7 +487,7 @@ public class IDataStoreTests {
     }
 
     @Test
-    public void testReviewUpdateSingleField() {
+    public void testTypicalReviewUpdateSingleField() {
         IDataStore dataStore = initDataStore();
 
         Review dbReview = dataStore.getReviewById("0");
@@ -480,7 +513,7 @@ public class IDataStoreTests {
     }
 
     @Test
-    public void testReviewUpdateMultiField() {
+    public void testTypicalReviewUpdateMultiField() {
         IDataStore dataStore = initDataStore();
 
         Review dbReview = dataStore.getReviewById("0");
@@ -534,7 +567,7 @@ public class IDataStoreTests {
     }
 
     @Test
-    public void testReviewDelete() {
+    public void testTypicalReviewDelete() {
         IDataStore dataStore = initDataStore();
 
         List<Review> reviews = dataStore.getAllReviews();

@@ -48,6 +48,11 @@ public class AccessRecipesTests {
         Assert.assertEquals("Snack", tags.get(2));
         Assert.assertEquals("All Day", tags.get(3));
 
+        List<String> images = recipes.get(0).getImages();
+        Assert.assertEquals(2, images.size());
+        Assert.assertEquals("muffin0", images.get(0));
+        Assert.assertEquals("muffin1", images.get(1));
+
 
         Assert.assertEquals("1", recipes.get(1).getId());
         Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(1).getTitle());
@@ -70,6 +75,11 @@ public class AccessRecipesTests {
         Assert.assertEquals("Savory", tags.get(1));
         Assert.assertEquals("Entree", tags.get(2));
         Assert.assertEquals("Dinner", tags.get(3));
+
+        images = recipes.get(1).getImages();
+        Assert.assertEquals(2, images.size());
+        Assert.assertEquals("chicken0", images.get(0));
+        Assert.assertEquals("chicken1", images.get(1));
     }
 
     @Test
@@ -139,7 +149,9 @@ public class AccessRecipesTests {
         Assert.assertEquals("1. Lay chicken thighs into the bottom of a 4-quart slow cooker.\n\n2. Whisk soy sauce, ketchup, honey, garlic, and basil together in a bowl; pour over the chicken.\n\n3. Cook on Low for 6 hours.", dbRecipe.getContent());
 
 
-        Recipe modifiedRecipe = new Recipe(dbRecipe.getId(), "Blackened Chicken Breast", dbRecipe.getAuthorId(), "Some new content", dbRecipe.getIngredientList(), 1, dbRecipe.getTags(), dbRecipe.getPrepTime(), dbRecipe.getCookTime(), dbRecipe.getDifficulty(), dbRecipe.getImages());
+        List<String> newTags = dbRecipe.getTags();
+        newTags.add("Breakfast");
+        Recipe modifiedRecipe = new Recipe(dbRecipe.getId(), "Blackened Chicken Breast", dbRecipe.getAuthorId(), "Some new content", dbRecipe.getIngredientList(), 1, newTags, dbRecipe.getPrepTime(), dbRecipe.getCookTime(), dbRecipe.getDifficulty(), dbRecipe.getImages());
         ar.updateRecipe(modifiedRecipe);
 
         dbRecipe = ar.getRecipeById("1");
@@ -147,6 +159,10 @@ public class AccessRecipesTests {
         Assert.assertEquals("Blackened Chicken Breast", dbRecipe.getTitle());
         Assert.assertEquals(1, dbRecipe.getServingSize());
         Assert.assertEquals("Some new content", dbRecipe.getContent());
+        Assert.assertTrue(dbRecipe.getTags().contains("Breakfast"));
+
+        List<Recipe> taggedRecipes = ar.getRecipesWithTag("Breakfast");
+        Assert.assertTrue(taggedRecipes.contains(dbRecipe));
     }
 
     @Test
@@ -191,16 +207,31 @@ public class AccessRecipesTests {
         Assert.assertEquals("0", recipes.get(0).getId());
         Assert.assertEquals("1", recipes.get(1).getId());
 
+        List<Recipe> taggedRecipes = ar.getRecipesWithTag("Sweet");
+        Assert.assertEquals(1, taggedRecipes.size());
+        taggedRecipes = ar.getRecipesWithTag("Savory");
+        Assert.assertEquals(1, taggedRecipes.size());
+
         ar.deleteRecipe(recipes.get(0));
 
         recipes = ar.getRecipes();
         Assert.assertEquals(1, recipes.size());
         Assert.assertEquals("1", recipes.get(0).getId());
 
+        taggedRecipes = ar.getRecipesWithTag("Sweet");
+        Assert.assertEquals(0, taggedRecipes.size());
+        taggedRecipes = ar.getRecipesWithTag("Savory");
+        Assert.assertEquals(1, taggedRecipes.size());
+
         ar.deleteRecipe(recipes.get(0));
 
         recipes = ar.getRecipes();
         Assert.assertEquals(0, recipes.size());
+
+        taggedRecipes = ar.getRecipesWithTag("Sweet");
+        Assert.assertEquals(0, taggedRecipes.size());
+        taggedRecipes = ar.getRecipesWithTag("Savory");
+        Assert.assertEquals(0, taggedRecipes.size());
     }
 
     @Test

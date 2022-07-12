@@ -8,12 +8,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import comp3350.cookit.business.Convert;
+import comp3350.cookit.business.ServingSizeUtilities;
 import comp3350.cookit.objects.Ingredient;
 import comp3350.cookit.objects.IngredientList;
 import comp3350.cookit.objects.Recipe;
 
-public class MultiplyServingSizeTests {
+public class ServingSizeUtilitiesTests {
     @Test
     public void testTypical() {
         Recipe recipe = createRecipeFromTemplate(
@@ -25,7 +25,7 @@ public class MultiplyServingSizeTests {
                 34
         );
 
-        Recipe x2 = Convert.multiplyServingSize(recipe, 2);
+        Recipe x2 = ServingSizeUtilities.multiplyServingSize(recipe, 2);
         List<Ingredient> newIngredients = x2.getIngredientList().getIngredients();
 
         Assert.assertEquals(68.0, x2.getServingSize(), 0.001);
@@ -37,7 +37,7 @@ public class MultiplyServingSizeTests {
         Assert.assertEquals(6, newIngredients.get(1).getQuantity(), 0.001);
         Assert.assertEquals(1.50, newIngredients.get(2).getQuantity(), 0.001);
 
-        Recipe x3 = Convert.multiplyServingSize(recipe, 3);
+        Recipe x3 = ServingSizeUtilities.multiplyServingSize(recipe, 3);
         newIngredients = x3.getIngredientList().getIngredients();
 
         Assert.assertEquals(102.0, x3.getServingSize(), 0.001);
@@ -49,7 +49,7 @@ public class MultiplyServingSizeTests {
         Assert.assertEquals(9, newIngredients.get(1).getQuantity(), 0.001);
         Assert.assertEquals(2.25, newIngredients.get(2).getQuantity(), 0.001);
 
-        Recipe x4 = Convert.multiplyServingSize(recipe, 4);
+        Recipe x4 = ServingSizeUtilities.multiplyServingSize(recipe, 4);
         newIngredients = x4.getIngredientList().getIngredients();
 
         Assert.assertEquals(136.0, x4.getServingSize(), 0.001);
@@ -72,7 +72,7 @@ public class MultiplyServingSizeTests {
                 10
         );
 
-        Recipe x2 = Convert.multiplyServingSize(recipe, 2);
+        Recipe x2 = ServingSizeUtilities.multiplyServingSize(recipe, 2);
         List<Ingredient> newIngredients = x2.getIngredientList().getIngredients();
 
         Assert.assertEquals(20.0, x2.getServingSize(), 0.001);
@@ -82,7 +82,7 @@ public class MultiplyServingSizeTests {
         Assert.assertEquals(0.66, newIngredients.get(0).getQuantity(), 0.01);
         Assert.assertEquals(1.33, newIngredients.get(1).getQuantity(), 0.01);
 
-        Recipe x3 = Convert.multiplyServingSize(recipe, 3);
+        Recipe x3 = ServingSizeUtilities.multiplyServingSize(recipe, 3);
         newIngredients = x3.getIngredientList().getIngredients();
 
         Assert.assertEquals(30.0, x3.getServingSize(), 0.001);
@@ -92,7 +92,7 @@ public class MultiplyServingSizeTests {
         Assert.assertEquals(1.0, newIngredients.get(0).getQuantity(), 0.01);
         Assert.assertEquals(2.0, newIngredients.get(1).getQuantity(), 0.01);
 
-        Recipe x4 = Convert.multiplyServingSize(recipe, 4);
+        Recipe x4 = ServingSizeUtilities.multiplyServingSize(recipe, 4);
         newIngredients = x4.getIngredientList().getIngredients();
 
         Assert.assertEquals(40.0, x4.getServingSize(), 0.001);
@@ -114,7 +114,7 @@ public class MultiplyServingSizeTests {
                 0
         );
 
-        Recipe x2 = Convert.multiplyServingSize(recipe, 2);
+        Recipe x2 = ServingSizeUtilities.multiplyServingSize(recipe, 2);
         List<Ingredient> newIngredients = x2.getIngredientList().getIngredients();
 
         Assert.assertEquals(0, x2.getServingSize(), 0.001);
@@ -134,7 +134,7 @@ public class MultiplyServingSizeTests {
                 10
         );
 
-        Recipe x2 = Convert.multiplyServingSize(recipe, 2);
+        Recipe x2 = ServingSizeUtilities.multiplyServingSize(recipe, 2);
         List<Ingredient> newIngredients = x2.getIngredientList().getIngredients();
 
         Assert.assertEquals(20.0, x2.getServingSize(), 0.000001);
@@ -150,7 +150,7 @@ public class MultiplyServingSizeTests {
                 10
         );
 
-        Recipe x2 = Convert.multiplyServingSize(recipe, 2);
+        Recipe x2 = ServingSizeUtilities.multiplyServingSize(recipe, 2);
         List<Ingredient> newIngredients = x2.getIngredientList().getIngredients();
 
         Assert.assertEquals(20.0, x2.getServingSize(), 0.000001);
@@ -170,7 +170,7 @@ public class MultiplyServingSizeTests {
                 34
         );
 
-        Convert.multiplyServingSize(recipe, 2);
+        ServingSizeUtilities.multiplyServingSize(recipe, 2);
 
         List<Ingredient> oldIngredients = recipe.getIngredientList().getIngredients();
         Assert.assertEquals(34, recipe.getServingSize(), 0.001);
@@ -186,20 +186,20 @@ public class MultiplyServingSizeTests {
                 10
         );
 
-        Convert.multiplyServingSize(recipe, 2);
+        ServingSizeUtilities.multiplyServingSize(recipe, 2);
     }
 
     @Test(expected = NullPointerException.class)
     public void testNullIngredientList() {
         Recipe recipe = new Recipe("0", "Test", "0", "1. This is an example recipe.\n2. It has no real content.", null, 10, new ArrayList<String>(), 10, 10, "Easy", new ArrayList<String>());
 
-        Convert.multiplyServingSize(recipe, 2);
+        ServingSizeUtilities.multiplyServingSize(recipe, 2);
     }
 
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void testNullRecipe() {
-        Convert.multiplyServingSize(null, 2);
+        ServingSizeUtilities.multiplyServingSize(null, 2);
     }
 
     private Recipe createRecipeFromTemplate(List<Ingredient> ingredients, int servingCount) {

@@ -8,7 +8,7 @@ import comp3350.cookit.objects.Ingredient;
 import comp3350.cookit.objects.IngredientList;
 import comp3350.cookit.objects.Recipe;
 
-public class Convert {
+public class ServingSizeUtilities {
     public static Recipe multiplyServingSize(Recipe recipe, int factor) {
         Recipe newRecipe;
         IngredientList newIngredientList;
