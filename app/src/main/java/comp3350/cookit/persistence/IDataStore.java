@@ -13,6 +13,8 @@ public interface IDataStore {
 
     List<Recipe> getAllRecipes();
 
+    List<Recipe> getRecipesWithTag(String tag);
+
     Recipe getRecipeById(String id);
 
     void insertRecipe(Recipe recipe);

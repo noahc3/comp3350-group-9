@@ -73,6 +73,22 @@ public class HsqldbDataStore implements IDataStore {
     }
 
     @Override
+    public List<Recipe> getRecipesWithTag(String tag) {
+        List<Recipe> recipes = getAllRecipes();
+        List<Recipe> taggedRecipes = new ArrayList<>();
+
+        if (recipes != null) {
+            for (Recipe r : recipes) {
+                if (r.getTags().contains(tag)) {
+                    taggedRecipes.add(r);
+                }
+            }
+        }
+
+        return taggedRecipes;
+    }
+
+    @Override
     public Recipe getRecipeById(String id) {
         Recipe result = null;
 

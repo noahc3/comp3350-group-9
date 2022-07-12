@@ -2,15 +2,16 @@ package comp3350.cookit.presentation;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -133,6 +134,15 @@ public class DisplayRecipeActivity extends Activity {
         displaySelectedImage(recipe);
     }
 
+    public void navigateToTaggedRecipeList(View view) {
+        Button btn = (Button) view;
+        String tag = btn.getText().toString();
+
+        Intent taggedRecipeListIntent = new Intent(this, TaggedListActivity.class);
+        taggedRecipeListIntent.putExtra("recipeTag", tag);
+        startActivity(taggedRecipeListIntent);
+    }
+
     private void displaySelectedImage(Recipe recipe) {
 
         Context context = getApplicationContext();
@@ -148,7 +158,7 @@ public class DisplayRecipeActivity extends Activity {
     }
 
     public void displayTags(Recipe recipe) {
-        if(!recipe.getTags().isEmpty()) {
+        if (!recipe.getTags().isEmpty()) {
             tagsList.removeAllViews();
             for (String tag : recipe.getTags()) {
                 // Create a button programmatically to act as a tag
@@ -164,7 +174,12 @@ public class DisplayRecipeActivity extends Activity {
                 btnTag.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
                 btnTag.setTextColor(getResources().getColor(R.color.colorWhite));
                 btnTag.getBackground().setColorFilter(btnTag.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
-                btnTag.setClickable(false);
+                btnTag.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        navigateToTaggedRecipeList(v);
+                    }
+                });
                 btnTag.setPadding(1, 1, 1, 1);
 
                 tagsList.addView(btnTag);

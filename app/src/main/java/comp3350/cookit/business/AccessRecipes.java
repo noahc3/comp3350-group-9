@@ -18,6 +18,10 @@ public class AccessRecipes {
         return dataStore.getAllRecipes();
     }
 
+    public List<Recipe> getRecipesWithTag(String tag) {
+        return dataStore.getRecipesWithTag(tag);
+    }
+
     public Recipe getRecipeById(String id) {
         return dataStore.getRecipeById(id);
     }

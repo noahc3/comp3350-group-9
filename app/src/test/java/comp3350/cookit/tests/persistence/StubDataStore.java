@@ -23,6 +23,7 @@ public class StubDataStore implements IDataStore {
         this.dbName = dbName;
     }
 
+    @Override
     public void open(String dbPath) {
         authors = new ArrayList<>(Arrays.asList(
                 new Author("0", "bobpiazza", "I love making muffins. Find me on allrecipes: https://www.allrecipes.com/cook/2955506"),
@@ -85,12 +86,30 @@ public class StubDataStore implements IDataStore {
         System.out.println("Opened stub database " + dbPath);
     }
 
+    @Override
     public void close() {
         System.out.println("Closed " + dbType + " database " + dbName);
     }
 
+    @Override
     public List<Recipe> getAllRecipes() {
         return new ArrayList<>(this.recipes);
+    }
+
+    @Override
+    public List<Recipe> getRecipesWithTag(String tag) {
+        List<Recipe> recipes = getAllRecipes();
+        List<Recipe> taggedRecipes = new ArrayList<>();
+
+        if (recipes != null) {
+            for (Recipe r : recipes) {
+                if (r.getTags().contains(tag)) {
+                    taggedRecipes.add(r);
+                }
+            }
+        }
+
+        return taggedRecipes;
     }
 
     public Recipe getRecipeById(String id) {
@@ -106,10 +125,12 @@ public class StubDataStore implements IDataStore {
         return result;
     }
 
+    @Override
     public void insertRecipe(Recipe recipe) {
         recipes.add(recipe);
     }
 
+    @Override
     public void updateRecipe(Recipe recipe) {
         if (recipe != null) {
             for (int i = 0; i < recipes.size(); i++) {
@@ -121,6 +142,7 @@ public class StubDataStore implements IDataStore {
         }
     }
 
+    @Override
     public void deleteRecipe(Recipe recipe) {
         if (recipe != null) {
             for (int i = 0; i < recipes.size(); i++) {
@@ -132,10 +154,12 @@ public class StubDataStore implements IDataStore {
         }
     }
 
+    @Override
     public List<Author> getAllAuthors() {
         return new ArrayList<>(this.authors);
     }
 
+    @Override
     public Author getAuthorById(String id) {
         Author result = null;
 
@@ -149,10 +173,12 @@ public class StubDataStore implements IDataStore {
         return result;
     }
 
+    @Override
     public void insertAuthor(Author author) {
         authors.add(author);
     }
 
+    @Override
     public void updateAuthor(Author author) {
         if (author != null) {
             for (int i = 0; i < authors.size(); i++) {
@@ -164,6 +190,7 @@ public class StubDataStore implements IDataStore {
         }
     }
 
+    @Override
     public void deleteAuthor(Author author) {
         if (author != null) {
             for (int i = 0; i < authors.size(); i++) {
@@ -175,10 +202,12 @@ public class StubDataStore implements IDataStore {
         }
     }
 
+    @Override
     public List<Review> getAllReviews() {
         return new ArrayList<>(this.reviews);
     }
 
+    @Override
     public Review getReviewById(String id) {
         Review result = null;
 
@@ -192,10 +221,12 @@ public class StubDataStore implements IDataStore {
         return result;
     }
 
+    @Override
     public void insertReview(Review review) {
         reviews.add(review);
     }
 
+    @Override
     public void updateReview(Review review) {
         if (review != null) {
             for (int i = 0; i < reviews.size(); i++) {
@@ -207,6 +238,7 @@ public class StubDataStore implements IDataStore {
         }
     }
 
+    @Override
     public void deleteReview(Review review) {
         if (review != null) {
             for (int i = 0; i < authors.size(); i++) {
