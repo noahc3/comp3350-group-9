@@ -264,7 +264,7 @@ public class HsqldbDataStore implements IDataStore {
 
         try {
             Statement st = db.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM REVIEWS");
+            ResultSet rs = st.executeQuery("SELECT * FROM REVIEWS ORDER BY TIMESTAMP DESC");
 
             while (rs.next()) {
                 result.add(parseReviewFromResult(rs));
@@ -283,7 +283,7 @@ public class HsqldbDataStore implements IDataStore {
         List<Review> result = new ArrayList<>();
 
         try {
-            PreparedStatement st = db.prepareStatement("SELECT * FROM REVIEWS WHERE RECIPEID = ?");
+            PreparedStatement st = db.prepareStatement("SELECT * FROM REVIEWS WHERE RECIPEID = ? ORDER BY TIMESTAMP DESC");
             st.setString(1, recipeId);
             ResultSet rs = st.executeQuery();
 
@@ -321,12 +321,13 @@ public class HsqldbDataStore implements IDataStore {
     @Override
     public void insertReview(Review review) {
         try {
-            PreparedStatement st = db.prepareStatement("INSERT INTO REVIEWS VALUES(?, ?, ?, ?, ?)");
+            PreparedStatement st = db.prepareStatement("INSERT INTO REVIEWS VALUES(?, ?, ?, ?, ?, ?)");
             st.setString(1, review.getId());
             st.setString(2, review.getRecipeId());
             st.setString(3, review.getAuthor());
             st.setString(4, review.getContent());
             st.setInt(5, review.getRating());
+            st.setLong(6, review.getTimestamp());
 
             int updateCount = st.executeUpdate();
             checkWarning(st, updateCount);
@@ -340,12 +341,13 @@ public class HsqldbDataStore implements IDataStore {
     @Override
     public void updateReview(Review review) {
         try {
-            PreparedStatement st = db.prepareStatement("UPDATE REVIEWS SET RECIPEID = ?, AUTHOR = ?, CONTENT = ?, RATING = ? WHERE ID = ?");
+            PreparedStatement st = db.prepareStatement("UPDATE REVIEWS SET RECIPEID = ?, AUTHOR = ?, CONTENT = ?, RATING = ?, TIMESTAMP = ? WHERE ID = ?");
             st.setString(1, review.getRecipeId());
             st.setString(2, review.getAuthor());
             st.setString(3, review.getContent());
             st.setInt(4, review.getRating());
-            st.setString(5, review.getId());
+            st.setLong(5, review.getTimestamp());
+            st.setString(6, review.getId());
 
             int updateCount = st.executeUpdate();
             checkWarning(st, updateCount);
@@ -415,8 +417,9 @@ public class HsqldbDataStore implements IDataStore {
         String author = rs.getString("AUTHOR");
         String content = rs.getString("CONTENT");
         int rating = rs.getInt("RATING");
+        long timestamp = rs.getLong("TIMESTAMP");
 
-        return new Review(id, recipeId, author, content, rating);
+        return new Review(id, recipeId, author, content, rating, timestamp);
     }
 
     public String checkWarning(Statement st, int updateCount) {

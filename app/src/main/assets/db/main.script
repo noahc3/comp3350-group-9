@@ -1,7 +1,7 @@
 CREATE SCHEMA PUBLIC AUTHORIZATION DBA
 CREATE MEMORY TABLE RECIPES(ID VARCHAR NOT NULL PRIMARY KEY,TITLE VARCHAR,AUTHORID VARCHAR,CONTENT VARCHAR,INGREDIENTS OBJECT,SERVINGSIZE INTEGER,TAGS OBJECT,PREPTIME INTEGER,COOKTIME INTEGER,DIFFICULTY VARCHAR,IMAGES OBJECT)
 CREATE MEMORY TABLE AUTHORS(ID VARCHAR NOT NULL PRIMARY KEY,NAME VARCHAR,BIO VARCHAR)
-CREATE MEMORY TABLE REVIEWS(ID VARCHAR NOT NULL PRIMARY KEY,RECIPEID VARCHAR,AUTHOR VARCHAR,CONTENT VARCHAR,RATING INTEGER)
+CREATE MEMORY TABLE REVIEWS(ID VARCHAR NOT NULL PRIMARY KEY,RECIPEID VARCHAR,AUTHOR VARCHAR,CONTENT VARCHAR,RATING INTEGER,TIMESTAMP BIGINT)
 CREATE USER SA PASSWORD ""
 GRANT DBA TO SA
 SET WRITE_DELAY 0 MILLIS
@@ -31,6 +31,6 @@ INSERT INTO AUTHORS VALUES('7','Nick Evans','Nick has been creating recipes for 
 INSERT INTO AUTHORS VALUES('8','Georgia Freedman','Georgia Freedman is a food writer and editor based in Oakland, California. Formerly the managing editor of Saveur, Georgia has written for a variety of food- and travel-focused publications including Food & Wine, The Wall Street Journal, Afar, Martha Stewart Living, the San Francisco Chronicle, and Serious Eats. Find them on Simply Recipes: https://www.simplyrecipes.com/georgia-freedman-5184047')
 INSERT INTO AUTHORS VALUES('9','Coco Morante','Coco started a food blog in 2011, and soon after that began managing social media and developing recipes for Garlic Gold, an organic foods company. She began developing recipes professionally for The Kitchn in 2014, joined Simply Recipes as a contributor in 2016, and published her first cookbook, The Essential Instant Pot Cookbook, with Ten Speed Press in 2017. Coco has written five cookbooks in total, with a new project in the works presently. Find them on Simply Recipes: https://www.simplyrecipes.com/coco-morante-5091788')
 INSERT INTO AUTHORS VALUES('10','Micah Siva','Micah Siva is a trained chef, registered dietitian, recipe writer, and food photographer, specializing in modern Jewish cuisine. Find them on Simply Recipes: https://www.simplyrecipes.com/micah-siva-5270458')
-INSERT INTO REVIEWS VALUES('0','0','Neo Colwyn','These muffins are really good!',5)
-INSERT INTO REVIEWS VALUES('1','0','Padma Gauthier','Should up the cranberry count a little bit, otherwise awesome!',4)
-INSERT INTO REVIEWS VALUES('2','1','Lara Hanna','Too much ketchup.',2)
+INSERT INTO REVIEWS VALUES('0','0','Neo Colwyn','These muffins are really good!',5,1658608235)
+INSERT INTO REVIEWS VALUES('1','0','Padma Gauthier','Should up the cranberry count a little bit, otherwise awesome!',4,1658672435)
+INSERT INTO REVIEWS VALUES('2','1','Lara Hanna','Too much ketchup.',2,1658797955)

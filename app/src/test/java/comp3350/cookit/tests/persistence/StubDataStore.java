@@ -2,6 +2,7 @@ package comp3350.cookit.tests.persistence;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import comp3350.cookit.objects.Author;
@@ -489,7 +490,9 @@ public class StubDataStore implements IDataStore {
 
     @Override
     public List<Review> getAllReviews() {
-        return new ArrayList<>(this.reviews);
+        List<Review> result = new ArrayList<>(this.reviews);
+        Collections.reverse(result);
+        return result;
     }
 
     @Override
@@ -502,6 +505,8 @@ public class StubDataStore implements IDataStore {
                 recipeReviews.add(review);
             }
         }
+
+        Collections.reverse(recipeReviews);
 
         return recipeReviews;
     }
