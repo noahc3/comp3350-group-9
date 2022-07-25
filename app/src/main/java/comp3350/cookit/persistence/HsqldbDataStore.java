@@ -279,6 +279,27 @@ public class HsqldbDataStore implements IDataStore {
     }
 
     @Override
+    public List<Review> getReviewsForRecipe(String recipeId) {
+        List<Review> result = new ArrayList<>();
+
+        try {
+            PreparedStatement st = db.prepareStatement("SELECT * FROM REVIEWS WHERE RECIPEID = ?");
+            st.setString(1, recipeId);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                result.add(parseReviewFromResult(rs));
+            }
+
+            return result;
+        } catch (Exception e) {
+            processSQLError(e);
+        }
+
+        return null;
+    }
+
+    @Override
     public Review getReviewById(String id) {
         Review result = null;
 

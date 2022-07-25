@@ -35,6 +35,8 @@ public interface IDataStore {
 
     List<Review> getAllReviews();
 
+    List<Review> getReviewsForRecipe(String recipeId);
+
     Review getReviewById(String id);
 
     void insertReview(Review review);

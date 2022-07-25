@@ -7,33 +7,43 @@ import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.UUID;
 
 import comp3350.cookit.R;
 import comp3350.cookit.application.Main;
 import comp3350.cookit.business.AccessAuthors;
 import comp3350.cookit.business.AccessRecipes;
+import comp3350.cookit.business.AccessReviews;
 import comp3350.cookit.business.ServingSizeUtilities;
 import comp3350.cookit.objects.Author;
 import comp3350.cookit.objects.Fraction;
 import comp3350.cookit.objects.Ingredient;
 import comp3350.cookit.objects.Recipe;
+import comp3350.cookit.objects.Review;
+import comp3350.cookit.presentation.components.ReviewView;
 
 public class DisplayRecipeActivity extends Activity {
     private static final int defaultServingSize = 1;
 
+    private ScrollView rootScrollView;
     private TextView recipeTitle;
     private TextView recipeAuthor;
     private TextView difficultyText;
@@ -48,6 +58,15 @@ public class DisplayRecipeActivity extends Activity {
     private LinearLayout imageButtonsLayout;
     private ImageView imageView;
 
+    private RatingBar averageRating;
+    private TextView ratingCount;
+
+    private EditText reviewContent;
+    private EditText reviewAuthor;
+    private RatingBar reviewRating;
+
+    private LinearLayout reviewsLayout;
+
     private int selectedImage = 0;
 
     @Override
@@ -55,6 +74,8 @@ public class DisplayRecipeActivity extends Activity {
         super.onCreate(savedInstanceState);
         Main.startUp();
         setContentView(R.layout.activity_display_recipe);
+
+        rootScrollView = findViewById(R.id.displayRecipeScrollView);
 
         recipeTitle = findViewById(R.id.recipeTitle);
         recipeAuthor = findViewById(R.id.recipeAuthor);
@@ -70,6 +91,15 @@ public class DisplayRecipeActivity extends Activity {
         imageButtonsLayout = findViewById(R.id.recipeImageButtonsLayout);
         imageView = findViewById(R.id.recipeImageView);
 
+        averageRating = findViewById(R.id.recipeAverageRating);
+        ratingCount = findViewById(R.id.recipeRatingCount);
+
+        reviewContent = findViewById(R.id.reviewMultiline);
+        reviewAuthor = findViewById(R.id.reviewName);
+        reviewRating = findViewById(R.id.reviewRating);
+
+        reviewsLayout = findViewById(R.id.recipeReviewsLayout);
+
         displayRecipe(defaultServingSize);
 
         servingsDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -82,13 +112,19 @@ public class DisplayRecipeActivity extends Activity {
             }
         });
 
+        reviewRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                if (rating < 1.0f) {
+                    ratingBar.setRating(1.0f);
+                }
+            }
+        });
+
     }
 
     public void displayRecipe(int servingSize) {
-        AccessRecipes recipes = new AccessRecipes();
+        Recipe recipe = getRecipeToDisplay();
         AccessAuthors authors = new AccessAuthors();
-        String recipeId = getIntent().getExtras().getString("recipeId");
-        Recipe recipe = recipes.getRecipeById(recipeId);
         Author author = authors.getAuthorById(recipe.getAuthorId());
         recipe = ServingSizeUtilities.multiplyServingSize(recipe, servingSize);
 
@@ -98,6 +134,7 @@ public class DisplayRecipeActivity extends Activity {
         prepTimeText.setText(getString(R.string.prep_time_display, recipe.getPrepTime()));
         cookTimeText.setText(getString(R.string.cook_time_display, recipe.getCookTime()));
         displayTags(recipe);
+        displayReviews(recipe);
         servingsText.setText(getString(R.string.creates_servings, recipe.getServingSize()));
         recipeInstructions.setText(recipe.getContent());
 
@@ -124,9 +161,7 @@ public class DisplayRecipeActivity extends Activity {
     }
 
     public void prevPhoto(View view) {
-        AccessRecipes recipes = new AccessRecipes();
-        String recipeId = getIntent().getExtras().getString("recipeId");
-        Recipe recipe = recipes.getRecipeById(recipeId);
+        Recipe recipe = getRecipeToDisplay();
 
         selectedImage = (selectedImage + recipe.getImages().size() - 1) % recipe.getImages().size();
         imageView.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.left));
@@ -134,9 +169,7 @@ public class DisplayRecipeActivity extends Activity {
     }
 
     public void nextPhoto(View view) {
-        AccessRecipes recipes = new AccessRecipes();
-        String recipeId = getIntent().getExtras().getString("recipeId");
-        Recipe recipe = recipes.getRecipeById(recipeId);
+        Recipe recipe = getRecipeToDisplay();
 
         selectedImage = (selectedImage + 1) % recipe.getImages().size();
         imageView.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.right));
@@ -197,5 +230,77 @@ public class DisplayRecipeActivity extends Activity {
             tagsList.requestLayout();
         }
         // else do nothing and retain the "no tags have been attached" message
+    }
+
+    public void displayReviews(Recipe recipe) {
+        AccessReviews ar = new AccessReviews();
+        List<Review> reviews = ar.getReviewsForRecipe(recipe);
+
+        if (reviews.size() > 0) {
+            reviewsLayout.removeAllViews();
+            for (Review review : reviews) {
+                ReviewView view = new ReviewView(this, review);
+                reviewsLayout.addView(view);
+            }
+        }
+
+        ratingCount.setText(getString(R.string.review_count, reviews.size()));
+        averageRating.setNumStars(5);
+        averageRating.setRating(ar.getAverageReviewScoreForRecipe(recipe));
+    }
+
+    public void onSubmitReview(View v) {
+        if (validateReviewSubmission()) {
+            AccessReviews reviews = new AccessReviews();
+            String reviewId = UUID.randomUUID().toString();
+            String recipeId = getIntent().getExtras().getString("recipeId");
+            String author = reviewAuthor.getText().toString();
+            String content = reviewContent.getText().toString();
+            int rating = Math.round(reviewRating.getRating());
+
+            Review review = new Review(reviewId, recipeId, author, content, rating);
+            reviews.insertReview(review);
+
+            reloadAfterReviewSubmission();
+
+            Messages.toastShort(this, getString(R.string.review_submitted));
+        } else {
+            displayReviewSubmissionErrors();
+        }
+    }
+
+    private boolean validateReviewSubmission() {
+        boolean invalid = false;
+
+        invalid = invalid || TextUtils.isEmpty(reviewContent.getText());
+        invalid = invalid || TextUtils.isEmpty(reviewAuthor.getText());
+
+        return !invalid;
+    }
+
+    private void displayReviewSubmissionErrors() {
+        if (TextUtils.isEmpty(reviewContent.getText())) {
+            reviewContent.setError(getString(R.string.review_error_empty_content));
+        }
+
+        if (TextUtils.isEmpty(reviewAuthor.getText())) {
+            reviewAuthor.setError(getString(R.string.review_error_empty_author));
+        }
+
+        Messages.toastLong(this, getString(R.string.submission_error));
+    }
+
+    private void reloadAfterReviewSubmission() {
+        reviewContent.setText("");
+        reviewAuthor.setText("");
+        reviewRating.setRating(3);
+
+        displayReviews(getRecipeToDisplay());
+    }
+
+    private Recipe getRecipeToDisplay() {
+        AccessRecipes recipes = new AccessRecipes();
+        String recipeId = getIntent().getExtras().getString("recipeId");
+        return recipes.getRecipeById(recipeId);
     }
 }

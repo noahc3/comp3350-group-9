@@ -493,6 +493,20 @@ public class StubDataStore implements IDataStore {
     }
 
     @Override
+    public List<Review> getReviewsForRecipe(String recipeId) {
+        List<Review> allReviews = getAllReviews();
+        List<Review> recipeReviews = new ArrayList<>();
+
+        for (Review review : allReviews) {
+            if (review.getRecipeId().equals(recipeId)) {
+                recipeReviews.add(review);
+            }
+        }
+
+        return recipeReviews;
+    }
+
+    @Override
     public Review getReviewById(String id) {
         Review result = null;
 

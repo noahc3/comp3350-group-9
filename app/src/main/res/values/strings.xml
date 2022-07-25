@@ -65,6 +65,16 @@
     <string name="reviews">Reviews</string>
     <string name="review">Review</string>
     <string name="write_review">Review</string>
+    <string name="review_count">%d ratings</string>
+    <string name="reviews_none_submitted">(No reviews have been submitted yet, you can be the first!)</string>
+    <string name="review_header">Leave a Review</string>
+    <string name="review_content_hint">What did you like or dislike? What did you use this recipe for?</string>
+    <string name="review_author_hint">Your Name</string>
+    <string name="submit_review">Submit</string>
+    <string name="review_submitted">Review submitted.</string>
+    <string name="review_error_empty_content">Please include a comment with your review.</string>
+    <string name="review_error_empty_author">Please include your name with your review.</string>
+    <string name="review_error_invalid_rating">Please rate the recipe between 1 and 5 stars.</string>
 
     <!-- Tag-Related -->
     <string name="tags">Tags</string>
@@ -84,4 +94,10 @@
     <string name="add">Add</string>
     <string name="create">Create</string>
     <string name="cancel">Cancel</string>
+
+    <!-- Misc -->
+    <string name="loremIpsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pellentesque metus vel sem sodales, vel imperdiet est lobortis. Sed viverra euismod ante nec euismod. Cras pulvinar posuere erat a consectetur. Vivamus ipsum arcu, ornare a ligula sed, tempor feugiat arcu. Curabitur vel velit et tortor luctus porttitor. Aliquam posuere sagittis tortor ac mollis. Quisque in tellus urna. Vivamus aliquam accumsan nunc eu vulputate. In semper in mauris eu molestie. Curabitur semper augue in nulla aliquam, eget iaculis sapien facilisis. Maecenas condimentum lorem nec nunc dapibus, et pellentesque purus tristique. Nullam consectetur et leo quis sodales.
+    </string>
+    <string name="submission_error">There were errors with your submission, please review the fields for details.</string>
 </resources>

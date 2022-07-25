@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,49 +16,51 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="sans-serif-black"
             android:text="@string/new_recipe"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="48sp"/>
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="sans-serif-black"
             android:text="@string/recipe_section"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="24sp"/>
-        
+            android:textSize="24sp" />
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
             android:layout_marginTop="6dp"
+            android:layout_marginEnd="32dp"
+            android:layout_weight="1"
             android:hint="@string/recipe_name">
+
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/recipeName"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:maxLength="300"/>
+                android:maxLength="300" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
             android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginTop="8dp">
+            android:layout_weight="0.3">
+
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/authorName"
                 android:layout_width="match_parent"
@@ -66,22 +68,24 @@
                 android:ems="10"
                 android:hint="@string/author"
                 android:inputType="textPersonName"
-                android:maxLength="100"/>
+                android:maxLength="100" />
         </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginTop="8dp">
+            android:orientation="horizontal">
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginEnd="8dp"
+                android:layout_weight="1"
                 app:helperText="@string/time_hint">
+
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/prepTime"
                     android:layout_width="match_parent"
@@ -89,15 +93,16 @@
                     android:ems="10"
                     android:hint="@string/prep_time"
                     android:inputType="number"
-                    android:maxLength="4"/>
+                    android:maxLength="4" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginEnd="8dp"
+                android:layout_weight="1"
                 app:helperText="@string/time_hint">
+
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/cookTime"
                     android:layout_width="match_parent"
@@ -105,14 +110,15 @@
                     android:ems="10"
                     android:hint="@string/cook_time"
                     android:inputType="number"
-                    android:maxLength="3"/>
+                    android:maxLength="3" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.9"
-                android:layout_marginEnd="8dp">
+                android:layout_marginEnd="8dp"
+                android:layout_weight="0.9">
+
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/servingSize"
                     android:layout_width="match_parent"
@@ -120,7 +126,7 @@
                     android:ems="10"
                     android:hint="@string/serving_size"
                     android:inputType="number"
-                    android:maxLength="3"/>
+                    android:maxLength="3" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -128,14 +134,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.9"
                 android:hint="@string/difficulty">
+
                 <AutoCompleteTextView
                     android:id="@+id/difficulty"
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
-                    android:inputType="none|textNoSuggestions"
+                    android:cursorVisible="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:cursorVisible="false" />
+                    android:inputType="none|textNoSuggestions" />
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
 
@@ -144,22 +151,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="sans-serif-black"
             android:text="@string/attach_photo"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="24sp"/>
+            android:textSize="24sp" />
 
         <Button
             android:id="@+id/addPhoto"
             android:layout_width="144dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
             android:layout_marginTop="6dp"
+            android:layout_marginEnd="32dp"
             android:onClick="addPhotos"
-            android:text="@string/add_photos"/>
+            android:text="@string/add_photos" />
 
         <TextView
             android:id="@+id/numPhotosDisplay"
@@ -175,83 +182,87 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="sans-serif-black"
             android:text="@string/tags_optional"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="24sp"/>
+            android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginStart="32dp"
+            android:layout_marginTop="6dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginTop="6dp">
+            android:orientation="horizontal">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginEnd="8dp"
+                android:layout_weight="1"
                 android:hint="@string/tags_type">
+
                 <AutoCompleteTextView
                     android:id="@+id/tagsType"
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
-                    android:inputType="none|textNoSuggestions"
+                    android:cursorVisible="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:cursorVisible="false" />
+                    android:inputType="none|textNoSuggestions" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:hint="@string/tags_taste"
-                android:layout_marginEnd="8dp">
+                android:hint="@string/tags_taste">
+
                 <AutoCompleteTextView
                     android:id="@+id/tagsTaste"
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
-                    android:inputType="none|textNoSuggestions"
+                    android:cursorVisible="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:cursorVisible="false" />
+                    android:inputType="none|textNoSuggestions" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginEnd="8dp"
+                android:layout_weight="1"
                 android:hint="@string/tags_course">
+
                 <AutoCompleteTextView
                     android:id="@+id/tagsCourse"
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
-                    android:inputType="none|textNoSuggestions"
+                    android:cursorVisible="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:cursorVisible="false" />
+                    android:inputType="none|textNoSuggestions" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:hint="@string/tags_time_of_day"
-                android:layout_marginEnd="8dp">
+                android:hint="@string/tags_time_of_day">
+
                 <AutoCompleteTextView
                     android:id="@+id/tagsTimeOfDay"
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
-                    android:inputType="none|textNoSuggestions"
+                    android:cursorVisible="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:cursorVisible="false" />
+                    android:inputType="none|textNoSuggestions" />
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
 
@@ -260,20 +271,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="sans-serif-black"
             android:text="@string/ingredients"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="24sp"/>
+            android:textSize="24sp" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginStart="32dp"
+            android:layout_marginTop="6dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginTop="6dp">
+            android:layout_weight="1">
+
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/ingredientName"
                 android:layout_width="match_parent"
@@ -281,62 +293,66 @@
                 android:ems="10"
                 android:hint="@string/ingredient_name"
                 android:inputType="textPersonName"
-                android:maxLength="100"/>
+                android:maxLength="100" />
         </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginTop="8dp">
+            android:orientation="horizontal">
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginEnd="8dp"
+                android:layout_weight="1"
                 android:hint="@string/amount_whole"
                 app:helperText="@string/measurements">
+
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/amountWhole"
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
                     android:ems="10"
                     android:inputType="number"
-                    android:maxLength="5"/>
+                    android:maxLength="5" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginEnd="8dp"
+                android:layout_weight="1"
                 android:hint="@string/amount_fraction">
+
                 <AutoCompleteTextView
                     android:id="@+id/amountFraction"
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
-                    android:inputType="none|textNoSuggestions"
+                    android:cursorVisible="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:cursorVisible="false" />
+                    android:inputType="none|textNoSuggestions" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:hint="@string/measurement_units"
-                android:layout_marginEnd="8dp">
+                android:hint="@string/measurement_units">
+
                 <AutoCompleteTextView
                     android:id="@+id/units"
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
-                    android:inputType="none|textNoSuggestions"
+                    android:cursorVisible="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:cursorVisible="false" />
+                    android:inputType="none|textNoSuggestions" />
             </android.support.design.widget.TextInputLayout>
 
             <Button
@@ -345,33 +361,34 @@
                 android:layout_height="64dp"
                 android:layout_marginTop="8dp"
                 android:onClick="onAddToList"
-                android:text="@string/add_ingredient"/>
+                android:text="@string/add_ingredient" />
         </LinearLayout>
 
         <android.support.design.widget.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:layout_weight="1"
             android:hint="@string/ingredients_list"
             app:helperText="@string/ingredients_format">
+
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/ingredientList"
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
+                android:cursorVisible="false"
                 android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine|textNoSuggestions"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:cursorVisible="false"
-                android:scrollbars="vertical"
+                android:gravity="start|top"
+                android:inputType="textMultiLine|textNoSuggestions"
+                android:maxLength="32000"
                 android:scrollbarStyle="insideInset"
-                android:scrollHorizontally="false"
-                android:maxLength="32000"/>
+                android:scrollbars="vertical"
+                android:scrollHorizontally="false" />
         </android.support.design.widget.TextInputLayout>
 
         <TextView
@@ -379,23 +396,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="sans-serif-black"
             android:text="@string/directions"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="24sp"/>
+            android:textSize="24sp" />
 
         <android.support.design.widget.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
             android:layout_marginTop="6dp"
+            android:layout_marginEnd="32dp"
+            android:layout_weight="1"
             android:hint="@string/directions_format"
             app:helperText="@string/directions_hint">
+
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/directionList"
                 android:layout_width="match_parent"
@@ -403,18 +421,19 @@
                 android:ems="10"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
-                android:maxLength="32000"/>
+                android:maxLength="32000" />
         </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
             android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
             android:layout_marginBottom="16dp"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
             <Button
                 android:id="@+id/cancel"
                 android:layout_width="150dp"
@@ -424,7 +443,7 @@
                 android:onClick="onCancel"
                 android:text="@string/cancel"
                 android:textColor="@color/colorWhite"
-                tools:ignore="TextContrastCheck"/>
+                tools:ignore="TextContrastCheck" />
 
             <Button
                 android:id="@+id/publish"
@@ -435,7 +454,7 @@
                 android:onClick="onSubmit"
                 android:text="@string/publish"
                 android:textColor="@color/colorWhite"
-                tools:ignore="TextContrastCheck"/>
+                tools:ignore="TextContrastCheck" />
         </LinearLayout>
     </LinearLayout>
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>

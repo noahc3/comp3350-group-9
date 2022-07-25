@@ -317,6 +317,8 @@ public class NewRecipeActivity extends Activity {
 
         if (TextUtils.isEmpty(difficulty.getText()))
             difficulty.setError("You must indicate the difficulty level of the recipe");
+
+        Messages.toastLong(this, getString(R.string.submission_error));
     }
 
     private void showIngredientErrors() {
