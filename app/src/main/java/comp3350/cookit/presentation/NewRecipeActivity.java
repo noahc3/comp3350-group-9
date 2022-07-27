@@ -131,7 +131,7 @@ public class NewRecipeActivity extends Activity {
             ingredientLayout.setError(null);
             ingredientListLayout.add(newIngredient);
 
-            Ingredient ingredient = new Ingredient(currIngredients, amount, strUnits);
+            Ingredient ingredient = new Ingredient(StringUtilities.toCapitalized(ingredientString), amount, strUnits);
             list.add(ingredient);
 
             clearIngredientFields();
@@ -262,26 +262,24 @@ public class NewRecipeActivity extends Activity {
 
     // private as these are helper methods
     private boolean validateInput() { // verify if every required field is filled
-        boolean isValid = true; // initially true
+        boolean isValid = !TextUtils.isEmpty(recipeName.getText())
+                && !TextUtils.isEmpty(author.getText())
+                && !TextUtils.isEmpty(servingSize.getText())
+                && !TextUtils.isEmpty(directions.getText())
+                && !TextUtils.isEmpty(prepTime.getText())
+                && !TextUtils.isEmpty(cookTime.getText())
+                && !TextUtils.isEmpty(difficulty.getText())
+                && !ingredientListLayout.isEmpty(); // initially true
 
-        if (TextUtils.isEmpty(recipeName.getText())
-                || TextUtils.isEmpty(author.getText())
-                || TextUtils.isEmpty(servingSize.getText())
-                || TextUtils.isEmpty(directions.getText())
-                || TextUtils.isEmpty(prepTime.getText())
-                || TextUtils.isEmpty(cookTime.getText())
-                || TextUtils.isEmpty(difficulty.getText())
-                || ingredientListLayout.isEmpty())
-            isValid = false; // change to false if one of the fields are empty
+        // change to false if one of the fields are empty
 
         return isValid;
     }
 
     private boolean validateIngredient() { // verify if every required ingredient field is filled
-        boolean isValid = true; // initially true
+        boolean isValid = !TextUtils.isEmpty(ingredientName.getText()) && !TextUtils.isEmpty(units.getText()); // initially true
 
-        if (TextUtils.isEmpty(ingredientName.getText()) || TextUtils.isEmpty(units.getText()))
-            isValid = false; // change to false if one of the fields are empty
+        // change to false if one of the fields are empty
 
         // Positive integer + no fraction is valid,
         // Empty whole number field (assumed 0) + fraction is valid,

@@ -56,7 +56,7 @@ public class HsqldbDataStore implements IDataStore {
 
         try {
             Statement st = db.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM RECIPES");
+            ResultSet rs = st.executeQuery("SELECT * FROM RECIPES ORDER BY TIMESTAMP");
 
             while (rs.next()) {
                 result.add(parseRecipeFromResult(rs));
@@ -108,7 +108,7 @@ public class HsqldbDataStore implements IDataStore {
     @Override
     public void insertRecipe(Recipe recipe) {
         try {
-            PreparedStatement st = db.prepareStatement("INSERT INTO RECIPES VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement st = db.prepareStatement("INSERT INTO RECIPES VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             st.setString(1, recipe.getId());
             st.setString(2, recipe.getTitle());
             st.setString(3, recipe.getAuthorId());
@@ -120,6 +120,7 @@ public class HsqldbDataStore implements IDataStore {
             st.setInt(9, recipe.getCookTime());
             st.setString(10, recipe.getDifficulty());
             st.setObject(11, recipe.getImages().toArray());
+            st.setLong(12, recipe.getTimestamp());
 
             int updateCount = st.executeUpdate();
             checkWarning(st, updateCount);
@@ -133,7 +134,7 @@ public class HsqldbDataStore implements IDataStore {
     @Override
     public void updateRecipe(Recipe recipe) {
         try {
-            PreparedStatement st = db.prepareStatement("UPDATE RECIPES SET TITLE = ?, AUTHORID = ?, CONTENT = ?, INGREDIENTS = ?, SERVINGSIZE = ?, TAGS = ?, PREPTIME = ?, COOKTIME = ?, DIFFICULTY = ?, IMAGES = ? WHERE ID = ?");
+            PreparedStatement st = db.prepareStatement("UPDATE RECIPES SET TITLE = ?, AUTHORID = ?, CONTENT = ?, INGREDIENTS = ?, SERVINGSIZE = ?, TAGS = ?, PREPTIME = ?, COOKTIME = ?, DIFFICULTY = ?, IMAGES = ?, TIMESTAMP = ? WHERE ID = ?");
             st.setString(1, recipe.getTitle());
             st.setString(2, recipe.getAuthorId());
             st.setString(3, recipe.getContent());
@@ -144,7 +145,8 @@ public class HsqldbDataStore implements IDataStore {
             st.setInt(8, recipe.getCookTime());
             st.setString(9, recipe.getDifficulty());
             st.setObject(10, recipe.getImages());
-            st.setString(11, recipe.getId());
+            st.setLong(11, recipe.getTimestamp());
+            st.setString(12, recipe.getId());
 
             int updateCount = st.executeUpdate();
             checkWarning(st, updateCount);
@@ -176,7 +178,7 @@ public class HsqldbDataStore implements IDataStore {
 
         try {
             Statement st = db.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM AUTHORS");
+            ResultSet rs = st.executeQuery("SELECT * FROM AUTHORS ORDER BY TIMESTAMP");
 
             while (rs.next()) {
                 result.add(parseAuthorFromResult(rs));
@@ -212,10 +214,11 @@ public class HsqldbDataStore implements IDataStore {
     @Override
     public void insertAuthor(Author author) {
         try {
-            PreparedStatement st = db.prepareStatement("INSERT INTO AUTHORS VALUES(?, ?, ?)");
+            PreparedStatement st = db.prepareStatement("INSERT INTO AUTHORS VALUES(?, ?, ?, ?)");
             st.setString(1, author.getId());
             st.setString(2, author.getName());
             st.setString(3, author.getBio());
+            st.setLong(4, author.getTimestamp());
 
             int updateCount = st.executeUpdate();
             checkWarning(st, updateCount);
@@ -229,10 +232,11 @@ public class HsqldbDataStore implements IDataStore {
     @Override
     public void updateAuthor(Author author) {
         try {
-            PreparedStatement st = db.prepareStatement("UPDATE AUTHORS SET NAME = ?, BIO = ? WHERE ID = ?");
+            PreparedStatement st = db.prepareStatement("UPDATE AUTHORS SET NAME = ?, BIO = ?, TIMESTAMP = ? WHERE ID = ?");
             st.setString(1, author.getName());
             st.setString(2, author.getBio());
-            st.setString(3, author.getId());
+            st.setLong(3, author.getTimestamp());
+            st.setString(4, author.getId());
 
             int updateCount = st.executeUpdate();
             checkWarning(st, updateCount);

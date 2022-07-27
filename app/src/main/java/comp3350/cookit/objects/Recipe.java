@@ -1,6 +1,7 @@
 package comp3350.cookit.objects;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,6 +17,7 @@ public class Recipe {
     private final int cookTime;
     private final String difficulty;
     private final List<String> images;
+    private final long timestamp;
 
     public Recipe(String id, String title, String authorId, String content, IngredientList ingredients, int servingSize, List<String> tags, int prepTime, int cookTime, String difficulty, List<String> images) {
         this.id = id;
@@ -29,6 +31,22 @@ public class Recipe {
         this.cookTime = cookTime;
         this.difficulty = difficulty;
         this.images = images;
+        this.timestamp = new Date().getTime();
+    }
+
+    public Recipe(String id, String title, String authorId, String content, IngredientList ingredients, int servingSize, List<String> tags, int prepTime, int cookTime, String difficulty, List<String> images, long timestamp) {
+        this.id = id;
+        this.title = title;
+        this.authorId = authorId;
+        this.content = content;
+        this.ingredients = ingredients;
+        this.servingSize = servingSize;
+        this.tags = tags;
+        this.prepTime = prepTime;
+        this.cookTime = cookTime;
+        this.difficulty = difficulty;
+        this.images = images;
+        this.timestamp = timestamp;
     }
 
     public String getId() {
@@ -73,6 +91,10 @@ public class Recipe {
 
     public List<String> getImages() {
         return images == null ? new ArrayList<String>() : new ArrayList<>(images);
+    }
+
+    public long getTimestamp() {
+        return timestamp;
     }
 
     @Override

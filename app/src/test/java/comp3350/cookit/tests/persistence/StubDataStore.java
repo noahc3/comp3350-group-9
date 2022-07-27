@@ -366,7 +366,8 @@ public class StubDataStore implements IDataStore {
         reviews = new ArrayList<>(Arrays.asList(
                 new Review("0", "0", "Neo Colwyn", "These muffins are really good!", 5),
                 new Review("1", "0", "Padma Gauthier", "Should up the cranberry count a little bit, otherwise awesome!", 4),
-                new Review("2", "1", "Lara Hanna", "Too much ketchup.", 2)
+                new Review("2", "1", "Lara Hanna", "Too much ketchup.", 2),
+                new Review("3", "2", "Sheila M. Higgs-Coulthard", "I am restricted with my intake of starch, also various vegetables, this recipe meets all my restrictions yet leaving you happy and satisfied, thank you very much.", 5)
         ));
 
         System.out.println("Opened stub database.");
@@ -545,7 +546,7 @@ public class StubDataStore implements IDataStore {
     @Override
     public void deleteReview(Review review) {
         if (review != null) {
-            for (int i = 0; i < authors.size(); i++) {
+            for (int i = 0; i < reviews.size(); i++) {
                 if (reviews.get(i).getId().equals(review.getId())) {
                     reviews.remove(i);
                     break;
