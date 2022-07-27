@@ -3,18 +3,25 @@ package comp3350.cookit.tests.business;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import comp3350.cookit.application.Services;
 import comp3350.cookit.business.AccessAuthors;
+import comp3350.cookit.business.AccessReviews;
 import comp3350.cookit.objects.Author;
+import comp3350.cookit.tests.RunIntegrationTests;
 import comp3350.cookit.tests.persistence.StubDataStore;
 
 public class AccessAuthorsTests {
+    AccessAuthors aa;
 
     @Test
     public void testAuthorList() {
-        AccessAuthors aa = initAccessAuthors();
+        initDatabase();
 
         List<Author> authors = aa.getAuthors();
 
@@ -47,11 +54,13 @@ public class AccessAuthorsTests {
         Assert.assertEquals("10", authors.get(10).getId());
         Assert.assertEquals("Micah Siva", authors.get(10).getName());
         Assert.assertEquals("Micah Siva is a trained chef, registered dietitian, recipe writer, and food photographer, specializing in modern Jewish cuisine. Find them on Simply Recipes: https://www.simplyrecipes.com/micah-siva-5270458", authors.get(10).getBio());
+
+        resetDatabase();
     }
 
     @Test
     public void testNewAuthorFlow() {
-        AccessAuthors aa = initAccessAuthors();
+        initDatabase();
 
         List<Author> authors = aa.getAuthors();
         Assert.assertEquals(11, authors.size());
@@ -66,11 +75,13 @@ public class AccessAuthorsTests {
         Assert.assertEquals(a.getId(), authors.get(11).getId());
         Assert.assertEquals(a.getName(), authors.get(11).getName());
         Assert.assertEquals(a.getBio(), authors.get(11).getBio());
+
+        resetDatabase();
     }
 
     @Test
     public void testAuthorUpdateSingleField() {
-        AccessAuthors aa = initAccessAuthors();
+        initDatabase();
 
         Author dbAuthor = aa.getAuthorById("0");
         Assert.assertEquals("0", dbAuthor.getId());
@@ -94,11 +105,12 @@ public class AccessAuthorsTests {
         Assert.assertEquals("some other person", dbAuthor.getName());
         Assert.assertEquals("This is a new bio!", dbAuthor.getBio());
 
+        resetDatabase();
     }
 
     @Test
     public void testAuthorUpdateMultiField() {
-        AccessAuthors aa = initAccessAuthors();
+        initDatabase();
 
         Author dbAuthor = aa.getAuthorById("0");
         Assert.assertEquals("0", dbAuthor.getId());
@@ -112,11 +124,13 @@ public class AccessAuthorsTests {
         Assert.assertEquals("0", dbAuthor.getId());
         Assert.assertEquals("bob the builder", dbAuthor.getName());
         Assert.assertEquals("can we fix it?", dbAuthor.getBio());
+
+        resetDatabase();
     }
 
     @Test
     public void testInvalidAuthorUpdate() {
-        AccessAuthors aa = initAccessAuthors();
+        initDatabase();
 
         List<Author> authors = aa.getAuthors();
         Assert.assertEquals(11, authors.size());
@@ -168,15 +182,17 @@ public class AccessAuthorsTests {
 
     @Test
     public void testInvalidAuthorIdLookup() {
-        AccessAuthors aa = initAccessAuthors();
+        initDatabase();
 
         Assert.assertNull(aa.getAuthorById("42"));
         Assert.assertNull(aa.getAuthorById(null));
+
+        resetDatabase();
     }
 
     @Test
     public void testAuthorDelete() {
-        AccessAuthors aa = initAccessAuthors();
+        initDatabase();
 
         List<Author> authors = aa.getAuthors();
         Assert.assertEquals(11, authors.size());
@@ -233,11 +249,13 @@ public class AccessAuthorsTests {
         Assert.assertEquals("7", authors.get(5).getId());
         Assert.assertEquals("8", authors.get(6).getId());
         Assert.assertEquals("9", authors.get(7).getId());
+
+        resetDatabase();
     }
 
     @Test
     public void testInvalidAuthorDelete() {
-        AccessAuthors aa = initAccessAuthors();
+        initDatabase();
 
         List<Author> authors = aa.getAuthors();
         Assert.assertEquals(11, authors.size());
@@ -285,10 +303,35 @@ public class AccessAuthorsTests {
         Assert.assertEquals("8", authors.get(8).getId());
         Assert.assertEquals("9", authors.get(9).getId());
         Assert.assertEquals("10", authors.get(10).getId());
+
+        resetDatabase();
     }
 
-    private AccessAuthors initAccessAuthors() {
-        Services.createDataStore(new StubDataStore());
-        return new AccessAuthors();
+    private void initDatabase() {
+        if (RunIntegrationTests.USE_STUBDATASTORE) {
+            Services.createDataStore(new StubDataStore());
+        } else {
+            Services.createDataStore();
+        }
+
+        aa = new AccessAuthors();
+    }
+
+    private void resetDatabase() {
+        try {
+            if (!RunIntegrationTests.USE_STUBDATASTORE) {
+                Services.closeDataStore();
+
+                for (Object o : Files.list(Paths.get("db")).toArray()) {
+                    Path p = (Path) o;
+                    Files.delete(p);
+                }
+
+                Files.copy(Paths.get("src/main/assets/db/main.script"), Paths.get("db/main.script"));
+            }
+        } catch (IOException ioe) {
+            System.out.println("Failed to reset database.");
+            System.out.println(ioe.getMessage());
+        }
     }
 }
