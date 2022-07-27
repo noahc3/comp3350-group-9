@@ -5,10 +5,18 @@ import junit.framework.TestCase;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import comp3350.cookit.tests.business.AccessAuthorsTests;
+import comp3350.cookit.tests.business.AccessRecipesTests;
+import comp3350.cookit.tests.business.AccessReviewsTests;
 import comp3350.cookit.tests.integration.AccessTests;
+import comp3350.cookit.tests.persistence.IDataStoreTests;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+        AccessAuthorsTests.class,
+        AccessRecipesTests.class,
+        AccessReviewsTests.class,
+        IDataStoreTests.class,
         AccessTests.class})
 public class RunIntegrationTests extends TestCase {
     public static final boolean USE_STUBDATASTORE = false;

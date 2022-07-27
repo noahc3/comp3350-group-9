@@ -23,6 +23,12 @@ public interface IDataStore {
 
     void deleteRecipe(Recipe recipe);
 
+    List<Recipe> getFavoriteRecipes();
+
+    void insertFavoriteRecipe(String recipeId);
+
+    void deleteFavoriteRecipe(String recipeId);
+
     List<Author> getAllAuthors();
 
     Author getAuthorById(String id);

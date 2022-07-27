@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import comp3350.cookit.R;
@@ -43,7 +45,7 @@ public class FavoriteListActivity extends Activity {
     }
 
     public void showRecipeButtons() {
-        List<Recipe> recipes = new AccessRecipes().getRecipesWithTag(tag);
+        List<Recipe> recipes = new ArrayList();
 
         taggedRecipeList.removeAllViews();
 

@@ -3,24 +3,37 @@ package comp3350.cookit.tests.persistence;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
+import comp3350.cookit.application.Main;
+import comp3350.cookit.application.Services;
+import comp3350.cookit.business.AccessAuthors;
+import comp3350.cookit.business.AccessRecipes;
+import comp3350.cookit.business.AccessReviews;
 import comp3350.cookit.objects.Author;
 import comp3350.cookit.objects.Ingredient;
 import comp3350.cookit.objects.IngredientList;
 import comp3350.cookit.objects.Recipe;
 import comp3350.cookit.objects.Review;
+import comp3350.cookit.persistence.HsqldbDataStore;
 import comp3350.cookit.persistence.IDataStore;
+import comp3350.cookit.tests.RunIntegrationTests;
 
 public class IDataStoreTests {
+    IDataStore dataStore;
+
     public IDataStoreTests() {
 
     }
 
     @Test
     public void testRecipeList() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         List<Recipe> recipes = dataStore.getAllRecipes();
 
@@ -90,11 +103,48 @@ public class IDataStoreTests {
         Assert.assertEquals(2, images.size());
         Assert.assertEquals("chicken0", images.get(0));
         Assert.assertEquals("chicken1", images.get(1));
+
+        resetDatabase();
+    }
+
+    @Test
+    public void testFavoritesList() {
+        initDataStore();
+
+        List<Recipe> recipes = dataStore.getFavoriteRecipes();
+
+        for (Recipe r : recipes) {
+            System.out.println(r.getTitle());
+        }
+
+        Assert.assertEquals(3, recipes.size());
+        Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(0).getTitle());
+        Assert.assertEquals("Grandma's Oatmeal Cookies", recipes.get(1).getTitle());
+        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipes.get(2).getTitle());
+
+        dataStore.insertFavoriteRecipe("9");
+
+        recipes = dataStore.getFavoriteRecipes();
+        Assert.assertEquals(4, recipes.size());
+        Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(0).getTitle());
+        Assert.assertEquals("Grandma's Oatmeal Cookies", recipes.get(1).getTitle());
+        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipes.get(2).getTitle());
+        Assert.assertEquals("Baked Oatmeal with Mixed Berries", recipes.get(3).getTitle());
+
+        dataStore.deleteFavoriteRecipe("3");
+
+        recipes = dataStore.getFavoriteRecipes();
+        Assert.assertEquals(3, recipes.size());
+        Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(0).getTitle());
+        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipes.get(1).getTitle());
+        Assert.assertEquals("Baked Oatmeal with Mixed Berries", recipes.get(2).getTitle());
+
+        resetDatabase();
     }
 
     @Test
     public void testAuthorList() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         List<Author> authors = dataStore.getAllAuthors();
 
@@ -127,11 +177,13 @@ public class IDataStoreTests {
         Assert.assertEquals("10", authors.get(10).getId());
         Assert.assertEquals("Micah Siva", authors.get(10).getName());
         Assert.assertEquals("Micah Siva is a trained chef, registered dietitian, recipe writer, and food photographer, specializing in modern Jewish cuisine. Find them on Simply Recipes: https://www.simplyrecipes.com/micah-siva-5270458", authors.get(10).getBio());
+
+        resetDatabase();
     }
 
     @Test
     public void testReviewList() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         List<Review> reviews = dataStore.getAllReviews();
 
@@ -161,11 +213,12 @@ public class IDataStoreTests {
         Assert.assertEquals("These muffins are really good!", reviews.get(3).getContent());
         Assert.assertEquals(5, reviews.get(3).getRating());
 
+        resetDatabase();
     }
 
     @Test
     public void testNewRecipeFlow() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         List<Author> authors = dataStore.getAllAuthors();
         Assert.assertEquals(11, authors.size());
@@ -215,11 +268,13 @@ public class IDataStoreTests {
         taggedRecipes = dataStore.getRecipesWithTag("Tags");
         Assert.assertEquals(1, taggedRecipes.size());
         Assert.assertTrue(taggedRecipes.contains(r));
+
+        resetDatabase();
     }
 
     @Test
     public void testNewReviewFlow() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         List<Review> reviews = dataStore.getAllReviews();
         Assert.assertEquals(4, reviews.size());
@@ -235,11 +290,13 @@ public class IDataStoreTests {
         Assert.assertEquals(r.getAuthor(), reviews.get(0).getAuthor());
         Assert.assertEquals(r.getContent(), reviews.get(0).getContent());
         Assert.assertEquals(r.getRating(), reviews.get(0).getRating());
+
+        resetDatabase();
     }
 
     @Test
     public void testTypicalRecipeUpdateSingleField() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         Recipe dbRecipe = dataStore.getRecipeById("0");
         Assert.assertEquals("0", dbRecipe.getId());
@@ -261,11 +318,13 @@ public class IDataStoreTests {
         Assert.assertEquals("0", dbRecipe.getId());
         Assert.assertEquals("Bran Muffins", dbRecipe.getTitle());
         Assert.assertEquals(3, dbRecipe.getServingSize());
+
+        resetDatabase();
     }
 
     @Test
     public void testTypicalRecipeUpdateMultiField() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         Recipe dbRecipe = dataStore.getRecipeById("1");
         Assert.assertEquals("1", dbRecipe.getId());
@@ -288,11 +347,13 @@ public class IDataStoreTests {
 
         List<Recipe> taggedRecipes = dataStore.getRecipesWithTag("Breakfast");
         Assert.assertTrue(taggedRecipes.contains(dbRecipe));
+
+        resetDatabase();
     }
 
     @Test
     public void testInvalidRecipeUpdate() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         List<Recipe> recipes = dataStore.getAllRecipes();
         Assert.assertEquals(14, recipes.size());
@@ -349,19 +410,23 @@ public class IDataStoreTests {
         Assert.assertEquals("Corn and Ricotta Bruschetta", recipes.get(11).getTitle());
         Assert.assertEquals("Crash Hot Potatoes with Smoked Salmon", recipes.get(12).getTitle());
         Assert.assertEquals("Rice Cake with Dulce de Leche and Dark Chocolate", recipes.get(13).getTitle());
+
+        resetDatabase();
     }
 
     @Test
     public void testInvalidRecipeIdLookup() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         Assert.assertNull(dataStore.getRecipeById("37"));
         Assert.assertNull(dataStore.getRecipeById(null));
+
+        resetDatabase();
     }
 
     @Test
     public void testTypicalRecipeDelete() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         List<Recipe> recipes = dataStore.getAllRecipes();
         Assert.assertEquals(14, recipes.size());
@@ -405,11 +470,13 @@ public class IDataStoreTests {
         Assert.assertEquals(5, taggedRecipes.size());
         taggedRecipes = dataStore.getRecipesWithTag("Savory");
         Assert.assertEquals(7, taggedRecipes.size());
+
+        resetDatabase();
     }
 
     @Test
     public void testInvalidRecipeDelete() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         List<Recipe> recipes = dataStore.getAllRecipes();
         Assert.assertEquals(14, recipes.size());
@@ -466,11 +533,13 @@ public class IDataStoreTests {
         Assert.assertEquals("11", recipes.get(11).getId());
         Assert.assertEquals("12", recipes.get(12).getId());
         Assert.assertEquals("13", recipes.get(13).getId());
+
+        resetDatabase();
     }
 
     @Test
     public void testTypicalAuthorUpdateSingleField() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         Author dbAuthor = dataStore.getAuthorById("0");
         Assert.assertEquals("0", dbAuthor.getId());
@@ -494,11 +563,12 @@ public class IDataStoreTests {
         Assert.assertEquals("some other person", dbAuthor.getName());
         Assert.assertEquals("This is a new bio!", dbAuthor.getBio());
 
+        resetDatabase();
     }
 
     @Test
     public void testTypicalAuthorUpdateMultiField() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         Author dbAuthor = dataStore.getAuthorById("0");
         Assert.assertEquals("0", dbAuthor.getId());
@@ -512,11 +582,13 @@ public class IDataStoreTests {
         Assert.assertEquals("0", dbAuthor.getId());
         Assert.assertEquals("bob the builder", dbAuthor.getName());
         Assert.assertEquals("can we fix it?", dbAuthor.getBio());
+
+        resetDatabase();
     }
 
     @Test
     public void testInvalidAuthorUpdate() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         List<Author> authors = dataStore.getAllAuthors();
         Assert.assertEquals(11, authors.size());
@@ -563,19 +635,23 @@ public class IDataStoreTests {
         Assert.assertEquals("Georgia Freedman", authors.get(8).getName());
         Assert.assertEquals("Coco Morante", authors.get(9).getName());
         Assert.assertEquals("Micah Siva", authors.get(10).getName());
+
+        resetDatabase();
     }
 
     @Test
     public void testInvalidAuthorIdLookup() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         Assert.assertNull(dataStore.getAuthorById("42"));
         Assert.assertNull(dataStore.getAuthorById(null));
+
+        resetDatabase();
     }
 
     @Test
     public void testTypicalAuthorDelete() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         List<Author> authors = dataStore.getAllAuthors();
         Assert.assertEquals(11, authors.size());
@@ -632,11 +708,13 @@ public class IDataStoreTests {
         Assert.assertEquals("7", authors.get(5).getId());
         Assert.assertEquals("8", authors.get(6).getId());
         Assert.assertEquals("9", authors.get(7).getId());
+
+        resetDatabase();
     }
 
     @Test
     public void testInvalidAuthorDelete() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         List<Author> authors = dataStore.getAllAuthors();
         Assert.assertEquals(11, authors.size());
@@ -684,11 +762,13 @@ public class IDataStoreTests {
         Assert.assertEquals("8", authors.get(8).getId());
         Assert.assertEquals("9", authors.get(9).getId());
         Assert.assertEquals("10", authors.get(10).getId());
+
+        resetDatabase();
     }
 
     @Test
     public void testTypicalReviewUpdateSingleField() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         Review dbReview = dataStore.getReviewById("0");
         Assert.assertEquals("0", dbReview.getId());
@@ -710,11 +790,13 @@ public class IDataStoreTests {
         Assert.assertEquals("0", dbReview.getId());
         Assert.assertEquals("New author", dbReview.getAuthor());
         Assert.assertEquals(3, dbReview.getRating());
+
+        resetDatabase();
     }
 
     @Test
     public void testTypicalReviewUpdateMultiField() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         Review dbReview = dataStore.getReviewById("0");
         Assert.assertEquals("0", dbReview.getId());
@@ -728,11 +810,13 @@ public class IDataStoreTests {
         Assert.assertEquals("0", dbReview.getId());
         Assert.assertEquals("Different author", dbReview.getAuthor());
         Assert.assertEquals(2, dbReview.getRating());
+
+        resetDatabase();
     }
 
     @Test
     public void testInvalidReviewUpdate() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         List<Review> reviews = dataStore.getAllReviews();
         Assert.assertEquals(4, reviews.size());
@@ -759,19 +843,23 @@ public class IDataStoreTests {
         Assert.assertEquals("Lara Hanna", reviews.get(1).getAuthor());
         Assert.assertEquals("Padma Gauthier", reviews.get(2).getAuthor());
         Assert.assertEquals("Neo Colwyn", reviews.get(3).getAuthor());
+
+        resetDatabase();
     }
 
     @Test
     public void testInvalidReviewIdLookup() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         Assert.assertNull(dataStore.getReviewById("58"));
         Assert.assertNull(dataStore.getReviewById(null));
+
+        resetDatabase();
     }
 
     @Test
     public void testTypicalReviewDelete() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         List<Review> reviews = dataStore.getAllReviews();
         Assert.assertEquals(4, reviews.size());
@@ -800,11 +888,13 @@ public class IDataStoreTests {
         reviews = dataStore.getAllReviews();
         Assert.assertEquals(1, reviews.size());
         Assert.assertEquals("0", reviews.get(0).getId());
+
+        resetDatabase();
     }
 
     @Test
     public void testInvalidReviewDelete() {
-        IDataStore dataStore = initDataStore();
+        initDataStore();
 
         List<Review> reviews = dataStore.getAllReviews();
         Assert.assertEquals(4, reviews.size());
@@ -831,11 +921,40 @@ public class IDataStoreTests {
         Assert.assertEquals("2", reviews.get(1).getId());
         Assert.assertEquals("1", reviews.get(2).getId());
         Assert.assertEquals("0", reviews.get(3).getId());
+
+        resetDatabase();
     }
 
     private IDataStore initDataStore() {
-        IDataStore dataStore = new StubDataStore();
-        dataStore.open("stub");
+        if (RunIntegrationTests.USE_STUBDATASTORE) {
+            dataStore = new StubDataStore();
+            dataStore.open("stub");
+
+        } else {
+            dataStore = new HsqldbDataStore();
+            dataStore.open(Main.getDBPath());
+        }
+
         return dataStore;
+    }
+
+    private void resetDatabase() {
+        try {
+            if (dataStore != null) {
+                dataStore.close();
+            }
+
+            if (!RunIntegrationTests.USE_STUBDATASTORE) {
+                for (Object o : Files.list(Paths.get("db")).toArray()) {
+                    Path p = (Path) o;
+                    Files.delete(p);
+                }
+
+                Files.copy(Paths.get("src/main/assets/db/main.script"), Paths.get("db/main.script"));
+            }
+        } catch (IOException ioe) {
+            System.out.println("Failed to reset database.");
+            System.out.println(ioe.getMessage());
+        }
     }
 }

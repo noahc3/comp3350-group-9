@@ -20,10 +20,6 @@ import comp3350.cookit.tests.persistence.IDataStoreTests;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        AccessAuthorsTests.class,
-        AccessRecipesTests.class,
-        AccessReviewsTests.class,
-        IDataStoreTests.class,
         AuthorTests.class,
         FractionTests.class,
         IngredientListTests.class,

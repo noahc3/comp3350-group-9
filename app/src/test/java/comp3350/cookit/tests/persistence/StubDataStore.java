@@ -17,6 +17,7 @@ public class StubDataStore implements IDataStore {
     private List<Author> authors;
     private List<Recipe> recipes;
     private List<Review> reviews;
+    private List<String> favorites;
 
     public StubDataStore() {
     }
@@ -370,6 +371,10 @@ public class StubDataStore implements IDataStore {
                 new Review("3", "2", "Sheila M. Higgs-Coulthard", "I am restricted with my intake of starch, also various vegetables, this recipe meets all my restrictions yet leaving you happy and satisfied, thank you very much.", 5)
         ));
 
+        favorites = new ArrayList<>(Arrays.asList(
+           "1", "3", "7"
+        ));
+
         System.out.println("Opened stub database.");
     }
 
@@ -439,6 +444,29 @@ public class StubDataStore implements IDataStore {
                 }
             }
         }
+    }
+
+    @Override
+    public List<Recipe> getFavoriteRecipes() {
+        List<Recipe> result = new ArrayList<>();
+
+        for (String id : favorites) {
+            result.add(getRecipeById(id));
+        }
+
+        return result;
+    }
+
+    @Override
+    public void insertFavoriteRecipe(String recipeId) {
+        if (!favorites.contains(recipeId)) {
+            favorites.add(recipeId);
+        }
+    }
+
+    @Override
+    public void deleteFavoriteRecipe(String recipeId) {
+        favorites.remove(recipeId);
     }
 
     @Override

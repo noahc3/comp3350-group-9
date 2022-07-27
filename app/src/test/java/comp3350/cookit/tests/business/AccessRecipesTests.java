@@ -3,21 +3,29 @@ package comp3350.cookit.tests.business;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
 import comp3350.cookit.application.Services;
+import comp3350.cookit.business.AccessAuthors;
 import comp3350.cookit.business.AccessRecipes;
+import comp3350.cookit.business.AccessReviews;
 import comp3350.cookit.objects.Ingredient;
 import comp3350.cookit.objects.IngredientList;
 import comp3350.cookit.objects.Recipe;
+import comp3350.cookit.tests.RunIntegrationTests;
 import comp3350.cookit.tests.persistence.StubDataStore;
 
 public class AccessRecipesTests {
+    AccessRecipes ar;
 
     @Test
     public void testRecipeList() {
-        AccessRecipes ar = initAccessRecipes();
+        initDatabase();
 
         List<Recipe> recipes = ar.getRecipes();
 
@@ -81,11 +89,13 @@ public class AccessRecipesTests {
         Assert.assertEquals(2, images.size());
         Assert.assertEquals("chicken0", images.get(0));
         Assert.assertEquals("chicken1", images.get(1));
+
+        resetDatabase();
     }
 
     @Test
     public void testNewRecipe() {
-        AccessRecipes ar = initAccessRecipes();
+        initDatabase();
 
         List<Recipe> recipes = ar.getRecipes();
         Assert.assertEquals(14, recipes.size());
@@ -111,11 +121,13 @@ public class AccessRecipesTests {
         Assert.assertEquals(2, recipes.get(14).getTags().size());
         Assert.assertEquals("Some", recipes.get(14).getTags().get(0));
         Assert.assertEquals("Tags", recipes.get(14).getTags().get(1));
+
+        resetDatabase();
     }
 
     @Test
     public void testRecipeUpdateSingleField() {
-        AccessRecipes ar = initAccessRecipes();
+        initDatabase();
 
         Recipe dbRecipe = ar.getRecipeById("0");
         Assert.assertEquals("0", dbRecipe.getId());
@@ -137,11 +149,13 @@ public class AccessRecipesTests {
         Assert.assertEquals("0", dbRecipe.getId());
         Assert.assertEquals("Bran Muffins", dbRecipe.getTitle());
         Assert.assertEquals(3, dbRecipe.getServingSize());
+
+        resetDatabase();
     }
 
     @Test
     public void testRecipeUpdateMultiField() {
-        AccessRecipes ar = initAccessRecipes();
+        initDatabase();
 
         Recipe dbRecipe = ar.getRecipeById("1");
         Assert.assertEquals("1", dbRecipe.getId());
@@ -164,11 +178,13 @@ public class AccessRecipesTests {
 
         List<Recipe> taggedRecipes = ar.getRecipesWithTag("Breakfast");
         Assert.assertTrue(taggedRecipes.contains(dbRecipe));
+
+        resetDatabase();
     }
 
     @Test
     public void testInvalidRecipeUpdate() {
-        AccessRecipes ar = initAccessRecipes();
+        initDatabase();
 
         List<Recipe> recipes = ar.getRecipes();
         Assert.assertEquals(14, recipes.size());
@@ -225,19 +241,23 @@ public class AccessRecipesTests {
         Assert.assertEquals("Corn and Ricotta Bruschetta", recipes.get(11).getTitle());
         Assert.assertEquals("Crash Hot Potatoes with Smoked Salmon", recipes.get(12).getTitle());
         Assert.assertEquals("Rice Cake with Dulce de Leche and Dark Chocolate", recipes.get(13).getTitle());
+
+        resetDatabase();
     }
 
     @Test
     public void testInvalidRecipeIdLookup() {
-        AccessRecipes ar = initAccessRecipes();
+        initDatabase();
 
         Assert.assertNull(ar.getRecipeById("37"));
         Assert.assertNull(ar.getRecipeById(null));
+
+        resetDatabase();
     }
 
     @Test
     public void testRecipeDelete() {
-        AccessRecipes ar = initAccessRecipes();
+        initDatabase();
 
         List<Recipe> recipes = ar.getRecipes();
         Assert.assertEquals(14, recipes.size());
@@ -281,11 +301,13 @@ public class AccessRecipesTests {
         Assert.assertEquals(5, taggedRecipes.size());
         taggedRecipes = ar.getRecipesWithTag("Savory");
         Assert.assertEquals(7, taggedRecipes.size());
+
+        resetDatabase();
     }
 
     @Test
     public void testInvalidRecipeDelete() {
-        AccessRecipes ar = initAccessRecipes();
+        initDatabase();
 
         List<Recipe> recipes = ar.getRecipes();
         Assert.assertEquals(14, recipes.size());
@@ -342,10 +364,92 @@ public class AccessRecipesTests {
         Assert.assertEquals("11", recipes.get(11).getId());
         Assert.assertEquals("12", recipes.get(12).getId());
         Assert.assertEquals("13", recipes.get(13).getId());
+
+        resetDatabase();
     }
 
-    private AccessRecipes initAccessRecipes() {
-        Services.createDataStore(new StubDataStore());
-        return new AccessRecipes();
+    @Test
+    public void testFavoritesList() {
+        initDatabase();
+
+        List<Recipe> recipes = ar.getFavoriteRecipes();
+
+        for (Recipe r : recipes) {
+            System.out.println(r.getTitle());
+        }
+
+        Assert.assertEquals(3, recipes.size());
+        Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(0).getTitle());
+        Assert.assertEquals("Grandma's Oatmeal Cookies", recipes.get(1).getTitle());
+        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipes.get(2).getTitle());
+
+        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("1")));
+        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("3")));
+        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("7")));
+        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("0")));
+        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("2")));
+        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("9")));
+
+        ar.insertFavoriteRecipe(ar.getRecipeById("9"));
+
+        recipes = ar.getFavoriteRecipes();
+        Assert.assertEquals(4, recipes.size());
+        Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(0).getTitle());
+        Assert.assertEquals("Grandma's Oatmeal Cookies", recipes.get(1).getTitle());
+        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipes.get(2).getTitle());
+        Assert.assertEquals("Baked Oatmeal with Mixed Berries", recipes.get(3).getTitle());
+
+        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("1")));
+        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("3")));
+        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("7")));
+        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("0")));
+        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("9")));
+        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("2")));
+
+        ar.deleteFavoriteRecipe(recipes.get(1));
+
+        recipes = ar.getFavoriteRecipes();
+        Assert.assertEquals(3, recipes.size());
+        Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(0).getTitle());
+        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipes.get(1).getTitle());
+        Assert.assertEquals("Baked Oatmeal with Mixed Berries", recipes.get(2).getTitle());
+
+        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("1")));
+        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("7")));
+        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("9")));
+        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("0")));
+        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("3")));
+        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("2")));
+
+        resetDatabase();
+    }
+
+
+    private void initDatabase() {
+        if (RunIntegrationTests.USE_STUBDATASTORE) {
+            Services.createDataStore(new StubDataStore());
+        } else {
+            Services.createDataStore();
+        }
+
+        ar = new AccessRecipes();
+    }
+
+    private void resetDatabase() {
+        try {
+            if (!RunIntegrationTests.USE_STUBDATASTORE) {
+                Services.closeDataStore();
+
+                for (Object o : Files.list(Paths.get("db")).toArray()) {
+                    Path p = (Path) o;
+                    Files.delete(p);
+                }
+
+                Files.copy(Paths.get("src/main/assets/db/main.script"), Paths.get("db/main.script"));
+            }
+        } catch (IOException ioe) {
+            System.out.println("Failed to reset database.");
+            System.out.println(ioe.getMessage());
+        }
     }
 }

@@ -144,7 +144,7 @@ public class HsqldbDataStore implements IDataStore {
             st.setInt(7, recipe.getPrepTime());
             st.setInt(8, recipe.getCookTime());
             st.setString(9, recipe.getDifficulty());
-            st.setObject(10, recipe.getImages());
+            st.setObject(10, recipe.getImages().toArray());
             st.setLong(11, recipe.getTimestamp());
             st.setString(12, recipe.getId());
 
@@ -162,6 +162,56 @@ public class HsqldbDataStore implements IDataStore {
         try {
             PreparedStatement st = db.prepareStatement("DELETE FROM RECIPES WHERE ID = ?");
             st.setString(1, recipe.getId());
+
+            int updateCount = st.executeUpdate();
+            checkWarning(st, updateCount);
+
+            db.commit();
+        } catch (Exception e) {
+            processSQLError(e);
+        }
+    }
+
+    @Override
+    public List<Recipe> getFavoriteRecipes() {
+        List<Recipe> result = new ArrayList<>();
+
+        try {
+            Statement st = db.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM FAVORITES LEFT JOIN RECIPES ON FAVORITES.ID = RECIPES.ID ORDER BY TIMESTAMP");
+
+            while (rs.next()) {
+                result.add(parseRecipeFromResult(rs));
+            }
+
+            return result;
+        } catch (Exception e) {
+            processSQLError(e);
+        }
+
+        return null;
+    }
+
+    @Override
+    public void insertFavoriteRecipe(String recipeId) {
+        try {
+            PreparedStatement st = db.prepareStatement("INSERT INTO FAVORITES VALUES(?)");
+            st.setString(1, recipeId);
+
+            int updateCount = st.executeUpdate();
+            checkWarning(st, updateCount);
+
+            db.commit();
+        } catch (Exception e) {
+            processSQLError(e);
+        }
+    }
+
+    @Override
+    public void deleteFavoriteRecipe(String recipeId) {
+        try {
+            PreparedStatement st = db.prepareStatement("DELETE FROM FAVORITES WHERE ID = ?");
+            st.setString(1, recipeId);
 
             int updateCount = st.executeUpdate();
             checkWarning(st, updateCount);
@@ -386,6 +436,7 @@ public class HsqldbDataStore implements IDataStore {
         int prepTime = rs.getInt("PREPTIME");
         int cookTime = rs.getInt("COOKTIME");
         String difficulty = rs.getString("DIFFICULTY");
+        long timestamp = rs.getLong("TIMESTAMP");
 
         Object[] objArr;
 
@@ -404,7 +455,7 @@ public class HsqldbDataStore implements IDataStore {
         String[] imagesArr = Arrays.copyOf(objArr, objArr.length, String[].class);
         Collections.addAll(images, imagesArr);
 
-        return new Recipe(id, title, authorId, content, new IngredientList(ingredients), servingSize, tags, prepTime, cookTime, difficulty, images);
+        return new Recipe(id, title, authorId, content, new IngredientList(ingredients), servingSize, tags, prepTime, cookTime, difficulty, images, timestamp);
     }
 
     private Author parseAuthorFromResult(ResultSet rs) throws SQLException {
