@@ -38,6 +38,7 @@
     <string name="ingredients_format">Use the fields above to add ingredients to this list</string>
     <string name="ingredients_list">Ingredient List</string>
     <string name="ingredient_format">%1$s %2$s %3$s</string>
+    <string name="ingredient_format_no_unit">%1$s %2$s</string>
     <string name="add_ingredient">Add Ingredient</string>
 
     <!-- Measurement-Related -->

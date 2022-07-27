@@ -151,7 +151,11 @@ public class DisplayRecipeActivity extends Activity {
         ingredientsList.removeAllViews();
         for (Ingredient i : recipe.getIngredientList().getIngredients()) {
             TextView text = new TextView(DisplayRecipeActivity.this);
-            text.setText(getString(R.string.ingredient_format, new Fraction(i.getQuantity()).getMixedFraction(), i.getMeasurement(), i.getName()));
+            if (i.getMeasurement().isEmpty()) {
+                text.setText(getString(R.string.ingredient_format_no_unit, new Fraction(i.getQuantity()).getMixedFraction(), i.getName()));
+            } else {
+                text.setText(getString(R.string.ingredient_format, new Fraction(i.getQuantity()).getMixedFraction(), i.getMeasurement(), i.getName()));
+            }
             ingredientsList.addView(text);
             text.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
         }

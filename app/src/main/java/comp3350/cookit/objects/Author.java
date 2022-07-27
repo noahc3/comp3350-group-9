@@ -1,16 +1,26 @@
 package comp3350.cookit.objects;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class Author {
     private final String id;
     private final String name;
     private final String bio;
+    private final long timestamp;
 
     public Author(String id, String name, String bio) {
         this.id = id;
         this.name = name;
         this.bio = bio;
+        this.timestamp = new Date().getTime();
+    }
+
+    public Author(String id, String name, String bio, long timestamp) {
+        this.id = id;
+        this.name = name;
+        this.bio = bio;
+        this.timestamp = timestamp;
     }
 
     public String getId() {
@@ -23,6 +33,10 @@ public class Author {
 
     public String getBio() {
         return bio;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
     }
 
     @Override

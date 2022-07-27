@@ -24,7 +24,7 @@ public class IDataStoreTests {
 
         List<Recipe> recipes = dataStore.getAllRecipes();
 
-        Assert.assertEquals(2, recipes.size());
+        Assert.assertEquals(14, recipes.size());
 
         Assert.assertEquals("0", recipes.get(0).getId());
         Assert.assertEquals("Lemon Cranberry Muffins", recipes.get(0).getTitle());
@@ -98,7 +98,7 @@ public class IDataStoreTests {
 
         List<Author> authors = dataStore.getAllAuthors();
 
-        Assert.assertEquals(2, authors.size());
+        Assert.assertEquals(11, authors.size());
 
         Assert.assertEquals("0", authors.get(0).getId());
         Assert.assertEquals("bobpiazza", authors.get(0).getName());
@@ -107,6 +107,26 @@ public class IDataStoreTests {
         Assert.assertEquals("1", authors.get(1).getId());
         Assert.assertEquals("Myrna", authors.get(1).getName());
         Assert.assertEquals("Find me on allrecipes: https://www.allrecipes.com/cook/2792648?content=recipes", authors.get(1).getBio());
+
+        Assert.assertEquals("2", authors.get(2).getId());
+        Assert.assertEquals("Hannah Zimmerman", authors.get(2).getName());
+        Assert.assertEquals("Hannah has been working as a food photographer and recipe developer since 2018, and has worked with brands & publications across the U.S. to create mouth-watering food content. She began contributing to Simply Recipes in 2021. See them on Simply Recipes: https://www.simplyrecipes.com/hannah-zimmerman-5195688", authors.get(2).getBio());
+
+        Assert.assertEquals("5", authors.get(5).getId());
+        Assert.assertEquals("Shilpa Uskokovic", authors.get(5).getName());
+        Assert.assertEquals("Shilpa Uskokovic is a food editor and recipe developer based in NYC. She was previously a line and pastry cook in some of NYC's top rated restaurants like Marea, The NoMad Hotel, Maialino and Perry Street. A graduate of The Culinary Institute of America, Shilpa loves reading, grocery shopping, and eating a little too much cake . She was born and raised in Chennai, India. Find them on Simply Recipes: https://www.simplyrecipes.com/shilpa-uskokovic-5219561", authors.get(5).getBio());
+
+        Assert.assertEquals("6", authors.get(6).getId());
+        Assert.assertEquals("Ariane Resnick", authors.get(6).getName());
+        Assert.assertEquals("Ariane is the author of The Bone Broth Miracle (2015), The Thinking Girl's Guide to Drinking (2016), Wake/Sleep (2018), How to Be Well When You're Not (foreword by P!nk, 2018), and Disney Princess Healthy Treats (2021). She has been a contributor since 2020 for Simply Recipes but began professional writing 15 years ago for Provincetown, Massachusetts newspaper and Curve Magazine. Find them on Simply Recipes: https://www.simplyrecipes.com/ariane-resnick-5091819", authors.get(6).getBio());
+
+        Assert.assertEquals("9", authors.get(9).getId());
+        Assert.assertEquals("Coco Morante", authors.get(9).getName());
+        Assert.assertEquals("Coco started a food blog in 2011, and soon after that began managing social media and developing recipes for Garlic Gold, an organic foods company. She began developing recipes professionally for The Kitchn in 2014, joined Simply Recipes as a contributor in 2016, and published her first cookbook, The Essential Instant Pot Cookbook, with Ten Speed Press in 2017. Coco has written five cookbooks in total, with a new project in the works presently. Find them on Simply Recipes: https://www.simplyrecipes.com/coco-morante-5091788", authors.get(9).getBio());
+
+        Assert.assertEquals("10", authors.get(10).getId());
+        Assert.assertEquals("Micah Siva", authors.get(10).getName());
+        Assert.assertEquals("Micah Siva is a trained chef, registered dietitian, recipe writer, and food photographer, specializing in modern Jewish cuisine. Find them on Simply Recipes: https://www.simplyrecipes.com/micah-siva-5270458", authors.get(10).getBio());
     }
 
     @Test
@@ -115,25 +135,32 @@ public class IDataStoreTests {
 
         List<Review> reviews = dataStore.getAllReviews();
 
-        Assert.assertEquals(3, reviews.size());
+        Assert.assertEquals(4, reviews.size());
 
-        Assert.assertEquals("0", reviews.get(0).getId());
-        Assert.assertEquals("0", reviews.get(0).getRecipeId());
-        Assert.assertEquals("Neo Colwyn", reviews.get(0).getAuthor());
-        Assert.assertEquals("These muffins are really good!", reviews.get(0).getContent());
+        Assert.assertEquals("3", reviews.get(0).getId());
+        Assert.assertEquals("2", reviews.get(0).getRecipeId());
+        Assert.assertEquals("Sheila M. Higgs-Coulthard", reviews.get(0).getAuthor());
+        Assert.assertEquals("I am restricted with my intake of starch, also various vegetables, this recipe meets all my restrictions yet leaving you happy and satisfied, thank you very much.", reviews.get(0).getContent());
         Assert.assertEquals(5, reviews.get(0).getRating());
 
-        Assert.assertEquals("1", reviews.get(1).getId());
-        Assert.assertEquals("0", reviews.get(1).getRecipeId());
-        Assert.assertEquals("Padma Gauthier", reviews.get(1).getAuthor());
-        Assert.assertEquals("Should up the cranberry count a little bit, otherwise awesome!", reviews.get(1).getContent());
-        Assert.assertEquals(4, reviews.get(1).getRating());
+        Assert.assertEquals("2", reviews.get(1).getId());
+        Assert.assertEquals("1", reviews.get(1).getRecipeId());
+        Assert.assertEquals("Lara Hanna", reviews.get(1).getAuthor());
+        Assert.assertEquals("Too much ketchup.", reviews.get(1).getContent());
+        Assert.assertEquals(2, reviews.get(1).getRating());
 
-        Assert.assertEquals("2", reviews.get(2).getId());
-        Assert.assertEquals("1", reviews.get(2).getRecipeId());
-        Assert.assertEquals("Lara Hanna", reviews.get(2).getAuthor());
-        Assert.assertEquals("Too much ketchup.", reviews.get(2).getContent());
-        Assert.assertEquals(2, reviews.get(2).getRating());
+        Assert.assertEquals("1", reviews.get(2).getId());
+        Assert.assertEquals("0", reviews.get(2).getRecipeId());
+        Assert.assertEquals("Padma Gauthier", reviews.get(2).getAuthor());
+        Assert.assertEquals("Should up the cranberry count a little bit, otherwise awesome!", reviews.get(2).getContent());
+        Assert.assertEquals(4, reviews.get(2).getRating());
+
+        Assert.assertEquals("0", reviews.get(3).getId());
+        Assert.assertEquals("0", reviews.get(3).getRecipeId());
+        Assert.assertEquals("Neo Colwyn", reviews.get(3).getAuthor());
+        Assert.assertEquals("These muffins are really good!", reviews.get(3).getContent());
+        Assert.assertEquals(5, reviews.get(3).getRating());
+
     }
 
     @Test
@@ -141,45 +168,45 @@ public class IDataStoreTests {
         IDataStore dataStore = initDataStore();
 
         List<Author> authors = dataStore.getAllAuthors();
-        Assert.assertEquals(2, authors.size());
+        Assert.assertEquals(11, authors.size());
 
         List<Recipe> recipes = dataStore.getAllRecipes();
-        Assert.assertEquals(2, recipes.size());
+        Assert.assertEquals(14, recipes.size());
 
         IngredientList il = IngredientList.Create(new Ingredient("all-purpose flour", 10.0, "cups"));
-        Author a = new Author("5", "An Author", "Hi, I am an author!");
-        Recipe r = new Recipe("3", "Title", "5", "Content", il, 2, Arrays.asList("Some", "Tags"), 10, 20, "Easy", Arrays.asList("Image1", "Image2"));
+        Author a = new Author("11", "An Author", "Hi, I am an author!");
+        Recipe r = new Recipe("14", "Title", "5", "Content", il, 2, Arrays.asList("Some", "Tags"), 10, 20, "Easy", Arrays.asList("Image1", "Image2"));
 
         dataStore.insertAuthor(a);
         dataStore.insertRecipe(r);
 
         authors = dataStore.getAllAuthors();
-        Assert.assertEquals(3, authors.size());
+        Assert.assertEquals(12, authors.size());
 
-        Assert.assertEquals(a.getId(), authors.get(2).getId());
-        Assert.assertEquals(a.getName(), authors.get(2).getName());
-        Assert.assertEquals(a.getBio(), authors.get(2).getBio());
+        Assert.assertEquals(a.getId(), authors.get(11).getId());
+        Assert.assertEquals(a.getName(), authors.get(11).getName());
+        Assert.assertEquals(a.getBio(), authors.get(11).getBio());
 
         recipes = dataStore.getAllRecipes();
-        Assert.assertEquals(3, recipes.size());
+        Assert.assertEquals(15, recipes.size());
 
-        Assert.assertEquals(r.getId(), recipes.get(2).getId());
-        Assert.assertEquals(r.getTitle(), recipes.get(2).getTitle());
-        Assert.assertEquals(r.getAuthorId(), recipes.get(2).getAuthorId());
-        Assert.assertEquals(r.getContent(), recipes.get(2).getContent());
-        Assert.assertEquals(r.getIngredientList(), recipes.get(2).getIngredientList());
-        Assert.assertEquals(r.getServingSize(), recipes.get(2).getServingSize());
-        Assert.assertEquals(r.getPrepTime(), 10);
-        Assert.assertEquals(r.getCookTime(), 20);
-        Assert.assertEquals(r.getDifficulty(), "Easy");
+        Assert.assertEquals(r.getId(), recipes.get(14).getId());
+        Assert.assertEquals(r.getTitle(), recipes.get(14).getTitle());
+        Assert.assertEquals(r.getAuthorId(), recipes.get(14).getAuthorId());
+        Assert.assertEquals(r.getContent(), recipes.get(14).getContent());
+        Assert.assertEquals(r.getIngredientList(), recipes.get(14).getIngredientList());
+        Assert.assertEquals(r.getServingSize(), recipes.get(14).getServingSize());
+        Assert.assertEquals(r.getPrepTime(), recipes.get(14).getPrepTime());
+        Assert.assertEquals(r.getCookTime(), recipes.get(14).getCookTime());
+        Assert.assertEquals(r.getDifficulty(), recipes.get(14).getDifficulty());
 
-        Assert.assertEquals(2, recipes.get(2).getTags().size());
-        Assert.assertEquals("Some", recipes.get(2).getTags().get(0));
-        Assert.assertEquals("Tags", recipes.get(2).getTags().get(1));
+        Assert.assertEquals(2, recipes.get(14).getTags().size());
+        Assert.assertEquals("Some", recipes.get(14).getTags().get(0));
+        Assert.assertEquals("Tags", recipes.get(14).getTags().get(1));
 
-        Assert.assertEquals(2, recipes.get(2).getImages().size());
-        Assert.assertEquals("Image1", recipes.get(2).getImages().get(0));
-        Assert.assertEquals("Image2", recipes.get(2).getImages().get(1));
+        Assert.assertEquals(2, recipes.get(14).getImages().size());
+        Assert.assertEquals("Image1", recipes.get(14).getImages().get(0));
+        Assert.assertEquals("Image2", recipes.get(14).getImages().get(1));
 
         List<Recipe> taggedRecipes = dataStore.getRecipesWithTag("Some");
         Assert.assertEquals(1, taggedRecipes.size());
@@ -188,10 +215,6 @@ public class IDataStoreTests {
         taggedRecipes = dataStore.getRecipesWithTag("Tags");
         Assert.assertEquals(1, taggedRecipes.size());
         Assert.assertTrue(taggedRecipes.contains(r));
-
-        taggedRecipes = dataStore.getRecipesWithTag("Breakfast");
-        Assert.assertEquals(0, taggedRecipes.size());
-        Assert.assertFalse(taggedRecipes.contains(r));
     }
 
     @Test
@@ -199,19 +222,19 @@ public class IDataStoreTests {
         IDataStore dataStore = initDataStore();
 
         List<Review> reviews = dataStore.getAllReviews();
-        Assert.assertEquals(3, reviews.size());
+        Assert.assertEquals(4, reviews.size());
 
-        Review r = new Review("3", "1", "Richard Hendricks", "tastes like chicken", 5);
+        Review r = new Review("4", "1", "Richard Hendricks", "tastes like chicken", 5);
         dataStore.insertReview(r);
 
         reviews = dataStore.getAllReviews();
-        Assert.assertEquals(4, reviews.size());
+        Assert.assertEquals(5, reviews.size());
 
-        Assert.assertEquals(r.getId(), reviews.get(3).getId());
-        Assert.assertEquals(r.getRecipeId(), reviews.get(3).getRecipeId());
-        Assert.assertEquals(r.getAuthor(), reviews.get(3).getAuthor());
-        Assert.assertEquals(r.getContent(), reviews.get(3).getContent());
-        Assert.assertEquals(r.getRating(), reviews.get(3).getRating());
+        Assert.assertEquals(r.getId(), reviews.get(0).getId());
+        Assert.assertEquals(r.getRecipeId(), reviews.get(0).getRecipeId());
+        Assert.assertEquals(r.getAuthor(), reviews.get(0).getAuthor());
+        Assert.assertEquals(r.getContent(), reviews.get(0).getContent());
+        Assert.assertEquals(r.getRating(), reviews.get(0).getRating());
     }
 
     @Test
@@ -272,24 +295,60 @@ public class IDataStoreTests {
         IDataStore dataStore = initDataStore();
 
         List<Recipe> recipes = dataStore.getAllRecipes();
-        Assert.assertEquals(2, recipes.size());
+        Assert.assertEquals(14, recipes.size());
         Assert.assertEquals("Lemon Cranberry Muffins", recipes.get(0).getTitle());
         Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(1).getTitle());
+        Assert.assertEquals("Sesame Peanut Noodles", recipes.get(2).getTitle());
+        Assert.assertEquals("Grandma's Oatmeal Cookies", recipes.get(3).getTitle());
+        Assert.assertEquals("Spinach Tofu Scramble", recipes.get(4).getTitle());
+        Assert.assertEquals("Shrimp Ceviche", recipes.get(5).getTitle());
+        Assert.assertEquals("Brazilian Cheese Bread (Pão de Queijo)", recipes.get(6).getTitle());
+        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipes.get(7).getTitle());
+        Assert.assertEquals("Bisquick Apple Coffee Cake", recipes.get(8).getTitle());
+        Assert.assertEquals("Baked Oatmeal with Mixed Berries", recipes.get(9).getTitle());
+        Assert.assertEquals("Philly Cheesesteak Sloppy Joes", recipes.get(10).getTitle());
+        Assert.assertEquals("Corn and Ricotta Bruschetta", recipes.get(11).getTitle());
+        Assert.assertEquals("Crash Hot Potatoes with Smoked Salmon", recipes.get(12).getTitle());
+        Assert.assertEquals("Rice Cake with Dulce de Leche and Dark Chocolate", recipes.get(13).getTitle());
 
-        Recipe invalid = new Recipe("3", "Recipe with non-existent ID", "0", "Some content", recipes.get(0).getIngredientList(), 1, Arrays.asList("Some", "tags"), 20, 40, "Hard", Arrays.asList("img1", "img2"));
+        Recipe invalid = new Recipe("96", "Recipe with non-existent ID", "0", "Some content", recipes.get(0).getIngredientList(), 1, Arrays.asList("Some", "tags"), 20, 40, "Hard", Arrays.asList("img1", "img2"));
         dataStore.updateRecipe(invalid);
 
         recipes = dataStore.getAllRecipes();
-        Assert.assertEquals(2, recipes.size());
+        Assert.assertEquals(14, recipes.size());
         Assert.assertEquals("Lemon Cranberry Muffins", recipes.get(0).getTitle());
         Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(1).getTitle());
+        Assert.assertEquals("Sesame Peanut Noodles", recipes.get(2).getTitle());
+        Assert.assertEquals("Grandma's Oatmeal Cookies", recipes.get(3).getTitle());
+        Assert.assertEquals("Spinach Tofu Scramble", recipes.get(4).getTitle());
+        Assert.assertEquals("Shrimp Ceviche", recipes.get(5).getTitle());
+        Assert.assertEquals("Brazilian Cheese Bread (Pão de Queijo)", recipes.get(6).getTitle());
+        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipes.get(7).getTitle());
+        Assert.assertEquals("Bisquick Apple Coffee Cake", recipes.get(8).getTitle());
+        Assert.assertEquals("Baked Oatmeal with Mixed Berries", recipes.get(9).getTitle());
+        Assert.assertEquals("Philly Cheesesteak Sloppy Joes", recipes.get(10).getTitle());
+        Assert.assertEquals("Corn and Ricotta Bruschetta", recipes.get(11).getTitle());
+        Assert.assertEquals("Crash Hot Potatoes with Smoked Salmon", recipes.get(12).getTitle());
+        Assert.assertEquals("Rice Cake with Dulce de Leche and Dark Chocolate", recipes.get(13).getTitle());
 
         dataStore.updateRecipe(null);
 
         recipes = dataStore.getAllRecipes();
-        Assert.assertEquals(2, recipes.size());
+        Assert.assertEquals(14, recipes.size());
         Assert.assertEquals("Lemon Cranberry Muffins", recipes.get(0).getTitle());
         Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(1).getTitle());
+        Assert.assertEquals("Sesame Peanut Noodles", recipes.get(2).getTitle());
+        Assert.assertEquals("Grandma's Oatmeal Cookies", recipes.get(3).getTitle());
+        Assert.assertEquals("Spinach Tofu Scramble", recipes.get(4).getTitle());
+        Assert.assertEquals("Shrimp Ceviche", recipes.get(5).getTitle());
+        Assert.assertEquals("Brazilian Cheese Bread (Pão de Queijo)", recipes.get(6).getTitle());
+        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipes.get(7).getTitle());
+        Assert.assertEquals("Bisquick Apple Coffee Cake", recipes.get(8).getTitle());
+        Assert.assertEquals("Baked Oatmeal with Mixed Berries", recipes.get(9).getTitle());
+        Assert.assertEquals("Philly Cheesesteak Sloppy Joes", recipes.get(10).getTitle());
+        Assert.assertEquals("Corn and Ricotta Bruschetta", recipes.get(11).getTitle());
+        Assert.assertEquals("Crash Hot Potatoes with Smoked Salmon", recipes.get(12).getTitle());
+        Assert.assertEquals("Rice Cake with Dulce de Leche and Dark Chocolate", recipes.get(13).getTitle());
     }
 
     @Test
@@ -305,35 +364,47 @@ public class IDataStoreTests {
         IDataStore dataStore = initDataStore();
 
         List<Recipe> recipes = dataStore.getAllRecipes();
-        Assert.assertEquals(2, recipes.size());
+        Assert.assertEquals(14, recipes.size());
         Assert.assertEquals("0", recipes.get(0).getId());
         Assert.assertEquals("1", recipes.get(1).getId());
+        Assert.assertEquals("2", recipes.get(2).getId());
+        Assert.assertEquals("3", recipes.get(3).getId());
+        Assert.assertEquals("4", recipes.get(4).getId());
+        Assert.assertEquals("5", recipes.get(5).getId());
+        Assert.assertEquals("6", recipes.get(6).getId());
+        Assert.assertEquals("7", recipes.get(7).getId());
+        Assert.assertEquals("8", recipes.get(8).getId());
+        Assert.assertEquals("9", recipes.get(9).getId());
+        Assert.assertEquals("10", recipes.get(10).getId());
+        Assert.assertEquals("11", recipes.get(11).getId());
+        Assert.assertEquals("12", recipes.get(12).getId());
+        Assert.assertEquals("13", recipes.get(13).getId());
 
         List<Recipe> taggedRecipes = dataStore.getRecipesWithTag("Sweet");
-        Assert.assertEquals(1, taggedRecipes.size());
+        Assert.assertEquals(6, taggedRecipes.size());
         taggedRecipes = dataStore.getRecipesWithTag("Savory");
-        Assert.assertEquals(1, taggedRecipes.size());
+        Assert.assertEquals(8, taggedRecipes.size());
 
         dataStore.deleteRecipe(recipes.get(0));
 
         recipes = dataStore.getAllRecipes();
-        Assert.assertEquals(1, recipes.size());
+        Assert.assertEquals(13, recipes.size());
         Assert.assertEquals("1", recipes.get(0).getId());
 
         taggedRecipes = dataStore.getRecipesWithTag("Sweet");
-        Assert.assertEquals(0, taggedRecipes.size());
+        Assert.assertEquals(5, taggedRecipes.size());
         taggedRecipes = dataStore.getRecipesWithTag("Savory");
-        Assert.assertEquals(1, taggedRecipes.size());
+        Assert.assertEquals(8, taggedRecipes.size());
 
         dataStore.deleteRecipe(recipes.get(0));
 
         recipes = dataStore.getAllRecipes();
-        Assert.assertEquals(0, recipes.size());
+        Assert.assertEquals(12, recipes.size());
 
         taggedRecipes = dataStore.getRecipesWithTag("Sweet");
-        Assert.assertEquals(0, taggedRecipes.size());
+        Assert.assertEquals(5, taggedRecipes.size());
         taggedRecipes = dataStore.getRecipesWithTag("Savory");
-        Assert.assertEquals(0, taggedRecipes.size());
+        Assert.assertEquals(7, taggedRecipes.size());
     }
 
     @Test
@@ -341,24 +412,60 @@ public class IDataStoreTests {
         IDataStore dataStore = initDataStore();
 
         List<Recipe> recipes = dataStore.getAllRecipes();
-        Assert.assertEquals(2, recipes.size());
+        Assert.assertEquals(14, recipes.size());
         Assert.assertEquals("0", recipes.get(0).getId());
         Assert.assertEquals("1", recipes.get(1).getId());
+        Assert.assertEquals("2", recipes.get(2).getId());
+        Assert.assertEquals("3", recipes.get(3).getId());
+        Assert.assertEquals("4", recipes.get(4).getId());
+        Assert.assertEquals("5", recipes.get(5).getId());
+        Assert.assertEquals("6", recipes.get(6).getId());
+        Assert.assertEquals("7", recipes.get(7).getId());
+        Assert.assertEquals("8", recipes.get(8).getId());
+        Assert.assertEquals("9", recipes.get(9).getId());
+        Assert.assertEquals("10", recipes.get(10).getId());
+        Assert.assertEquals("11", recipes.get(11).getId());
+        Assert.assertEquals("12", recipes.get(12).getId());
+        Assert.assertEquals("13", recipes.get(13).getId());
 
-        Recipe invalid = new Recipe("3", "Recipe with non-existant ID", "0", "Some content", recipes.get(0).getIngredientList(), 1, Arrays.asList("Some", "tags"), 15, 5, "Impossible", Arrays.asList("img1", "img2"));
+        Recipe invalid = new Recipe("36", "Recipe with non-existant ID", "0", "Some content", recipes.get(0).getIngredientList(), 1, Arrays.asList("Some", "tags"), 15, 5, "Impossible", Arrays.asList("img1", "img2"));
         dataStore.deleteRecipe(invalid);
 
         recipes = dataStore.getAllRecipes();
-        Assert.assertEquals(2, recipes.size());
+        Assert.assertEquals(14, recipes.size());
         Assert.assertEquals("0", recipes.get(0).getId());
         Assert.assertEquals("1", recipes.get(1).getId());
+        Assert.assertEquals("2", recipes.get(2).getId());
+        Assert.assertEquals("3", recipes.get(3).getId());
+        Assert.assertEquals("4", recipes.get(4).getId());
+        Assert.assertEquals("5", recipes.get(5).getId());
+        Assert.assertEquals("6", recipes.get(6).getId());
+        Assert.assertEquals("7", recipes.get(7).getId());
+        Assert.assertEquals("8", recipes.get(8).getId());
+        Assert.assertEquals("9", recipes.get(9).getId());
+        Assert.assertEquals("10", recipes.get(10).getId());
+        Assert.assertEquals("11", recipes.get(11).getId());
+        Assert.assertEquals("12", recipes.get(12).getId());
+        Assert.assertEquals("13", recipes.get(13).getId());
 
         dataStore.deleteRecipe(null);
 
         recipes = dataStore.getAllRecipes();
-        Assert.assertEquals(2, recipes.size());
+        Assert.assertEquals(14, recipes.size());
         Assert.assertEquals("0", recipes.get(0).getId());
         Assert.assertEquals("1", recipes.get(1).getId());
+        Assert.assertEquals("2", recipes.get(2).getId());
+        Assert.assertEquals("3", recipes.get(3).getId());
+        Assert.assertEquals("4", recipes.get(4).getId());
+        Assert.assertEquals("5", recipes.get(5).getId());
+        Assert.assertEquals("6", recipes.get(6).getId());
+        Assert.assertEquals("7", recipes.get(7).getId());
+        Assert.assertEquals("8", recipes.get(8).getId());
+        Assert.assertEquals("9", recipes.get(9).getId());
+        Assert.assertEquals("10", recipes.get(10).getId());
+        Assert.assertEquals("11", recipes.get(11).getId());
+        Assert.assertEquals("12", recipes.get(12).getId());
+        Assert.assertEquals("13", recipes.get(13).getId());
     }
 
     @Test
@@ -412,24 +519,50 @@ public class IDataStoreTests {
         IDataStore dataStore = initDataStore();
 
         List<Author> authors = dataStore.getAllAuthors();
-        Assert.assertEquals(2, authors.size());
+        Assert.assertEquals(11, authors.size());
         Assert.assertEquals("bobpiazza", authors.get(0).getName());
         Assert.assertEquals("Myrna", authors.get(1).getName());
+        Assert.assertEquals("Hannah Zimmerman", authors.get(2).getName());
+        Assert.assertEquals("Elise Bauer", authors.get(3).getName());
+        Assert.assertEquals("Sara Bir", authors.get(4).getName());
+        Assert.assertEquals("Shilpa Uskokovic", authors.get(5).getName());
+        Assert.assertEquals("Ariane Resnick", authors.get(6).getName());
+        Assert.assertEquals("Nick Evans", authors.get(7).getName());
+        Assert.assertEquals("Georgia Freedman", authors.get(8).getName());
+        Assert.assertEquals("Coco Morante", authors.get(9).getName());
+        Assert.assertEquals("Micah Siva", authors.get(10).getName());
 
-        Author invalid = new Author("3", "thomas the tank engine", "It was time for Thomas to leave. He had seen everything.");
+        Author invalid = new Author("33", "thomas the tank engine", "It was time for Thomas to leave. He had seen everything.");
         dataStore.updateAuthor(invalid);
 
         authors = dataStore.getAllAuthors();
-        Assert.assertEquals(2, authors.size());
+        Assert.assertEquals(11, authors.size());
         Assert.assertEquals("bobpiazza", authors.get(0).getName());
         Assert.assertEquals("Myrna", authors.get(1).getName());
-
+        Assert.assertEquals("Hannah Zimmerman", authors.get(2).getName());
+        Assert.assertEquals("Elise Bauer", authors.get(3).getName());
+        Assert.assertEquals("Sara Bir", authors.get(4).getName());
+        Assert.assertEquals("Shilpa Uskokovic", authors.get(5).getName());
+        Assert.assertEquals("Ariane Resnick", authors.get(6).getName());
+        Assert.assertEquals("Nick Evans", authors.get(7).getName());
+        Assert.assertEquals("Georgia Freedman", authors.get(8).getName());
+        Assert.assertEquals("Coco Morante", authors.get(9).getName());
+        Assert.assertEquals("Micah Siva", authors.get(10).getName());
         dataStore.updateAuthor(null);
 
         authors = dataStore.getAllAuthors();
-        Assert.assertEquals(2, authors.size());
+        Assert.assertEquals(11, authors.size());
         Assert.assertEquals("bobpiazza", authors.get(0).getName());
         Assert.assertEquals("Myrna", authors.get(1).getName());
+        Assert.assertEquals("Hannah Zimmerman", authors.get(2).getName());
+        Assert.assertEquals("Elise Bauer", authors.get(3).getName());
+        Assert.assertEquals("Sara Bir", authors.get(4).getName());
+        Assert.assertEquals("Shilpa Uskokovic", authors.get(5).getName());
+        Assert.assertEquals("Ariane Resnick", authors.get(6).getName());
+        Assert.assertEquals("Nick Evans", authors.get(7).getName());
+        Assert.assertEquals("Georgia Freedman", authors.get(8).getName());
+        Assert.assertEquals("Coco Morante", authors.get(9).getName());
+        Assert.assertEquals("Micah Siva", authors.get(10).getName());
     }
 
     @Test
@@ -445,20 +578,60 @@ public class IDataStoreTests {
         IDataStore dataStore = initDataStore();
 
         List<Author> authors = dataStore.getAllAuthors();
-        Assert.assertEquals(2, authors.size());
+        Assert.assertEquals(11, authors.size());
         Assert.assertEquals("0", authors.get(0).getId());
         Assert.assertEquals("1", authors.get(1).getId());
+        Assert.assertEquals("2", authors.get(2).getId());
+        Assert.assertEquals("3", authors.get(3).getId());
+        Assert.assertEquals("4", authors.get(4).getId());
+        Assert.assertEquals("5", authors.get(5).getId());
+        Assert.assertEquals("6", authors.get(6).getId());
+        Assert.assertEquals("7", authors.get(7).getId());
+        Assert.assertEquals("8", authors.get(8).getId());
+        Assert.assertEquals("9", authors.get(9).getId());
+        Assert.assertEquals("10", authors.get(10).getId());
 
         dataStore.deleteAuthor(authors.get(0));
 
         authors = dataStore.getAllAuthors();
-        Assert.assertEquals(1, authors.size());
+        Assert.assertEquals(10, authors.size());
         Assert.assertEquals("1", authors.get(0).getId());
+        Assert.assertEquals("2", authors.get(1).getId());
+        Assert.assertEquals("3", authors.get(2).getId());
+        Assert.assertEquals("4", authors.get(3).getId());
+        Assert.assertEquals("5", authors.get(4).getId());
+        Assert.assertEquals("6", authors.get(5).getId());
+        Assert.assertEquals("7", authors.get(6).getId());
+        Assert.assertEquals("8", authors.get(7).getId());
+        Assert.assertEquals("9", authors.get(8).getId());
+        Assert.assertEquals("10", authors.get(9).getId());
 
-        dataStore.deleteAuthor(authors.get(0));
+        dataStore.deleteAuthor(authors.get(3));
 
         authors = dataStore.getAllAuthors();
-        Assert.assertEquals(0, authors.size());
+        Assert.assertEquals(9, authors.size());
+        Assert.assertEquals("1", authors.get(0).getId());
+        Assert.assertEquals("2", authors.get(1).getId());
+        Assert.assertEquals("3", authors.get(2).getId());
+        Assert.assertEquals("5", authors.get(3).getId());
+        Assert.assertEquals("6", authors.get(4).getId());
+        Assert.assertEquals("7", authors.get(5).getId());
+        Assert.assertEquals("8", authors.get(6).getId());
+        Assert.assertEquals("9", authors.get(7).getId());
+        Assert.assertEquals("10", authors.get(8).getId());
+
+        dataStore.deleteAuthor(authors.get(8));
+
+        authors = dataStore.getAllAuthors();
+        Assert.assertEquals(8, authors.size());
+        Assert.assertEquals("1", authors.get(0).getId());
+        Assert.assertEquals("2", authors.get(1).getId());
+        Assert.assertEquals("3", authors.get(2).getId());
+        Assert.assertEquals("5", authors.get(3).getId());
+        Assert.assertEquals("6", authors.get(4).getId());
+        Assert.assertEquals("7", authors.get(5).getId());
+        Assert.assertEquals("8", authors.get(6).getId());
+        Assert.assertEquals("9", authors.get(7).getId());
     }
 
     @Test
@@ -466,24 +639,51 @@ public class IDataStoreTests {
         IDataStore dataStore = initDataStore();
 
         List<Author> authors = dataStore.getAllAuthors();
-        Assert.assertEquals(2, authors.size());
+        Assert.assertEquals(11, authors.size());
         Assert.assertEquals("0", authors.get(0).getId());
         Assert.assertEquals("1", authors.get(1).getId());
+        Assert.assertEquals("2", authors.get(2).getId());
+        Assert.assertEquals("3", authors.get(3).getId());
+        Assert.assertEquals("4", authors.get(4).getId());
+        Assert.assertEquals("5", authors.get(5).getId());
+        Assert.assertEquals("6", authors.get(6).getId());
+        Assert.assertEquals("7", authors.get(7).getId());
+        Assert.assertEquals("8", authors.get(8).getId());
+        Assert.assertEquals("9", authors.get(9).getId());
+        Assert.assertEquals("10", authors.get(10).getId());
 
-        Author invalid = new Author("6", "perry the platypus", "[platypus noises]");
+        Author invalid = new Author("66", "perry the platypus", "[platypus noises]");
         dataStore.deleteAuthor(invalid);
 
         authors = dataStore.getAllAuthors();
-        Assert.assertEquals(2, authors.size());
+        Assert.assertEquals(11, authors.size());
         Assert.assertEquals("0", authors.get(0).getId());
         Assert.assertEquals("1", authors.get(1).getId());
+        Assert.assertEquals("2", authors.get(2).getId());
+        Assert.assertEquals("3", authors.get(3).getId());
+        Assert.assertEquals("4", authors.get(4).getId());
+        Assert.assertEquals("5", authors.get(5).getId());
+        Assert.assertEquals("6", authors.get(6).getId());
+        Assert.assertEquals("7", authors.get(7).getId());
+        Assert.assertEquals("8", authors.get(8).getId());
+        Assert.assertEquals("9", authors.get(9).getId());
+        Assert.assertEquals("10", authors.get(10).getId());
 
         dataStore.deleteAuthor(null);
 
         authors = dataStore.getAllAuthors();
-        Assert.assertEquals(2, authors.size());
+        Assert.assertEquals(11, authors.size());
         Assert.assertEquals("0", authors.get(0).getId());
         Assert.assertEquals("1", authors.get(1).getId());
+        Assert.assertEquals("2", authors.get(2).getId());
+        Assert.assertEquals("3", authors.get(3).getId());
+        Assert.assertEquals("4", authors.get(4).getId());
+        Assert.assertEquals("5", authors.get(5).getId());
+        Assert.assertEquals("6", authors.get(6).getId());
+        Assert.assertEquals("7", authors.get(7).getId());
+        Assert.assertEquals("8", authors.get(8).getId());
+        Assert.assertEquals("9", authors.get(9).getId());
+        Assert.assertEquals("10", authors.get(10).getId());
     }
 
     @Test
@@ -535,27 +735,30 @@ public class IDataStoreTests {
         IDataStore dataStore = initDataStore();
 
         List<Review> reviews = dataStore.getAllReviews();
-        Assert.assertEquals(3, reviews.size());
-        Assert.assertEquals("Neo Colwyn", reviews.get(0).getAuthor());
-        Assert.assertEquals("Padma Gauthier", reviews.get(1).getAuthor());
-        Assert.assertEquals("Lara Hanna", reviews.get(2).getAuthor());
+        Assert.assertEquals(4, reviews.size());
+        Assert.assertEquals("Sheila M. Higgs-Coulthard", reviews.get(0).getAuthor());
+        Assert.assertEquals("Lara Hanna", reviews.get(1).getAuthor());
+        Assert.assertEquals("Padma Gauthier", reviews.get(2).getAuthor());
+        Assert.assertEquals("Neo Colwyn", reviews.get(3).getAuthor());
 
         Review invalid = new Review("86", "0", "Vladilena Milize", "this is a good recipe", 5);
         dataStore.updateReview(invalid);
 
         reviews = dataStore.getAllReviews();
-        Assert.assertEquals(3, reviews.size());
-        Assert.assertEquals("Neo Colwyn", reviews.get(0).getAuthor());
-        Assert.assertEquals("Padma Gauthier", reviews.get(1).getAuthor());
-        Assert.assertEquals("Lara Hanna", reviews.get(2).getAuthor());
+        Assert.assertEquals(4, reviews.size());
+        Assert.assertEquals("Sheila M. Higgs-Coulthard", reviews.get(0).getAuthor());
+        Assert.assertEquals("Lara Hanna", reviews.get(1).getAuthor());
+        Assert.assertEquals("Padma Gauthier", reviews.get(2).getAuthor());
+        Assert.assertEquals("Neo Colwyn", reviews.get(3).getAuthor());
 
         dataStore.updateReview(null);
 
         reviews = dataStore.getAllReviews();
-        Assert.assertEquals(3, reviews.size());
-        Assert.assertEquals("Neo Colwyn", reviews.get(0).getAuthor());
-        Assert.assertEquals("Padma Gauthier", reviews.get(1).getAuthor());
-        Assert.assertEquals("Lara Hanna", reviews.get(2).getAuthor());
+        Assert.assertEquals(4, reviews.size());
+        Assert.assertEquals("Sheila M. Higgs-Coulthard", reviews.get(0).getAuthor());
+        Assert.assertEquals("Lara Hanna", reviews.get(1).getAuthor());
+        Assert.assertEquals("Padma Gauthier", reviews.get(2).getAuthor());
+        Assert.assertEquals("Neo Colwyn", reviews.get(3).getAuthor());
     }
 
     @Test
@@ -571,28 +774,32 @@ public class IDataStoreTests {
         IDataStore dataStore = initDataStore();
 
         List<Review> reviews = dataStore.getAllReviews();
-        Assert.assertEquals(3, reviews.size());
-        Assert.assertEquals("0", reviews.get(0).getId());
-        Assert.assertEquals("1", reviews.get(1).getId());
-        Assert.assertEquals("2", reviews.get(2).getId());
+        Assert.assertEquals(4, reviews.size());
+        Assert.assertEquals("3", reviews.get(0).getId());
+        Assert.assertEquals("2", reviews.get(1).getId());
+        Assert.assertEquals("1", reviews.get(2).getId());
+        Assert.assertEquals("0", reviews.get(3).getId());
 
         dataStore.deleteReview(reviews.get(1));
 
         reviews = dataStore.getAllReviews();
+        Assert.assertEquals(3, reviews.size());
+        Assert.assertEquals("3", reviews.get(0).getId());
+        Assert.assertEquals("1", reviews.get(1).getId());
+        Assert.assertEquals("0", reviews.get(2).getId());
+
+        dataStore.deleteReview(reviews.get(0));
+
+        reviews = dataStore.getAllReviews();
         Assert.assertEquals(2, reviews.size());
-        Assert.assertEquals("0", reviews.get(0).getId());
-        Assert.assertEquals("2", reviews.get(1).getId());
+        Assert.assertEquals("1", reviews.get(0).getId());
+        Assert.assertEquals("0", reviews.get(1).getId());
 
         dataStore.deleteReview(reviews.get(0));
 
         reviews = dataStore.getAllReviews();
         Assert.assertEquals(1, reviews.size());
-        Assert.assertEquals("2", reviews.get(0).getId());
-
-        dataStore.deleteReview(reviews.get(0));
-
-        reviews = dataStore.getAllReviews();
-        Assert.assertEquals(0, reviews.size());
+        Assert.assertEquals("0", reviews.get(0).getId());
     }
 
     @Test
@@ -600,27 +807,30 @@ public class IDataStoreTests {
         IDataStore dataStore = initDataStore();
 
         List<Review> reviews = dataStore.getAllReviews();
-        Assert.assertEquals(3, reviews.size());
-        Assert.assertEquals("0", reviews.get(0).getId());
-        Assert.assertEquals("1", reviews.get(1).getId());
-        Assert.assertEquals("2", reviews.get(2).getId());
+        Assert.assertEquals(4, reviews.size());
+        Assert.assertEquals("3", reviews.get(0).getId());
+        Assert.assertEquals("2", reviews.get(1).getId());
+        Assert.assertEquals("1", reviews.get(2).getId());
+        Assert.assertEquals("0", reviews.get(3).getId());
 
         Review invalid = new Review("94", "0", "franklin", "[turtle noises]", 5);
         dataStore.deleteReview(invalid);
 
         reviews = dataStore.getAllReviews();
-        Assert.assertEquals(3, reviews.size());
-        Assert.assertEquals("0", reviews.get(0).getId());
-        Assert.assertEquals("1", reviews.get(1).getId());
-        Assert.assertEquals("2", reviews.get(2).getId());
+        Assert.assertEquals(4, reviews.size());
+        Assert.assertEquals("3", reviews.get(0).getId());
+        Assert.assertEquals("2", reviews.get(1).getId());
+        Assert.assertEquals("1", reviews.get(2).getId());
+        Assert.assertEquals("0", reviews.get(3).getId());
 
         dataStore.deleteReview(null);
 
         reviews = dataStore.getAllReviews();
-        Assert.assertEquals(3, reviews.size());
-        Assert.assertEquals("0", reviews.get(0).getId());
-        Assert.assertEquals("1", reviews.get(1).getId());
-        Assert.assertEquals("2", reviews.get(2).getId());
+        Assert.assertEquals(4, reviews.size());
+        Assert.assertEquals("3", reviews.get(0).getId());
+        Assert.assertEquals("2", reviews.get(1).getId());
+        Assert.assertEquals("1", reviews.get(2).getId());
+        Assert.assertEquals("0", reviews.get(3).getId());
     }
 
     private IDataStore initDataStore() {
