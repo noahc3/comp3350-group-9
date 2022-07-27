@@ -71,6 +71,11 @@ public class HomeListActivity extends Activity {
         startActivity(newRecipesIntent);
     }
 
+    public void favoriteListOnClick(View v) {
+        Intent favoriteList = new Intent(this, FavoriteListActivity.class);
+        startActivity(favoriteList);
+    }
+
     public void displayRecipe(View v) {
         Intent displayRecipeIntent = new Intent(this, DisplayRecipeActivity.class);
         displayRecipeIntent.putExtra("recipeId", (String) v.getTag());
