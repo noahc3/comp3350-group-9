@@ -44,10 +44,15 @@ public class NewRecipeActivity extends Activity {
     private AutoCompleteTextView fraction;
     private AutoCompleteTextView units;
     private AutoCompleteTextView difficulty;
+
     private AutoCompleteTextView tagsType;
     private AutoCompleteTextView tagsTaste;
     private AutoCompleteTextView tagsTime;
     private AutoCompleteTextView tagsCourse;
+    private AutoCompleteTextView tagsDiet;
+    private AutoCompleteTextView tagsRegion;
+    private AutoCompleteTextView tagsOccasion;
+    private AutoCompleteTextView tagsSeason;
 
     private TextInputEditText recipeName;
     private TextInputEditText author;
@@ -73,7 +78,6 @@ public class NewRecipeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_recipe);
 
-
         fraction = findViewById(R.id.amountFraction);
         initializeDropdowns(fraction, R.array.fraction_dropdown);
 
@@ -94,6 +98,18 @@ public class NewRecipeActivity extends Activity {
 
         tagsCourse = findViewById(R.id.tagsCourse);
         initializeDropdowns(tagsCourse, R.array.tags_course);
+
+        tagsDiet = findViewById(R.id.tagsDiet);
+        initializeDropdowns(tagsDiet, R.array.tags_diet);
+
+        tagsRegion = findViewById(R.id.tagsRegion);
+        initializeDropdowns(tagsRegion, R.array.tags_region);
+
+        tagsOccasion = findViewById(R.id.tagsOccasion);
+        initializeDropdowns(tagsOccasion, R.array.tags_occasion);
+
+        tagsSeason = findViewById(R.id.tagsSeason);
+        initializeDropdowns(tagsSeason, R.array.tags_season);
 
         recipeName = findViewById(R.id.recipeName);
         author = findViewById(R.id.authorName);
@@ -348,6 +364,18 @@ public class NewRecipeActivity extends Activity {
 
         if (!TextUtils.isEmpty(tagsCourse.getText()))
             tagList.add(tagsCourse.getText().toString());
+
+        if (!TextUtils.isEmpty(tagsDiet.getText()))
+            tagList.add(tagsDiet.getText().toString());
+
+        if (!TextUtils.isEmpty(tagsRegion.getText()))
+            tagList.add(tagsRegion.getText().toString());
+
+        if (!TextUtils.isEmpty(tagsOccasion.getText()))
+            tagList.add(tagsOccasion.getText().toString());
+
+        if (!TextUtils.isEmpty(tagsSeason.getText()))
+            tagList.add(tagsSeason.getText().toString());
 
         return tagList;
     }

@@ -266,6 +266,83 @@
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:hint="@string/tags_diet">
+
+                <AutoCompleteTextView
+                    android:id="@+id/tagsDiet"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:inputType="none|textNoSuggestions" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:hint="@string/tags_region">
+
+                <AutoCompleteTextView
+                    android:id="@+id/tagsRegion"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:inputType="none|textNoSuggestions" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:hint="@string/tags_occasion">
+
+                <AutoCompleteTextView
+                    android:id="@+id/tagsOccasion"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:inputType="none|textNoSuggestions" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:hint="@string/tags_season">
+
+                <AutoCompleteTextView
+                    android:id="@+id/tagsSeason"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:inputType="none|textNoSuggestions" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
@@ -277,6 +354,17 @@
             android:text="@string/ingredients"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/ingredients_tip"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"

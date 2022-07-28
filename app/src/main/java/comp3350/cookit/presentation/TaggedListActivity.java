@@ -32,8 +32,6 @@ public class TaggedListActivity extends Activity {
 
         header.setText(getString(R.string.title_activity_tagged_list, tag));
         showRecipeButtons();
-
-
     }
 
     @Override
@@ -45,16 +43,18 @@ public class TaggedListActivity extends Activity {
     public void showRecipeButtons() {
         List<Recipe> recipes = new AccessRecipes().getRecipesWithTag(tag);
 
-        taggedRecipeList.removeAllViews();
+        if(!recipes.isEmpty()) {
+            taggedRecipeList.removeAllViews();
 
-        for (Recipe recipe : recipes) {
-            RecipeBoxView view = new RecipeBoxView(this, recipe);
-            view.setTag(recipe.getId());
-            view.setOnClickListener(this::displayRecipe);
-            taggedRecipeList.addView(view);
-        }
+            for (Recipe recipe : recipes) {
+                RecipeBoxView view = new RecipeBoxView(this, recipe);
+                view.setTag(recipe.getId());
+                view.setOnClickListener(this::displayRecipe);
+                taggedRecipeList.addView(view);
+            }
 
-        taggedRecipeList.requestLayout();
+            taggedRecipeList.requestLayout();
+        } // else retain no tags attached message
     }
 
     public void displayRecipe(View v) {

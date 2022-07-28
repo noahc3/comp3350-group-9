@@ -256,11 +256,6 @@ public class DisplayRecipeActivity extends Activity {
                 Button btnTag = new Button(DisplayRecipeActivity.this);
 
                 // Set the parameters for the button programmatically
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
-                layoutParams.setMarginEnd(6);
-                btnTag.setLayoutParams(layoutParams);
                 btnTag.setText(tag);
                 btnTag.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
                 btnTag.setTextColor(getResources().getColor(R.color.colorWhite));
@@ -274,6 +269,21 @@ public class DisplayRecipeActivity extends Activity {
                 btnTag.setPadding(1, 1, 1, 1);
 
                 tagsList.addView(btnTag);
+
+                /**
+                 * Re-adjust the width after the Button is added to the View
+                 *
+                 * The LayoutParams approach (below) does not seem to behave as how the
+                 * documentation says it would; it does not apply any change at all.
+                 * LinearLayout.LayoutParams layoutParams...
+                 * ... btnTag.setLayoutParams(layoutParams);
+                 *
+                 * Instead, for longer strings, we change the width of button to a size relative
+                 * to their length; Android Studio seems to resize it accordingly if it is close
+                 * enough, thus the hard-coded scaling "22"
+                 */
+                if(tag.length() >= 8)
+                    btnTag.getLayoutParams().width = tag.length() * 22;
             }
             tagsList.requestLayout();
         }

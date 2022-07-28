@@ -61,6 +61,46 @@
         <item>Savory</item>
     </string-array>
 
+    <string-array name="tags_diet">
+        <item>Vegan</item>
+        <item>Vegetarian</item>
+        <item>Pescatarian</item>
+        <item>Mediterranean</item>
+        <item>Keto</item>
+        <item>Paleo</item>
+        <item>Gluten-Free</item>
+    </string-array>
+
+    <string-array name="tags_region">
+        <item>Western</item>
+        <item>Middle Eastern</item>
+        <item>West Asian</item>
+        <item>East Asian</item>
+        <item>European</item>
+        <item>African</item>
+        <item>Caribbean</item>
+        <item>Fusion</item>
+    </string-array>
+
+    <string-array name="tags_occasion">
+        <item>New Year\'s Eve</item>
+        <item>Easter</item>
+        <item>Halloween</item>
+        <item>Thanksgiving</item>
+        <item>Christmas</item>
+        <item>Cultural</item>
+        <item>Romantic</item>
+        <item>Birthday</item>
+    </string-array>
+
+    <string-array name="tags_season">
+        <item>Winter</item>
+        <item>Spring</item>
+        <item>Summer</item>
+        <item>Autumn/Fall</item>
+        <item>All Year</item>
+    </string-array>
+
     <string-array name="difficulty_dropdown">
         <item>Easy</item>
         <item>Moderate</item>

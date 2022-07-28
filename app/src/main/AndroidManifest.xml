@@ -22,6 +22,7 @@
         <activity android:name=".presentation.DisplayRecipeActivity"/>
         <activity android:name=".presentation.TaggedListActivity"/>
         <activity android:name=".presentation.FavoriteListActivity"/>
+        <activity android:name=".presentation.FilterByTagActivity"/>
     </application>
 
 </manifest>
