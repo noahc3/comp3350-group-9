@@ -143,6 +143,8 @@ public class DisplayRecipeActivity extends Activity {
         favoriteImage.setImageResource(R.drawable.ic_baseline_favorite_24);
     }
 
+
+
     public void displayRecipe(int servingSize) {
         Recipe recipe = getRecipeToDisplay();
         AccessAuthors authors = new AccessAuthors();
