@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import java.io.File;
@@ -19,6 +18,7 @@ import comp3350.cookit.R;
 import comp3350.cookit.application.Main;
 import comp3350.cookit.business.AccessRecipes;
 import comp3350.cookit.objects.Recipe;
+import comp3350.cookit.presentation.components.RecipeBoxView;
 
 public class HomeListActivity extends Activity {
     private LinearLayout recipeList;
@@ -51,16 +51,10 @@ public class HomeListActivity extends Activity {
         recipeList.removeAllViews();
 
         for (Recipe recipe : recipes) {
-            Button button = new Button(this);
-            button.setText(recipe.getTitle());
-            button.setTag(recipe.getId());
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    displayRecipe(v);
-                }
-            });
-            recipeList.addView(button);
+            RecipeBoxView view = new RecipeBoxView(this, recipe);
+            view.setTag(recipe.getId());
+            view.setOnClickListener(this::displayRecipe);
+            recipeList.addView(view);
         }
 
         recipeList.requestLayout();
