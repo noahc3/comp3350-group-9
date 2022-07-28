@@ -22,7 +22,7 @@ import comp3350.cookit.objects.Review;
 import comp3350.cookit.tests.RunIntegrationTests;
 import comp3350.cookit.tests.persistence.StubDataStore;
 
-public class AccessTests {
+public class BusinessPersistenceSeamTest {
     private AccessAuthors authors;
     private AccessRecipes recipes;
     private AccessReviews reviews;
@@ -122,6 +122,149 @@ public class AccessTests {
 
         author = authors.getAuthorById(recipe.getAuthorId());
         Assert.assertEquals("Max Mayfield", author.getName());
+
+        resetDatabase();
+    }
+
+    @Test
+    public void testFavoritesList() {
+        initDatabase();
+
+        List<Recipe> recipeList = recipes.getFavoriteRecipes();
+
+        Assert.assertEquals(3, recipeList.size());
+        Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipeList.get(0).getTitle());
+        Assert.assertEquals("Grandma's Oatmeal Cookies", recipeList.get(1).getTitle());
+        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipeList.get(2).getTitle());
+
+        Assert.assertTrue(recipes.isRecipeFavorited(recipes.getRecipeById("1")));
+        Assert.assertTrue(recipes.isRecipeFavorited(recipes.getRecipeById("3")));
+        Assert.assertTrue(recipes.isRecipeFavorited(recipes.getRecipeById("7")));
+        Assert.assertFalse(recipes.isRecipeFavorited(recipes.getRecipeById("0")));
+        Assert.assertFalse(recipes.isRecipeFavorited(recipes.getRecipeById("2")));
+        Assert.assertFalse(recipes.isRecipeFavorited(recipes.getRecipeById("9")));
+
+        recipes.insertFavoriteRecipe(recipes.getRecipeById("9"));
+
+        recipeList = recipes.getFavoriteRecipes();
+        Assert.assertEquals(4, recipeList.size());
+        Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipeList.get(0).getTitle());
+        Assert.assertEquals("Grandma's Oatmeal Cookies", recipeList.get(1).getTitle());
+        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipeList.get(2).getTitle());
+        Assert.assertEquals("Baked Oatmeal with Mixed Berries", recipeList.get(3).getTitle());
+
+        Assert.assertTrue(recipes.isRecipeFavorited(recipes.getRecipeById("1")));
+        Assert.assertTrue(recipes.isRecipeFavorited(recipes.getRecipeById("3")));
+        Assert.assertTrue(recipes.isRecipeFavorited(recipes.getRecipeById("7")));
+        Assert.assertFalse(recipes.isRecipeFavorited(recipes.getRecipeById("0")));
+        Assert.assertTrue(recipes.isRecipeFavorited(recipes.getRecipeById("9")));
+        Assert.assertFalse(recipes.isRecipeFavorited(recipes.getRecipeById("2")));
+
+        recipes.deleteFavoriteRecipe(recipeList.get(1));
+
+        recipeList = recipes.getFavoriteRecipes();
+        Assert.assertEquals(3, recipeList.size());
+        Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipeList.get(0).getTitle());
+        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipeList.get(1).getTitle());
+        Assert.assertEquals("Baked Oatmeal with Mixed Berries", recipeList.get(2).getTitle());
+
+        Assert.assertTrue(recipes.isRecipeFavorited(recipes.getRecipeById("1")));
+        Assert.assertTrue(recipes.isRecipeFavorited(recipes.getRecipeById("7")));
+        Assert.assertTrue(recipes.isRecipeFavorited(recipes.getRecipeById("9")));
+        Assert.assertFalse(recipes.isRecipeFavorited(recipes.getRecipeById("0")));
+        Assert.assertFalse(recipes.isRecipeFavorited(recipes.getRecipeById("3")));
+        Assert.assertFalse(recipes.isRecipeFavorited(recipes.getRecipeById("2")));
+
+        resetDatabase();
+    }
+
+    @Test
+    public void testReviewSubmissionOnRecipeWithReviews() {
+        initDatabase();
+
+        // Load the recipe list
+        List<Recipe> recipeList = recipes.getRecipes();
+
+        // Pick a recipe from the list with some reviews
+        Recipe recipe = recipeList.get(0);
+
+        Assert.assertEquals("Lemon Cranberry Muffins", recipe.getTitle());
+
+        // Look at the avg review score
+        Assert.assertEquals(4.5, reviews.getAverageReviewScoreForRecipe(recipe), 0.01);
+
+        // Look at the reviews
+        List<Review> reviewList = reviews.getReviewsForRecipe(recipe);
+
+        Assert.assertEquals(2, reviewList.size());
+        Assert.assertEquals("Padma Gauthier", reviewList.get(0).getAuthor());
+        Assert.assertEquals("Should up the cranberry count a little bit, otherwise awesome!", reviewList.get(0).getContent());
+        Assert.assertEquals(4, reviewList.get(0).getRating());
+
+        Assert.assertEquals("Neo Colwyn", reviewList.get(1).getAuthor());
+        Assert.assertEquals("These muffins are really good!", reviewList.get(1).getContent());
+        Assert.assertEquals(5, reviewList.get(1).getRating());
+
+        // Submit a new review
+        Review review = new Review("4", recipe.getId(), "thomas the tank engine", "choo choo very bad muffins for a tank engine like me", 1);
+        reviews.insertReview(review);
+
+        // Look at the avg review score again
+        Assert.assertEquals(3.3, reviews.getAverageReviewScoreForRecipe(recipe), 0.1);
+
+        // Look at the again
+        reviewList = reviews.getReviewsForRecipe(recipe);
+
+        Assert.assertEquals(3, reviewList.size());
+        Assert.assertEquals("thomas the tank engine", reviewList.get(0).getAuthor());
+        Assert.assertEquals("choo choo very bad muffins for a tank engine like me", reviewList.get(0).getContent());
+        Assert.assertEquals(1, reviewList.get(0).getRating());
+
+        Assert.assertEquals("Padma Gauthier", reviewList.get(1).getAuthor());
+        Assert.assertEquals("Should up the cranberry count a little bit, otherwise awesome!", reviewList.get(1).getContent());
+        Assert.assertEquals(4, reviewList.get(1).getRating());
+
+        Assert.assertEquals("Neo Colwyn", reviewList.get(2).getAuthor());
+        Assert.assertEquals("These muffins are really good!", reviewList.get(2).getContent());
+        Assert.assertEquals(5, reviewList.get(2).getRating());
+
+        resetDatabase();
+    }
+
+    @Test
+    public void testReviewSubmissionOnRecipeWithoutReviews() {
+        initDatabase();
+
+        // Load the recipe list
+        List<Recipe> recipeList = recipes.getRecipes();
+
+        // Pick a recipe from the list with no reviews
+        Recipe recipe = recipeList.get(8);
+
+        Assert.assertEquals("Bisquick Apple Coffee Cake", recipe.getTitle());
+
+        // Look at the avg review score
+        Assert.assertEquals(0.0, reviews.getAverageReviewScoreForRecipe(recipe), 0.01);
+
+        // Look at the reviews
+        List<Review> reviewList = reviews.getReviewsForRecipe(recipe);
+
+        Assert.assertEquals(0, reviewList.size());
+
+        // Submit a new review
+        Review review = new Review("4", recipe.getId(), "ruby bunny", "apples are very yum", 5);
+        reviews.insertReview(review);
+
+        // Look at the avg review score again
+        Assert.assertEquals(5.0, reviews.getAverageReviewScoreForRecipe(recipe), 0.1);
+
+        // Look at the again
+        reviewList = reviews.getReviewsForRecipe(recipe);
+
+        Assert.assertEquals(1, reviewList.size());
+        Assert.assertEquals("ruby bunny", reviewList.get(0).getAuthor());
+        Assert.assertEquals("apples are very yum", reviewList.get(0).getContent());
+        Assert.assertEquals(5, reviewList.get(0).getRating());
 
         resetDatabase();
     }

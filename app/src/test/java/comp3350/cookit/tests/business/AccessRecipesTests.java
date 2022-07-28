@@ -368,62 +368,6 @@ public class AccessRecipesTests {
         resetDatabase();
     }
 
-    @Test
-    public void testFavoritesList() {
-        initDatabase();
-
-        List<Recipe> recipes = ar.getFavoriteRecipes();
-
-        for (Recipe r : recipes) {
-            System.out.println(r.getTitle());
-        }
-
-        Assert.assertEquals(3, recipes.size());
-        Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(0).getTitle());
-        Assert.assertEquals("Grandma's Oatmeal Cookies", recipes.get(1).getTitle());
-        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipes.get(2).getTitle());
-
-        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("1")));
-        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("3")));
-        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("7")));
-        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("0")));
-        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("2")));
-        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("9")));
-
-        ar.insertFavoriteRecipe(ar.getRecipeById("9"));
-
-        recipes = ar.getFavoriteRecipes();
-        Assert.assertEquals(4, recipes.size());
-        Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(0).getTitle());
-        Assert.assertEquals("Grandma's Oatmeal Cookies", recipes.get(1).getTitle());
-        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipes.get(2).getTitle());
-        Assert.assertEquals("Baked Oatmeal with Mixed Berries", recipes.get(3).getTitle());
-
-        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("1")));
-        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("3")));
-        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("7")));
-        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("0")));
-        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("9")));
-        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("2")));
-
-        ar.deleteFavoriteRecipe(recipes.get(1));
-
-        recipes = ar.getFavoriteRecipes();
-        Assert.assertEquals(3, recipes.size());
-        Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(0).getTitle());
-        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipes.get(1).getTitle());
-        Assert.assertEquals("Baked Oatmeal with Mixed Berries", recipes.get(2).getTitle());
-
-        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("1")));
-        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("7")));
-        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("9")));
-        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("0")));
-        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("3")));
-        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("2")));
-
-        resetDatabase();
-    }
-
 
     private void initDatabase() {
         if (RunIntegrationTests.USE_STUBDATASTORE) {
