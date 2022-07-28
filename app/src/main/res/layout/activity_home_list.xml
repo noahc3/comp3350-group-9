@@ -87,12 +87,12 @@ android:orientation="vertical">
         android:onClick="newRecipesOnClick"
         android:text="@string/new_recipe" />
 
-    <Button
-        android:id="@+id/favoriteList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="favoriteListOnClick"
-        android:text="FAVORITES" />
+        <Button
+            android:id="@+id/favoriteList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="favoriteListOnClick"
+            android:text="@string/title_activity_favorite_list" />
 
     </LinearLayout>
 </LinearLayout>

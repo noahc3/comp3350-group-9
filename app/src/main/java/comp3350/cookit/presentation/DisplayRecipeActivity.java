@@ -117,11 +117,9 @@ public class DisplayRecipeActivity extends Activity {
             }
         });
 
-        reviewRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                if (rating < 1.0f) {
-                    ratingBar.setRating(1.0f);
-                }
+        reviewRating.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
+            if (rating < 1.0f) {
+                ratingBar.setRating(1.0f);
             }
         });
 
@@ -133,20 +131,10 @@ public class DisplayRecipeActivity extends Activity {
         AccessRecipes recipes = new AccessRecipes();
         if (recipes.isRecipeFavorited(getRecipeToDisplay())) {
             favoriteImage.setImageResource(R.drawable.ic_baseline_favorite_24);
-            favoriteImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    deleteFavorite(v);
-                }
-            });
+            favoriteImage.setOnClickListener(this::deleteFavorite);
         } else {
             favoriteImage.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-            favoriteImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    addFavorite(v);
-                }
-            });
+            favoriteImage.setOnClickListener(this::addFavorite);
         }
     }
 
@@ -260,12 +248,7 @@ public class DisplayRecipeActivity extends Activity {
                 btnTag.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
                 btnTag.setTextColor(getResources().getColor(R.color.colorWhite));
                 btnTag.getBackground().setColorFilter(btnTag.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
-                btnTag.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        navigateToTaggedRecipeList(v);
-                    }
-                });
+                btnTag.setOnClickListener(this::navigateToTaggedRecipeList);
                 btnTag.setPadding(1, 1, 1, 1);
 
                 tagsList.addView(btnTag);
@@ -328,9 +311,9 @@ public class DisplayRecipeActivity extends Activity {
     }
 
     private boolean validateReviewSubmission() {
-        boolean invalid = false;
+        boolean invalid;
 
-        invalid = invalid || TextUtils.isEmpty(reviewContent.getText());
+        invalid = TextUtils.isEmpty(reviewContent.getText());
         invalid = invalid || TextUtils.isEmpty(reviewAuthor.getText());
 
         return !invalid;

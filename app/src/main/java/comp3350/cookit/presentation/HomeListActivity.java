@@ -83,15 +83,10 @@ public class HomeListActivity extends Activity {
                 btnTag.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
                 btnTag.setTextColor(getResources().getColor(R.color.colorWhite));
                 btnTag.getBackground().setColorFilter(btnTag.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
-                btnTag.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Button btn = (Button) v;
-
-                        Intent taggedRecipeListIntent = new Intent(v.getContext(), TaggedListActivity.class);
-                        taggedRecipeListIntent.putExtra("recipeTag", tag);
-                        startActivity(taggedRecipeListIntent);
-                    }
+                btnTag.setOnClickListener(v -> {
+                    Intent taggedRecipeListIntent = new Intent(v.getContext(), TaggedListActivity.class);
+                    taggedRecipeListIntent.putExtra("recipeTag", tag);
+                    startActivity(taggedRecipeListIntent);
                 });
                 btnTag.setPadding(1, 1, 1, 1);
 
@@ -141,7 +136,7 @@ public class HomeListActivity extends Activity {
         // Suggest time_of_day tag for the time of day
         if (currHour >= 6 && currHour <= 10)
             suggestions.add(timeOfDay[0]); // "Breakfast" Tag
-        else if (currHour >= 12 && currHour <= 2)
+        else if (currHour >= 12 && currHour <= 14)
             suggestions.add(timeOfDay[1]); // "Lunch" Tag
         else if (currHour >= 18 && currHour <= 22)
             suggestions.add(timeOfDay[2]); // "Dinner" Tag
@@ -157,7 +152,7 @@ public class HomeListActivity extends Activity {
             suggestions.add(tagsArray[i][randIndex]);
         }
 
-        return (String[]) suggestions.toArray(new String[0]); // cast Object[] to String[]
+        return (String[]) suggestions.toArray(new String[0]);
     }
 
     public void seeAllOnClick(View v) {

@@ -28,6 +28,19 @@
     <string name="cook_time_display">Cook Time: %d minutes</string>
     <string name="difficulty_display">Difficulty: %s</string>
 
+    <!-- Recipe Submission Errors -->
+    <string name="recipe_error_provide_name">You must provide a name for the recipe</string>
+    <string name="recipe_error_provide_author">You must provide an author</string>
+    <string name="recipe_error_provide_serving_size">You must provide a serving size</string>
+    <string name="recipe_error_provide_directions">You must give directions for the recipe</string>
+    <string name="recipe_error_provide_ingredients">You must add at least one (1) ingredient</string>
+    <string name="recipe_error_provide_prep_time">You must specify the prep time</string>
+    <string name="recipe_error_provide_cook_time">You must specify the cook time</string>
+    <string name="recipe_error_provide_difficulty">You must indicate the difficulty level of the recipe</string>
+    <string name="recipe_error_provide_ingredient_name">You must provide an ingredient</string>
+    <string name="recipe_error_provide_ingredient_qty">You must provide one or both of a whole number and/or a fraction</string>
+    <string name="recipe_error_provide_ingredient_unit">You must provide a unit of measurement</string>
+
     <!-- Hints -->
     <string name="time_hint">(in minutes)</string>
     <string name="optional_hint">(optional)</string>

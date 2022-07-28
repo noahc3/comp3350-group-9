@@ -309,28 +309,28 @@ public class NewRecipeActivity extends Activity {
     private void showTextInputErrors() {
         // Show an error message for each text input that is missing
         if (TextUtils.isEmpty(recipeName.getText()))
-            recipeName.setError("You must provide a name for the recipe");
+            recipeName.setError(getString(R.string.recipe_error_provide_name));
 
         if (TextUtils.isEmpty(author.getText()))
-            author.setError("You must provide an author");
+            author.setError(getString(R.string.recipe_error_provide_author));
 
         if (TextUtils.isEmpty(servingSize.getText()))
-            servingSize.setError("You must provide a serving size");
+            servingSize.setError(getString(R.string.recipe_error_provide_serving_size));
 
         if (TextUtils.isEmpty(directions.getText()))
-            directions.setError("You must give directions for the recipe");
+            directions.setError(getString(R.string.recipe_error_provide_directions));
 
         if (ingredientListLayout.isEmpty())
-            ingredientLayout.setError("You must add at least one (1) ingredient");
+            ingredientLayout.setError(getString(R.string.recipe_error_provide_ingredients));
 
         if (TextUtils.isEmpty(prepTime.getText()))
-            prepTime.setError("You must specify the prep time");
+            prepTime.setError(getString(R.string.recipe_error_provide_prep_time));
 
         if (TextUtils.isEmpty(cookTime.getText()))
-            cookTime.setError("You must specify the cook time");
+            cookTime.setError(getString(R.string.recipe_error_provide_cook_time));
 
         if (TextUtils.isEmpty(difficulty.getText()))
-            difficulty.setError("You must indicate the difficulty level of the recipe");
+            difficulty.setError(getString(R.string.recipe_error_provide_difficulty));
 
         Messages.toastLong(this, getString(R.string.submission_error));
     }
@@ -338,16 +338,16 @@ public class NewRecipeActivity extends Activity {
     private void showIngredientErrors() {
         // Show an error message for each text input that is missing
         if (TextUtils.isEmpty(ingredientName.getText()))
-            ingredientName.setError("You must provide an ingredient");
+            ingredientName.setError(getString(R.string.recipe_error_provide_ingredient_name));
 
         if (TextUtils.isEmpty(amountWhole.getText()) && TextUtils.isEmpty(fraction.getText())) {
-            String errorMsg = "You must provide one or both of a whole number and/or a fraction";
+            String errorMsg = getString(R.string.recipe_error_provide_ingredient_qty);
             amountWhole.setError(errorMsg);
             fraction.setError(errorMsg);
         }
 
         if (TextUtils.isEmpty(units.getText()))
-            units.setError("You must provide a unit of measurement");
+            units.setError(getString(R.string.recipe_error_provide_ingredient_unit));
     }
 
     private ArrayList<String> attachTags() {
@@ -400,16 +400,13 @@ public class NewRecipeActivity extends Activity {
         dropdown.setAdapter(adapter);
 
         // Show all text suggestions to mimic a dropdown list's behavior
-        dropdown.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    dropdown.showDropDown(); // show all dropdown options
-                    dropdown.setError(null); // clear any preexisting error indicators
-                }
-
-                return false;
+        dropdown.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                dropdown.showDropDown(); // show all dropdown options
+                dropdown.setError(null); // clear any preexisting error indicators
             }
+
+            return false;
         });
     }
 
