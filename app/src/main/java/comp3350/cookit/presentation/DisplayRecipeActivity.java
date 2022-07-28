@@ -122,8 +122,6 @@ public class DisplayRecipeActivity extends Activity {
 
     }
 
-
-
     public void displayRecipe(int servingSize) {
         Recipe recipe = getRecipeToDisplay();
         AccessAuthors authors = new AccessAuthors();

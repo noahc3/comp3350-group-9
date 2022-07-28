@@ -44,12 +44,12 @@ public class RecipeTagsAcceptanceTests {
 
         onView(withId(R.id.taggedListHeader)).check(matches(withText("Recipes tagged as 'Sweet'")));
         onView(withId(R.id.taggedRecipeList)).check(matches(hasChildCount(6)));
-        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withText("Lemon Cranberry Muffins"))));
-        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withText("Rice Cake with Dulce de Leche and Dark Chocolate"))));
-        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withText("Grandma's Oatmeal Cookies"))));
-        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withText("Sweet and Salty Three-Seed Granola"))));
-        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withText("Bisquick Apple Coffee Cake"))));
-        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withText("Baked Oatmeal with Mixed Berries"))));
+        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withChild(withChild(withChild(withText("Lemon Cranberry Muffins")))))));
+        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withChild(withChild(withChild(withText("Rice Cake with Dulce de Leche and Dark Chocolate")))))));
+        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withChild(withChild(withChild(withText("Grandma's Oatmeal Cookies")))))));
+        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withChild(withChild(withChild(withText("Sweet and Salty Three-Seed Granola")))))));
+        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withChild(withChild(withChild(withText("Bisquick Apple Coffee Cake")))))));
+        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withChild(withChild(withChild(withText("Baked Oatmeal with Mixed Berries")))))));
 
         onView(withText("Lemon Cranberry Muffins")).perform(scrollTo(), click());
 
@@ -64,8 +64,8 @@ public class RecipeTagsAcceptanceTests {
 
         onView(withId(R.id.taggedListHeader)).check(matches(withText("Recipes tagged as 'Snack'")));
         onView(withId(R.id.taggedRecipeList)).check(matches(hasChildCount(3)));
-        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withText("Lemon Cranberry Muffins"))));
-        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withText("Sweet and Salty Three-Seed Granola"))));
-        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withText("Baked Oatmeal with Mixed Berries"))));
+        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withChild(withChild(withChild(withText("Lemon Cranberry Muffins")))))));
+        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withChild(withChild(withChild(withText("Sweet and Salty Three-Seed Granola")))))));
+        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withChild(withChild(withChild(withText("Baked Oatmeal with Mixed Berries")))))));
     }
 }
