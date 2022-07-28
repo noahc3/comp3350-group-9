@@ -21,6 +21,7 @@
         <activity android:name=".presentation.NewRecipeActivity"/>
         <activity android:name=".presentation.DisplayRecipeActivity"/>
         <activity android:name=".presentation.TaggedListActivity"/>
+        <activity android:name=".presentation.FavoriteListActivity"/>
     </application>
 
 </manifest>

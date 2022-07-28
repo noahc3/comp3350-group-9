@@ -29,25 +29,27 @@ public class FavoriteListActivity extends Activity {
         setContentView(R.layout.activity_favorite_list);
 
         header = findViewById(R.id.favoriteListHeader);
-        favoriteRecipeList = findViewById(R.id.taggedRecipeList);
+        favoriteRecipeList = findViewById(R.id.favoriteRecipeList);
 
+        showRecipeButtons();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         showRecipeButtons();
     }
 
     public void showRecipeButtons() {
         List<Recipe> recipes = new AccessRecipes().getFavoriteRecipes();
 
-//        favoriteRecipeList.removeAllViews();
+        favoriteRecipeList.removeAllViews();
 
         for (Recipe recipe : recipes) {
-            Button button = new Button(this);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    displayRecipe(v);
-                }
-            });
-            favoriteRecipeList.addView(button);
+            RecipeBoxView view = new RecipeBoxView(this, recipe);
+            view.setTag(recipe.getId());
+            view.setOnClickListener(this::displayRecipe);
+            favoriteRecipeList.addView(view);
         }
 
         favoriteRecipeList.requestLayout();

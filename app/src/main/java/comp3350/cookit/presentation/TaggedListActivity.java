@@ -13,6 +13,7 @@ import java.util.List;
 import comp3350.cookit.R;
 import comp3350.cookit.business.AccessRecipes;
 import comp3350.cookit.objects.Recipe;
+import comp3350.cookit.presentation.components.RecipeBoxView;
 
 public class TaggedListActivity extends Activity {
     private TextView header;
@@ -47,16 +48,10 @@ public class TaggedListActivity extends Activity {
         taggedRecipeList.removeAllViews();
 
         for (Recipe recipe : recipes) {
-            Button button = new Button(this);
-            button.setText(recipe.getTitle());
-            button.setTag(recipe.getId());
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    displayRecipe(v);
-                }
-            });
-            taggedRecipeList.addView(button);
+            RecipeBoxView view = new RecipeBoxView(this, recipe);
+            view.setTag(recipe.getId());
+            view.setOnClickListener(this::displayRecipe);
+            taggedRecipeList.addView(view);
         }
 
         taggedRecipeList.requestLayout();
