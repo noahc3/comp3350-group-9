@@ -29,8 +29,6 @@ public interface IDataStore {
 
     void deleteFavoriteRecipe(String recipeId);
 
-    boolean anyRecipeWithTag(String tag);
-
     List<Author> getAllAuthors();
 
     Author getAuthorById(String id);
