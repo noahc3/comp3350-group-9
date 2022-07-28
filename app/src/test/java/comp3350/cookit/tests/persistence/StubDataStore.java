@@ -61,7 +61,8 @@ public class StubDataStore implements IDataStore {
                         30,
                         20,
                         "Medium",
-                        Arrays.asList("muffin0", "muffin1")
+                        Arrays.asList("muffin0", "muffin1"),
+                        1658904000000L
                 ),
                 new Recipe(
                         "1",
@@ -81,7 +82,8 @@ public class StubDataStore implements IDataStore {
                         30,
                         360,
                         "Easy",
-                        Arrays.asList("chicken0", "chicken1")
+                        Arrays.asList("chicken0", "chicken1"),
+                        1658904010000L
                 ),
                 new Recipe(
                         "2",
@@ -104,7 +106,8 @@ public class StubDataStore implements IDataStore {
                         10,
                         10,
                         "Easy",
-                        Arrays.asList("sesame-peanut-noodles-1", "sesame-peanut-noodles-2", "sesame-peanut-noodles-3")
+                        Arrays.asList("sesame-peanut-noodles-1", "sesame-peanut-noodles-2", "sesame-peanut-noodles-3"),
+                        1658904020000L
                 ),
                 new Recipe(
                         "3",
@@ -130,7 +133,8 @@ public class StubDataStore implements IDataStore {
                         20,
                         10,
                         "Moderate",
-                        Arrays.asList("oatmeal-cookies-1", "oatmeal-cookies-2", "oatmeal-cookies-3")
+                        Arrays.asList("oatmeal-cookies-1", "oatmeal-cookies-2", "oatmeal-cookies-3"),
+                        1658904030000L
                 ),
                 new Recipe(
                         "4",
@@ -153,7 +157,8 @@ public class StubDataStore implements IDataStore {
                         7,
                         8,
                         "Easy",
-                        Arrays.asList("tofu-scramble-1", "tofu-scramble-2", "tofu-scramble-3")
+                        Arrays.asList("tofu-scramble-1", "tofu-scramble-2", "tofu-scramble-3"),
+                        1658904040000L
                 ),
                 new Recipe(
                         "5",
@@ -176,7 +181,8 @@ public class StubDataStore implements IDataStore {
                         30,
                         10,
                         "Moderate",
-                        Arrays.asList("shrimp-ceviche-1", "shrimp-ceviche-2", "shrimp-ceviche-3")
+                        Arrays.asList("shrimp-ceviche-1", "shrimp-ceviche-2", "shrimp-ceviche-3"),
+                        1658904050000L
                 ),
                 new Recipe(
                         "6",
@@ -196,7 +202,8 @@ public class StubDataStore implements IDataStore {
                         5,
                         15,
                         "Easy",
-                        Arrays.asList("cheese-bread-1", "cheese-bread-2", "cheese-bread-3")
+                        Arrays.asList("cheese-bread-1", "cheese-bread-2", "cheese-bread-3"),
+                        1658904060000L
                 ),
                 new Recipe(
                         "7",
@@ -223,7 +230,8 @@ public class StubDataStore implements IDataStore {
                         10,
                         45,
                         "Moderate",
-                        Arrays.asList("sweet-salty-granola-1", "sweet-salty-granola-2", "sweet-salty-granola-3")
+                        Arrays.asList("sweet-salty-granola-1", "sweet-salty-granola-2", "sweet-salty-granola-3"),
+                        1658904070000L
                 ),
                 new Recipe(
                         "8",
@@ -246,7 +254,8 @@ public class StubDataStore implements IDataStore {
                         5,
                         20,
                         "Easy",
-                        Arrays.asList("bisquick-1", "bisquick-2")
+                        Arrays.asList("bisquick-1", "bisquick-2"),
+                        1658904080000L
                 ),
                 new Recipe(
                         "9",
@@ -270,7 +279,8 @@ public class StubDataStore implements IDataStore {
                         10,
                         45,
                         "Moderate",
-                        Arrays.asList("oatmeal-berries-1", "oatmeal-berries-2", "oatmeal-berries-3")
+                        Arrays.asList("oatmeal-berries-1", "oatmeal-berries-2", "oatmeal-berries-3"),
+                        1658904090000L
                 ),
                 new Recipe(
                         "10",
@@ -296,7 +306,8 @@ public class StubDataStore implements IDataStore {
                         10,
                         30,
                         "Easy",
-                        Arrays.asList("philly-sloppy-joes-1", "philly-sloppy-joes-2", "philly-sloppy-joes-3")
+                        Arrays.asList("philly-sloppy-joes-1", "philly-sloppy-joes-2", "philly-sloppy-joes-3"),
+                        1658904100000L
                 ),
                 new Recipe(
                         "11",
@@ -318,7 +329,8 @@ public class StubDataStore implements IDataStore {
                         5,
                         15,
                         "Easy",
-                        Arrays.asList("bruschetta-1", "bruschetta-2", "bruschetta-3", "bruschetta-4")
+                        Arrays.asList("bruschetta-1", "bruschetta-2", "bruschetta-3", "bruschetta-4"),
+                        1658904110000L
                 ),
                 new Recipe(
                         "12",
@@ -340,7 +352,8 @@ public class StubDataStore implements IDataStore {
                         15,
                         45,
                         "Challenging",
-                        Arrays.asList("crash-hot-potatoes-1", "crash-hot-potatoes-2", "crash-hot-potatoes-3")
+                        Arrays.asList("crash-hot-potatoes-1", "crash-hot-potatoes-2", "crash-hot-potatoes-3"),
+                        1658904120000L
                 ),
                 new Recipe(
                         "13",
@@ -359,20 +372,21 @@ public class StubDataStore implements IDataStore {
                         10,
                         1,
                         "Easy",
-                        Arrays.asList("rice-cakes-1", "rice-cakes-2", "rice-cakes-3")
+                        Arrays.asList("rice-cakes-1", "rice-cakes-2", "rice-cakes-3"),
+                        1658904130000L
                 )
 
         ));
 
         reviews = new ArrayList<>(Arrays.asList(
-                new Review("0", "0", "Neo Colwyn", "These muffins are really good!", 5),
-                new Review("1", "0", "Padma Gauthier", "Should up the cranberry count a little bit, otherwise awesome!", 4),
-                new Review("2", "1", "Lara Hanna", "Too much ketchup.", 2),
-                new Review("3", "2", "Sheila M. Higgs-Coulthard", "I am restricted with my intake of starch, also various vegetables, this recipe meets all my restrictions yet leaving you happy and satisfied, thank you very much.", 5)
+                new Review("0", "0", "Neo Colwyn", "These muffins are really good!", 5, 1658608235000L),
+                new Review("1", "0", "Padma Gauthier", "Should up the cranberry count a little bit, otherwise awesome!", 4, 1658672435000L),
+                new Review("2", "1", "Lara Hanna", "Too much ketchup.", 2, 1658797955000L),
+                new Review("3", "2", "Sheila M. Higgs-Coulthard", "I am restricted with my intake of starch, also various vegetables, this recipe meets all my restrictions yet leaving you happy and satisfied, thank you very much.", 5, 1658797965000L)
         ));
 
         favorites = new ArrayList<>(Arrays.asList(
-           "1", "3", "7"
+                "1", "3", "7"
         ));
 
         System.out.println("Opened stub database.");
@@ -444,6 +458,21 @@ public class StubDataStore implements IDataStore {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean anyRecipeWithTag(String tag) {
+        List<Recipe> recipes = getAllRecipes();
+
+        if (recipes != null) {
+            for (Recipe r : recipes) {
+                if (r.getTags().contains(tag)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     @Override
