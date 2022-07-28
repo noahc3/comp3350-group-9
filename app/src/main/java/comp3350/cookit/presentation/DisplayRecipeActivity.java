@@ -132,7 +132,6 @@ public class DisplayRecipeActivity extends Activity {
             @Override
             public void onClick(View v) {
                 addFavorite(v);
-
             }
         });
 
@@ -141,6 +140,8 @@ public class DisplayRecipeActivity extends Activity {
 
     public void addFavorite(View v) {
         favoriteImage.setImageResource(R.drawable.ic_baseline_favorite_24);
+        AccessRecipes recipes = new AccessRecipes();
+        recipes.insertFavoriteRecipe(getRecipeToDisplay());
     }
 
 

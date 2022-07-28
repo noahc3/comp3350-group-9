@@ -18,10 +18,6 @@ public class AccessRecipes {
         return dataStore.getAllRecipes();
     }
 
-    public List<Recipe> getFavoriteRecipes() {
-        return dataStore.getFavoriteRecipes();
-    }
-
     public void insertFavoriteRecipe(Recipe r) {
         dataStore.insertFavoriteRecipe(r.getId());
     }
@@ -34,8 +30,12 @@ public class AccessRecipes {
         return getFavoriteRecipes().contains(r);
     }
 
-    public List<Recipe> getRecipesWithTag(String tag) {
-        return dataStore.getRecipesWithTag(tag);
+    public List<Recipe> getRecipesWithTag(String id) {
+        return dataStore.getRecipesWithTag(id);
+    }
+
+    public List<Recipe> getFavoriteRecipes() {
+        return dataStore.getFavoriteRecipes();
     }
 
     public Recipe getRecipeById(String id) {
