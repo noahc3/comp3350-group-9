@@ -2,7 +2,6 @@ package comp3350.cookit.business;
 
 import java.util.List;
 
-import comp3350.cookit.application.Main;
 import comp3350.cookit.application.Services;
 import comp3350.cookit.objects.Recipe;
 import comp3350.cookit.persistence.IDataStore;
@@ -40,6 +39,10 @@ public class AccessRecipes {
 
     public Recipe getRecipeById(String id) {
         return dataStore.getRecipeById(id);
+    }
+
+    public boolean anyRecipeWithTag(String tag) {
+        return dataStore.anyRecipeWithTag(tag);
     }
 
     public void insertRecipe(Recipe recipe) {

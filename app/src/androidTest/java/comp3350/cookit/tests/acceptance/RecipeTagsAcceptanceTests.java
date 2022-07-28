@@ -11,6 +11,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withChild;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import static org.hamcrest.Matchers.allOf;
+
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -44,12 +46,12 @@ public class RecipeTagsAcceptanceTests {
 
         onView(withId(R.id.taggedListHeader)).check(matches(withText("Recipes tagged as 'Sweet'")));
         onView(withId(R.id.taggedRecipeList)).check(matches(hasChildCount(6)));
-        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withText("Lemon Cranberry Muffins"))));
-        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withText("Rice Cake with Dulce de Leche and Dark Chocolate"))));
-        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withText("Grandma's Oatmeal Cookies"))));
-        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withText("Sweet and Salty Three-Seed Granola"))));
-        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withText("Bisquick Apple Coffee Cake"))));
-        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withText("Baked Oatmeal with Mixed Berries"))));
+        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withChild(withChild(allOf(withChild(withText("Lemon Cranberry Muffins")), withChild(withText("Written by bobpiazza"))))))));
+        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withChild(withChild(allOf(withChild(withText("Rice Cake with Dulce de Leche and Dark Chocolate")), withChild(withText("Written by Micah Siva"))))))));
+        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withChild(withChild(allOf(withChild(withText("Grandma's Oatmeal Cookies")), withChild(withText("Written by Elise Bauer"))))))));
+        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withChild(withChild(allOf(withChild(withText("Sweet and Salty Three-Seed Granola")), withChild(withText("Written by Shilpa Uskokovic"))))))));
+        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withChild(withChild(allOf(withChild(withText("Bisquick Apple Coffee Cake")), withChild(withText("Written by Elise Bauer"))))))));
+        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withChild(withChild(allOf(withChild(withText("Baked Oatmeal with Mixed Berries")), withChild(withText("Written by Ariane Resnick"))))))));
 
         onView(withText("Lemon Cranberry Muffins")).perform(scrollTo(), click());
 
@@ -64,8 +66,8 @@ public class RecipeTagsAcceptanceTests {
 
         onView(withId(R.id.taggedListHeader)).check(matches(withText("Recipes tagged as 'Snack'")));
         onView(withId(R.id.taggedRecipeList)).check(matches(hasChildCount(3)));
-        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withText("Lemon Cranberry Muffins"))));
-        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withText("Sweet and Salty Three-Seed Granola"))));
-        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withText("Baked Oatmeal with Mixed Berries"))));
+        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withChild(withChild(allOf(withChild(withText("Lemon Cranberry Muffins")), withChild(withText("Written by bobpiazza"))))))));
+        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withChild(withChild(allOf(withChild(withText("Sweet and Salty Three-Seed Granola")), withChild(withText("Written by Shilpa Uskokovic"))))))));
+        onView(withId(R.id.taggedRecipeList)).check(matches(withChild(withChild(withChild(allOf(withChild(withText("Baked Oatmeal with Mixed Berries")), withChild(withText("Written by Ariane Resnick"))))))));
     }
 }
