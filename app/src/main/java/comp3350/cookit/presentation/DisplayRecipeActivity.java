@@ -58,6 +58,10 @@ public class DisplayRecipeActivity extends Activity {
     private LinearLayout imageButtonsLayout;
     private ImageView imageView;
 
+    private ImageView favorite;
+//    int [] ImageId = {R.drawable.ic_baseline_favorite_border_24, R.drawable.ic_baseline_favorite_24};
+    ImageView favoriteImage;
+
     private RatingBar averageRating;
     private TextView ratingCount;
 
@@ -100,6 +104,8 @@ public class DisplayRecipeActivity extends Activity {
 
         reviewsLayout = findViewById(R.id.recipeReviewsLayout);
 
+        favorite = findViewById(R.id.favorite);
+
         displayRecipe(defaultServingSize);
 
         servingsDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -120,6 +126,21 @@ public class DisplayRecipeActivity extends Activity {
             }
         });
 
+        favoriteImage = (ImageView) findViewById(R.id.favorite);
+        favoriteImage.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+        favoriteImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addFavorite(v);
+
+            }
+        });
+
+
+    }
+
+    public void addFavorite(View v) {
+        favoriteImage.setImageResource(R.drawable.ic_baseline_favorite_24);
     }
 
     public void displayRecipe(int servingSize) {

@@ -150,11 +150,10 @@
                 android:layout_weight="1" />
 
             <ImageView
-                android:id="@+id/fav"
+                android:id="@+id/favorite"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
-                android:src="@drawable/ic_baseline_favorite_border_24"
                 android:tint="@android:color/black" />
 
         </LinearLayout>

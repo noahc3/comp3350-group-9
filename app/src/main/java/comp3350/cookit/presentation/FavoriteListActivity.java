@@ -20,7 +20,6 @@ public class FavoriteListActivity extends Activity {
 
     private TextView header;
     private LinearLayout taggedRecipeList;
-//    private String tag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,42 +27,12 @@ public class FavoriteListActivity extends Activity {
 
         setContentView(R.layout.activity_favorite_list);
 
-//        tag = getIntent().getExtras().getString("recipeTag");
         header = findViewById(R.id.favoriteListHeader);
-//        taggedRecipeList = findViewById(R.id.taggedRecipeList);
-
-//        header.setText(getString(R.string.title_activity_tagged_list, tag));
-//        showRecipeButtons();
 
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        showRecipeButtons();
-    }
 
-    public void showRecipeButtons() {
-        List<Recipe> recipes = new ArrayList();
-
-        taggedRecipeList.removeAllViews();
-
-        for (Recipe recipe : recipes) {
-            Button button = new Button(this);
-            button.setText(recipe.getTitle());
-            button.setTag(recipe.getId());
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    displayRecipe(v);
-                }
-            });
-            taggedRecipeList.addView(button);
-        }
-
-        taggedRecipeList.requestLayout();
-    }
 
     public void displayRecipe(View v) {
         Intent displayRecipeIntent = new Intent(this, DisplayRecipeActivity.class);
