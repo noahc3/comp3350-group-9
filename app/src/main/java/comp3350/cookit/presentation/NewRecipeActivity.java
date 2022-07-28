@@ -131,7 +131,7 @@ public class NewRecipeActivity extends Activity {
             ingredientLayout.setError(null);
             ingredientListLayout.add(newIngredient);
 
-            Ingredient ingredient = new Ingredient(StringUtilities.toCapitalized(ingredientString), amount, strUnits);
+            Ingredient ingredient = new Ingredient(currIngredients, amount, strUnits);
             list.add(ingredient);
 
             clearIngredientFields();
@@ -200,11 +200,11 @@ public class NewRecipeActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         photos = new ArrayList<>();
-        if (resultCode == RESULT_OK && requestCode == 1) {
+        if (resultCode == RESULT_OK && requestCode == 1 && data.getData() != null) {
             if (data.getClipData() != null) {
                 int count = data.getClipData().getItemCount();
                 for (int i = 0; i < count; i++) {
-                    if (data.getClipData().getItemAt(i) != null)
+                    if (data.getData() != null)
                         photos.add(data.getClipData().getItemAt(i).getUri());
                 }
             } else if (data.getData() != null) {
@@ -262,24 +262,26 @@ public class NewRecipeActivity extends Activity {
 
     // private as these are helper methods
     private boolean validateInput() { // verify if every required field is filled
-        boolean isValid = !TextUtils.isEmpty(recipeName.getText())
-                && !TextUtils.isEmpty(author.getText())
-                && !TextUtils.isEmpty(servingSize.getText())
-                && !TextUtils.isEmpty(directions.getText())
-                && !TextUtils.isEmpty(prepTime.getText())
-                && !TextUtils.isEmpty(cookTime.getText())
-                && !TextUtils.isEmpty(difficulty.getText())
-                && !ingredientListLayout.isEmpty(); // initially true
+        boolean isValid = true; // initially true
 
-        // change to false if one of the fields are empty
+        if (TextUtils.isEmpty(recipeName.getText())
+                || TextUtils.isEmpty(author.getText())
+                || TextUtils.isEmpty(servingSize.getText())
+                || TextUtils.isEmpty(directions.getText())
+                || TextUtils.isEmpty(prepTime.getText())
+                || TextUtils.isEmpty(cookTime.getText())
+                || TextUtils.isEmpty(difficulty.getText())
+                || ingredientListLayout.isEmpty())
+            isValid = false; // change to false if one of the fields are empty
 
         return isValid;
     }
 
     private boolean validateIngredient() { // verify if every required ingredient field is filled
-        boolean isValid = !TextUtils.isEmpty(ingredientName.getText()) && !TextUtils.isEmpty(units.getText()); // initially true
+        boolean isValid = true; // initially true
 
-        // change to false if one of the fields are empty
+        if (TextUtils.isEmpty(ingredientName.getText()) || TextUtils.isEmpty(units.getText()))
+            isValid = false; // change to false if one of the fields are empty
 
         // Positive integer + no fraction is valid,
         // Empty whole number field (assumed 0) + fraction is valid,
@@ -315,8 +317,6 @@ public class NewRecipeActivity extends Activity {
 
         if (TextUtils.isEmpty(difficulty.getText()))
             difficulty.setError("You must indicate the difficulty level of the recipe");
-
-        Messages.toastLong(this, getString(R.string.submission_error));
     }
 
     private void showIngredientErrors() {

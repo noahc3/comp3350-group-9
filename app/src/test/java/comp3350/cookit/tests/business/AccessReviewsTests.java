@@ -3,48 +3,37 @@ package comp3350.cookit.tests.business;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import comp3350.cookit.application.Services;
-import comp3350.cookit.business.AccessRecipes;
 import comp3350.cookit.business.AccessReviews;
 import comp3350.cookit.objects.Review;
-import comp3350.cookit.tests.RunIntegrationTests;
 import comp3350.cookit.tests.persistence.StubDataStore;
 
 public class AccessReviewsTests {
-
-    AccessReviews ar;
-
     @Test
     public void testNewReview() {
-        initDatabase();
+        AccessReviews ar = initAccessReviews();
 
         List<Review> reviews = ar.getReviews();
-        Assert.assertEquals(4, reviews.size());
+        Assert.assertEquals(3, reviews.size());
 
-        Review r = new Review("4", "1", "Richard Hendricks", "tastes like chicken", 5);
+        Review r = new Review("3", "1", "Richard Hendricks", "tastes like chicken", 5);
         ar.insertReview(r);
 
         reviews = ar.getReviews();
-        Assert.assertEquals(5, reviews.size());
+        Assert.assertEquals(4, reviews.size());
 
-        Assert.assertEquals(r.getId(), reviews.get(0).getId());
-        Assert.assertEquals(r.getRecipeId(), reviews.get(0).getRecipeId());
-        Assert.assertEquals(r.getAuthor(), reviews.get(0).getAuthor());
-        Assert.assertEquals(r.getContent(), reviews.get(0).getContent());
-        Assert.assertEquals(r.getRating(), reviews.get(0).getRating());
-
-        resetDatabase();
+        Assert.assertEquals(r.getId(), reviews.get(3).getId());
+        Assert.assertEquals(r.getRecipeId(), reviews.get(3).getRecipeId());
+        Assert.assertEquals(r.getAuthor(), reviews.get(3).getAuthor());
+        Assert.assertEquals(r.getContent(), reviews.get(3).getContent());
+        Assert.assertEquals(r.getRating(), reviews.get(3).getRating());
     }
 
     @Test
     public void testReviewUpdateSingleField() {
-        initDatabase();
+        AccessReviews ar = initAccessReviews();
 
         Review dbReview = ar.getReviewById("0");
         Assert.assertEquals("0", dbReview.getId());
@@ -66,13 +55,11 @@ public class AccessReviewsTests {
         Assert.assertEquals("0", dbReview.getId());
         Assert.assertEquals("New author", dbReview.getAuthor());
         Assert.assertEquals(3, dbReview.getRating());
-
-        resetDatabase();
     }
 
     @Test
     public void testReviewUpdateMultiField() {
-        initDatabase();
+        AccessReviews ar = initAccessReviews();
 
         Review dbReview = ar.getReviewById("0");
         Assert.assertEquals("0", dbReview.getId());
@@ -86,146 +73,103 @@ public class AccessReviewsTests {
         Assert.assertEquals("0", dbReview.getId());
         Assert.assertEquals("Different author", dbReview.getAuthor());
         Assert.assertEquals(2, dbReview.getRating());
-
-        resetDatabase();
     }
 
     @Test
     public void testInvalidReviewUpdate() {
-        initDatabase();
+        AccessReviews ar = initAccessReviews();
 
         List<Review> reviews = ar.getReviews();
-        Assert.assertEquals(4, reviews.size());
-        Assert.assertEquals("Sheila M. Higgs-Coulthard", reviews.get(0).getAuthor());
-        Assert.assertEquals("Lara Hanna", reviews.get(1).getAuthor());
-        Assert.assertEquals("Padma Gauthier", reviews.get(2).getAuthor());
-        Assert.assertEquals("Neo Colwyn", reviews.get(3).getAuthor());
+        Assert.assertEquals(3, reviews.size());
+        Assert.assertEquals("Neo Colwyn", reviews.get(0).getAuthor());
+        Assert.assertEquals("Padma Gauthier", reviews.get(1).getAuthor());
+        Assert.assertEquals("Lara Hanna", reviews.get(2).getAuthor());
 
         Review invalid = new Review("86", "0", "Vladilena Milize", "this is a good recipe", 5);
         ar.updateReview(invalid);
 
         reviews = ar.getReviews();
-        Assert.assertEquals(4, reviews.size());
-        Assert.assertEquals("Sheila M. Higgs-Coulthard", reviews.get(0).getAuthor());
-        Assert.assertEquals("Lara Hanna", reviews.get(1).getAuthor());
-        Assert.assertEquals("Padma Gauthier", reviews.get(2).getAuthor());
-        Assert.assertEquals("Neo Colwyn", reviews.get(3).getAuthor());
+        Assert.assertEquals(3, reviews.size());
+        Assert.assertEquals("Neo Colwyn", reviews.get(0).getAuthor());
+        Assert.assertEquals("Padma Gauthier", reviews.get(1).getAuthor());
+        Assert.assertEquals("Lara Hanna", reviews.get(2).getAuthor());
 
         ar.updateReview(null);
 
         reviews = ar.getReviews();
-        Assert.assertEquals(4, reviews.size());
-        Assert.assertEquals("Sheila M. Higgs-Coulthard", reviews.get(0).getAuthor());
-        Assert.assertEquals("Lara Hanna", reviews.get(1).getAuthor());
-        Assert.assertEquals("Padma Gauthier", reviews.get(2).getAuthor());
-        Assert.assertEquals("Neo Colwyn", reviews.get(3).getAuthor());
-
-        resetDatabase();
+        Assert.assertEquals(3, reviews.size());
+        Assert.assertEquals("Neo Colwyn", reviews.get(0).getAuthor());
+        Assert.assertEquals("Padma Gauthier", reviews.get(1).getAuthor());
+        Assert.assertEquals("Lara Hanna", reviews.get(2).getAuthor());
     }
 
     @Test
     public void testInvalidReviewIdLookup() {
-        initDatabase();
+        AccessReviews ar = initAccessReviews();
 
         Assert.assertNull(ar.getReviewById("58"));
         Assert.assertNull(ar.getReviewById(null));
-
-        resetDatabase();
     }
 
     @Test
     public void testReviewDelete() {
-        initDatabase();
+        AccessReviews ar = initAccessReviews();
 
         List<Review> reviews = ar.getReviews();
-        Assert.assertEquals(4, reviews.size());
-        Assert.assertEquals("3", reviews.get(0).getId());
-        Assert.assertEquals("2", reviews.get(1).getId());
-        Assert.assertEquals("1", reviews.get(2).getId());
-        Assert.assertEquals("0", reviews.get(3).getId());
+        Assert.assertEquals(3, reviews.size());
+        Assert.assertEquals("0", reviews.get(0).getId());
+        Assert.assertEquals("1", reviews.get(1).getId());
+        Assert.assertEquals("2", reviews.get(2).getId());
 
         ar.deleteReview(reviews.get(1));
 
         reviews = ar.getReviews();
-        Assert.assertEquals(3, reviews.size());
-        Assert.assertEquals("3", reviews.get(0).getId());
-        Assert.assertEquals("1", reviews.get(1).getId());
-        Assert.assertEquals("0", reviews.get(2).getId());
-
-        ar.deleteReview(reviews.get(0));
-
-        reviews = ar.getReviews();
         Assert.assertEquals(2, reviews.size());
-        Assert.assertEquals("1", reviews.get(0).getId());
-        Assert.assertEquals("0", reviews.get(1).getId());
+        Assert.assertEquals("0", reviews.get(0).getId());
+        Assert.assertEquals("2", reviews.get(1).getId());
 
         ar.deleteReview(reviews.get(0));
 
         reviews = ar.getReviews();
         Assert.assertEquals(1, reviews.size());
-        Assert.assertEquals("0", reviews.get(0).getId());
+        Assert.assertEquals("2", reviews.get(0).getId());
 
-        resetDatabase();
+        ar.deleteReview(reviews.get(0));
+
+        reviews = ar.getReviews();
+        Assert.assertEquals(0, reviews.size());
     }
 
     @Test
     public void testInvalidReviewDelete() {
-        initDatabase();
+        AccessReviews ar = initAccessReviews();
 
         List<Review> reviews = ar.getReviews();
-        Assert.assertEquals(4, reviews.size());
-        Assert.assertEquals("3", reviews.get(0).getId());
-        Assert.assertEquals("2", reviews.get(1).getId());
-        Assert.assertEquals("1", reviews.get(2).getId());
-        Assert.assertEquals("0", reviews.get(3).getId());
+        Assert.assertEquals(3, reviews.size());
+        Assert.assertEquals("0", reviews.get(0).getId());
+        Assert.assertEquals("1", reviews.get(1).getId());
+        Assert.assertEquals("2", reviews.get(2).getId());
 
         Review invalid = new Review("94", "0", "franklin", "[turtle noises]", 5);
         ar.deleteReview(invalid);
 
         reviews = ar.getReviews();
-        Assert.assertEquals(4, reviews.size());
-        Assert.assertEquals("3", reviews.get(0).getId());
-        Assert.assertEquals("2", reviews.get(1).getId());
-        Assert.assertEquals("1", reviews.get(2).getId());
-        Assert.assertEquals("0", reviews.get(3).getId());
+        Assert.assertEquals(3, reviews.size());
+        Assert.assertEquals("0", reviews.get(0).getId());
+        Assert.assertEquals("1", reviews.get(1).getId());
+        Assert.assertEquals("2", reviews.get(2).getId());
 
         ar.deleteReview(null);
 
         reviews = ar.getReviews();
-        Assert.assertEquals(4, reviews.size());
-        Assert.assertEquals("3", reviews.get(0).getId());
-        Assert.assertEquals("2", reviews.get(1).getId());
-        Assert.assertEquals("1", reviews.get(2).getId());
-        Assert.assertEquals("0", reviews.get(3).getId());
-
-        resetDatabase();
+        Assert.assertEquals(3, reviews.size());
+        Assert.assertEquals("0", reviews.get(0).getId());
+        Assert.assertEquals("1", reviews.get(1).getId());
+        Assert.assertEquals("2", reviews.get(2).getId());
     }
 
-    private void initDatabase() {
-        if (RunIntegrationTests.USE_STUBDATASTORE) {
-            Services.createDataStore(new StubDataStore());
-        } else {
-            Services.createDataStore();
-        }
-
-        ar = new AccessReviews();
-    }
-
-    private void resetDatabase() {
-        try {
-            if (!RunIntegrationTests.USE_STUBDATASTORE) {
-                Services.closeDataStore();
-
-                for (Object o : Files.list(Paths.get("db")).toArray()) {
-                    Path p = (Path) o;
-                    Files.delete(p);
-                }
-
-                Files.copy(Paths.get("src/main/assets/db/main.script"), Paths.get("db/main.script"));
-            }
-        } catch (IOException ioe) {
-            System.out.println("Failed to reset database.");
-            System.out.println(ioe.getMessage());
-        }
+    private AccessReviews initAccessReviews() {
+        Services.createDataStore(new StubDataStore("stub"));
+        return new AccessReviews();
     }
 }

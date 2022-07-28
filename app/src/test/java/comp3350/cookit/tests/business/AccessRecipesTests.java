@@ -3,33 +3,24 @@ package comp3350.cookit.tests.business;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
 import comp3350.cookit.application.Services;
-import comp3350.cookit.business.AccessAuthors;
 import comp3350.cookit.business.AccessRecipes;
-import comp3350.cookit.business.AccessReviews;
 import comp3350.cookit.objects.Ingredient;
 import comp3350.cookit.objects.IngredientList;
 import comp3350.cookit.objects.Recipe;
-import comp3350.cookit.tests.RunIntegrationTests;
 import comp3350.cookit.tests.persistence.StubDataStore;
 
 public class AccessRecipesTests {
-    AccessRecipes ar;
-
     @Test
     public void testRecipeList() {
-        initDatabase();
+        AccessRecipes ar = initAccessRecipes();
 
         List<Recipe> recipes = ar.getRecipes();
 
-        Assert.assertEquals(14, recipes.size());
+        Assert.assertEquals(2, recipes.size());
 
         Assert.assertEquals("0", recipes.get(0).getId());
         Assert.assertEquals("Lemon Cranberry Muffins", recipes.get(0).getTitle());
@@ -89,45 +80,41 @@ public class AccessRecipesTests {
         Assert.assertEquals(2, images.size());
         Assert.assertEquals("chicken0", images.get(0));
         Assert.assertEquals("chicken1", images.get(1));
-
-        resetDatabase();
     }
 
     @Test
     public void testNewRecipe() {
-        initDatabase();
+        AccessRecipes ar = initAccessRecipes();
 
         List<Recipe> recipes = ar.getRecipes();
-        Assert.assertEquals(14, recipes.size());
+        Assert.assertEquals(2, recipes.size());
 
         IngredientList il = IngredientList.Create(new Ingredient("all-purpose flour", 10.0, "cups"));
-        Recipe r = new Recipe("14", "Title", "5", "Content", il, 2, Arrays.asList("Some", "Tags"), 10, 20, "Easy", Arrays.asList("img1", "img2"));
+        Recipe r = new Recipe("3", "Title", "5", "Content", il, 2, Arrays.asList("Some", "Tags"), 10, 20, "Easy", Arrays.asList("img1", "img2"));
 
         ar.insertRecipe(r);
 
         recipes = ar.getRecipes();
-        Assert.assertEquals(15, recipes.size());
+        Assert.assertEquals(3, recipes.size());
 
-        Assert.assertEquals(r.getId(), recipes.get(14).getId());
-        Assert.assertEquals(r.getTitle(), recipes.get(14).getTitle());
-        Assert.assertEquals(r.getAuthorId(), recipes.get(14).getAuthorId());
-        Assert.assertEquals(r.getContent(), recipes.get(14).getContent());
-        Assert.assertEquals(r.getIngredientList(), recipes.get(14).getIngredientList());
-        Assert.assertEquals(r.getServingSize(), recipes.get(14).getServingSize());
-        Assert.assertEquals(r.getPrepTime(), recipes.get(14).getPrepTime());
-        Assert.assertEquals(r.getCookTime(), recipes.get(14).getCookTime());
-        Assert.assertEquals(r.getDifficulty(), recipes.get(14).getDifficulty());
+        Assert.assertEquals(r.getId(), recipes.get(2).getId());
+        Assert.assertEquals(r.getTitle(), recipes.get(2).getTitle());
+        Assert.assertEquals(r.getAuthorId(), recipes.get(2).getAuthorId());
+        Assert.assertEquals(r.getContent(), recipes.get(2).getContent());
+        Assert.assertEquals(r.getIngredientList(), recipes.get(2).getIngredientList());
+        Assert.assertEquals(r.getServingSize(), recipes.get(2).getServingSize());
+        Assert.assertEquals(r.getPrepTime(), recipes.get(2).getPrepTime());
+        Assert.assertEquals(r.getCookTime(), recipes.get(2).getCookTime());
+        Assert.assertEquals(r.getDifficulty(), recipes.get(2).getDifficulty());
 
-        Assert.assertEquals(2, recipes.get(14).getTags().size());
-        Assert.assertEquals("Some", recipes.get(14).getTags().get(0));
-        Assert.assertEquals("Tags", recipes.get(14).getTags().get(1));
-
-        resetDatabase();
+        Assert.assertEquals(2, recipes.get(2).getTags().size());
+        Assert.assertEquals("Some", recipes.get(2).getTags().get(0));
+        Assert.assertEquals("Tags", recipes.get(2).getTags().get(1));
     }
 
     @Test
     public void testRecipeUpdateSingleField() {
-        initDatabase();
+        AccessRecipes ar = initAccessRecipes();
 
         Recipe dbRecipe = ar.getRecipeById("0");
         Assert.assertEquals("0", dbRecipe.getId());
@@ -149,13 +136,11 @@ public class AccessRecipesTests {
         Assert.assertEquals("0", dbRecipe.getId());
         Assert.assertEquals("Bran Muffins", dbRecipe.getTitle());
         Assert.assertEquals(3, dbRecipe.getServingSize());
-
-        resetDatabase();
     }
 
     @Test
     public void testRecipeUpdateMultiField() {
-        initDatabase();
+        AccessRecipes ar = initAccessRecipes();
 
         Recipe dbRecipe = ar.getRecipeById("1");
         Assert.assertEquals("1", dbRecipe.getId());
@@ -178,278 +163,104 @@ public class AccessRecipesTests {
 
         List<Recipe> taggedRecipes = ar.getRecipesWithTag("Breakfast");
         Assert.assertTrue(taggedRecipes.contains(dbRecipe));
-
-        resetDatabase();
     }
 
     @Test
     public void testInvalidRecipeUpdate() {
-        initDatabase();
+        AccessRecipes ar = initAccessRecipes();
 
         List<Recipe> recipes = ar.getRecipes();
-        Assert.assertEquals(14, recipes.size());
+        Assert.assertEquals(2, recipes.size());
         Assert.assertEquals("Lemon Cranberry Muffins", recipes.get(0).getTitle());
         Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(1).getTitle());
-        Assert.assertEquals("Sesame Peanut Noodles", recipes.get(2).getTitle());
-        Assert.assertEquals("Grandma's Oatmeal Cookies", recipes.get(3).getTitle());
-        Assert.assertEquals("Spinach Tofu Scramble", recipes.get(4).getTitle());
-        Assert.assertEquals("Shrimp Ceviche", recipes.get(5).getTitle());
-        Assert.assertEquals("Brazilian Cheese Bread (Pão de Queijo)", recipes.get(6).getTitle());
-        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipes.get(7).getTitle());
-        Assert.assertEquals("Bisquick Apple Coffee Cake", recipes.get(8).getTitle());
-        Assert.assertEquals("Baked Oatmeal with Mixed Berries", recipes.get(9).getTitle());
-        Assert.assertEquals("Philly Cheesesteak Sloppy Joes", recipes.get(10).getTitle());
-        Assert.assertEquals("Corn and Ricotta Bruschetta", recipes.get(11).getTitle());
-        Assert.assertEquals("Crash Hot Potatoes with Smoked Salmon", recipes.get(12).getTitle());
-        Assert.assertEquals("Rice Cake with Dulce de Leche and Dark Chocolate", recipes.get(13).getTitle());
 
-        Recipe invalid = new Recipe("37", "Recipe with non-existant ID", "0", "Some content", recipes.get(0).getIngredientList(), 1, Arrays.asList("Some", "tags"), 120, 30, "Hard", Arrays.asList("img1", "img2"));
+        Recipe invalid = new Recipe("3", "Recipe with non-existant ID", "0", "Some content", recipes.get(0).getIngredientList(), 1, Arrays.asList("Some", "tags"), 120, 30, "Hard", Arrays.asList("img1", "img2"));
         ar.updateRecipe(invalid);
 
         recipes = ar.getRecipes();
-        Assert.assertEquals(14, recipes.size());
+        Assert.assertEquals(2, recipes.size());
         Assert.assertEquals("Lemon Cranberry Muffins", recipes.get(0).getTitle());
         Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(1).getTitle());
-        Assert.assertEquals("Sesame Peanut Noodles", recipes.get(2).getTitle());
-        Assert.assertEquals("Grandma's Oatmeal Cookies", recipes.get(3).getTitle());
-        Assert.assertEquals("Spinach Tofu Scramble", recipes.get(4).getTitle());
-        Assert.assertEquals("Shrimp Ceviche", recipes.get(5).getTitle());
-        Assert.assertEquals("Brazilian Cheese Bread (Pão de Queijo)", recipes.get(6).getTitle());
-        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipes.get(7).getTitle());
-        Assert.assertEquals("Bisquick Apple Coffee Cake", recipes.get(8).getTitle());
-        Assert.assertEquals("Baked Oatmeal with Mixed Berries", recipes.get(9).getTitle());
-        Assert.assertEquals("Philly Cheesesteak Sloppy Joes", recipes.get(10).getTitle());
-        Assert.assertEquals("Corn and Ricotta Bruschetta", recipes.get(11).getTitle());
-        Assert.assertEquals("Crash Hot Potatoes with Smoked Salmon", recipes.get(12).getTitle());
-        Assert.assertEquals("Rice Cake with Dulce de Leche and Dark Chocolate", recipes.get(13).getTitle());
 
         ar.updateRecipe(null);
 
         recipes = ar.getRecipes();
-        Assert.assertEquals(14, recipes.size());
+        Assert.assertEquals(2, recipes.size());
         Assert.assertEquals("Lemon Cranberry Muffins", recipes.get(0).getTitle());
         Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(1).getTitle());
-        Assert.assertEquals("Sesame Peanut Noodles", recipes.get(2).getTitle());
-        Assert.assertEquals("Grandma's Oatmeal Cookies", recipes.get(3).getTitle());
-        Assert.assertEquals("Spinach Tofu Scramble", recipes.get(4).getTitle());
-        Assert.assertEquals("Shrimp Ceviche", recipes.get(5).getTitle());
-        Assert.assertEquals("Brazilian Cheese Bread (Pão de Queijo)", recipes.get(6).getTitle());
-        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipes.get(7).getTitle());
-        Assert.assertEquals("Bisquick Apple Coffee Cake", recipes.get(8).getTitle());
-        Assert.assertEquals("Baked Oatmeal with Mixed Berries", recipes.get(9).getTitle());
-        Assert.assertEquals("Philly Cheesesteak Sloppy Joes", recipes.get(10).getTitle());
-        Assert.assertEquals("Corn and Ricotta Bruschetta", recipes.get(11).getTitle());
-        Assert.assertEquals("Crash Hot Potatoes with Smoked Salmon", recipes.get(12).getTitle());
-        Assert.assertEquals("Rice Cake with Dulce de Leche and Dark Chocolate", recipes.get(13).getTitle());
-
-        resetDatabase();
     }
 
     @Test
     public void testInvalidRecipeIdLookup() {
-        initDatabase();
+        AccessRecipes ar = initAccessRecipes();
 
         Assert.assertNull(ar.getRecipeById("37"));
         Assert.assertNull(ar.getRecipeById(null));
-
-        resetDatabase();
     }
 
     @Test
     public void testRecipeDelete() {
-        initDatabase();
+        AccessRecipes ar = initAccessRecipes();
 
         List<Recipe> recipes = ar.getRecipes();
-        Assert.assertEquals(14, recipes.size());
+        Assert.assertEquals(2, recipes.size());
         Assert.assertEquals("0", recipes.get(0).getId());
         Assert.assertEquals("1", recipes.get(1).getId());
-        Assert.assertEquals("2", recipes.get(2).getId());
-        Assert.assertEquals("3", recipes.get(3).getId());
-        Assert.assertEquals("4", recipes.get(4).getId());
-        Assert.assertEquals("5", recipes.get(5).getId());
-        Assert.assertEquals("6", recipes.get(6).getId());
-        Assert.assertEquals("7", recipes.get(7).getId());
-        Assert.assertEquals("8", recipes.get(8).getId());
-        Assert.assertEquals("9", recipes.get(9).getId());
-        Assert.assertEquals("10", recipes.get(10).getId());
-        Assert.assertEquals("11", recipes.get(11).getId());
-        Assert.assertEquals("12", recipes.get(12).getId());
-        Assert.assertEquals("13", recipes.get(13).getId());
 
         List<Recipe> taggedRecipes = ar.getRecipesWithTag("Sweet");
-        Assert.assertEquals(6, taggedRecipes.size());
+        Assert.assertEquals(1, taggedRecipes.size());
         taggedRecipes = ar.getRecipesWithTag("Savory");
-        Assert.assertEquals(8, taggedRecipes.size());
+        Assert.assertEquals(1, taggedRecipes.size());
 
         ar.deleteRecipe(recipes.get(0));
 
         recipes = ar.getRecipes();
-        Assert.assertEquals(13, recipes.size());
+        Assert.assertEquals(1, recipes.size());
         Assert.assertEquals("1", recipes.get(0).getId());
 
         taggedRecipes = ar.getRecipesWithTag("Sweet");
-        Assert.assertEquals(5, taggedRecipes.size());
+        Assert.assertEquals(0, taggedRecipes.size());
         taggedRecipes = ar.getRecipesWithTag("Savory");
-        Assert.assertEquals(8, taggedRecipes.size());
+        Assert.assertEquals(1, taggedRecipes.size());
 
         ar.deleteRecipe(recipes.get(0));
 
         recipes = ar.getRecipes();
-        Assert.assertEquals(12, recipes.size());
+        Assert.assertEquals(0, recipes.size());
 
         taggedRecipes = ar.getRecipesWithTag("Sweet");
-        Assert.assertEquals(5, taggedRecipes.size());
+        Assert.assertEquals(0, taggedRecipes.size());
         taggedRecipes = ar.getRecipesWithTag("Savory");
-        Assert.assertEquals(7, taggedRecipes.size());
-
-        resetDatabase();
+        Assert.assertEquals(0, taggedRecipes.size());
     }
 
     @Test
     public void testInvalidRecipeDelete() {
-        initDatabase();
+        AccessRecipes ar = initAccessRecipes();
 
         List<Recipe> recipes = ar.getRecipes();
-        Assert.assertEquals(14, recipes.size());
+        Assert.assertEquals(2, recipes.size());
         Assert.assertEquals("0", recipes.get(0).getId());
         Assert.assertEquals("1", recipes.get(1).getId());
-        Assert.assertEquals("2", recipes.get(2).getId());
-        Assert.assertEquals("3", recipes.get(3).getId());
-        Assert.assertEquals("4", recipes.get(4).getId());
-        Assert.assertEquals("5", recipes.get(5).getId());
-        Assert.assertEquals("6", recipes.get(6).getId());
-        Assert.assertEquals("7", recipes.get(7).getId());
-        Assert.assertEquals("8", recipes.get(8).getId());
-        Assert.assertEquals("9", recipes.get(9).getId());
-        Assert.assertEquals("10", recipes.get(10).getId());
-        Assert.assertEquals("11", recipes.get(11).getId());
-        Assert.assertEquals("12", recipes.get(12).getId());
-        Assert.assertEquals("13", recipes.get(13).getId());
 
-        Recipe invalid = new Recipe("18", "Recipe with non-existant ID", "0", "Some content", recipes.get(0).getIngredientList(), 1, Arrays.asList("Some", "tags"), 40, 360, "Easy", Arrays.asList("img1", "img2"));
+        Recipe invalid = new Recipe("3", "Recipe with non-existant ID", "0", "Some content", recipes.get(0).getIngredientList(), 1, Arrays.asList("Some", "tags"), 40, 360, "Easy", Arrays.asList("img1", "img2"));
         ar.deleteRecipe(invalid);
 
         recipes = ar.getRecipes();
-        Assert.assertEquals(14, recipes.size());
+        Assert.assertEquals(2, recipes.size());
         Assert.assertEquals("0", recipes.get(0).getId());
         Assert.assertEquals("1", recipes.get(1).getId());
-        Assert.assertEquals("2", recipes.get(2).getId());
-        Assert.assertEquals("3", recipes.get(3).getId());
-        Assert.assertEquals("4", recipes.get(4).getId());
-        Assert.assertEquals("5", recipes.get(5).getId());
-        Assert.assertEquals("6", recipes.get(6).getId());
-        Assert.assertEquals("7", recipes.get(7).getId());
-        Assert.assertEquals("8", recipes.get(8).getId());
-        Assert.assertEquals("9", recipes.get(9).getId());
-        Assert.assertEquals("10", recipes.get(10).getId());
-        Assert.assertEquals("11", recipes.get(11).getId());
-        Assert.assertEquals("12", recipes.get(12).getId());
-        Assert.assertEquals("13", recipes.get(13).getId());
 
         ar.deleteRecipe(null);
 
         recipes = ar.getRecipes();
-        Assert.assertEquals(14, recipes.size());
+        Assert.assertEquals(2, recipes.size());
         Assert.assertEquals("0", recipes.get(0).getId());
         Assert.assertEquals("1", recipes.get(1).getId());
-        Assert.assertEquals("2", recipes.get(2).getId());
-        Assert.assertEquals("3", recipes.get(3).getId());
-        Assert.assertEquals("4", recipes.get(4).getId());
-        Assert.assertEquals("5", recipes.get(5).getId());
-        Assert.assertEquals("6", recipes.get(6).getId());
-        Assert.assertEquals("7", recipes.get(7).getId());
-        Assert.assertEquals("8", recipes.get(8).getId());
-        Assert.assertEquals("9", recipes.get(9).getId());
-        Assert.assertEquals("10", recipes.get(10).getId());
-        Assert.assertEquals("11", recipes.get(11).getId());
-        Assert.assertEquals("12", recipes.get(12).getId());
-        Assert.assertEquals("13", recipes.get(13).getId());
-
-        resetDatabase();
     }
 
-    @Test
-    public void testFavoritesList() {
-        initDatabase();
-
-        List<Recipe> recipes = ar.getFavoriteRecipes();
-
-        for (Recipe r : recipes) {
-            System.out.println(r.getTitle());
-        }
-
-        Assert.assertEquals(3, recipes.size());
-        Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(0).getTitle());
-        Assert.assertEquals("Grandma's Oatmeal Cookies", recipes.get(1).getTitle());
-        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipes.get(2).getTitle());
-
-        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("1")));
-        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("3")));
-        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("7")));
-        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("0")));
-        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("2")));
-        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("9")));
-
-        ar.insertFavoriteRecipe(ar.getRecipeById("9"));
-
-        recipes = ar.getFavoriteRecipes();
-        Assert.assertEquals(4, recipes.size());
-        Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(0).getTitle());
-        Assert.assertEquals("Grandma's Oatmeal Cookies", recipes.get(1).getTitle());
-        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipes.get(2).getTitle());
-        Assert.assertEquals("Baked Oatmeal with Mixed Berries", recipes.get(3).getTitle());
-
-        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("1")));
-        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("3")));
-        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("7")));
-        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("0")));
-        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("9")));
-        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("2")));
-
-        ar.deleteFavoriteRecipe(recipes.get(1));
-
-        recipes = ar.getFavoriteRecipes();
-        Assert.assertEquals(3, recipes.size());
-        Assert.assertEquals("Honey-Garlic Slow Cooker Chicken Thighs", recipes.get(0).getTitle());
-        Assert.assertEquals("Sweet and Salty Three-Seed Granola", recipes.get(1).getTitle());
-        Assert.assertEquals("Baked Oatmeal with Mixed Berries", recipes.get(2).getTitle());
-
-        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("1")));
-        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("7")));
-        Assert.assertTrue(ar.isRecipeFavorited(ar.getRecipeById("9")));
-        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("0")));
-        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("3")));
-        Assert.assertFalse(ar.isRecipeFavorited(ar.getRecipeById("2")));
-
-        resetDatabase();
-    }
-
-
-    private void initDatabase() {
-        if (RunIntegrationTests.USE_STUBDATASTORE) {
-            Services.createDataStore(new StubDataStore());
-        } else {
-            Services.createDataStore();
-        }
-
-        ar = new AccessRecipes();
-    }
-
-    private void resetDatabase() {
-        try {
-            if (!RunIntegrationTests.USE_STUBDATASTORE) {
-                Services.closeDataStore();
-
-                for (Object o : Files.list(Paths.get("db")).toArray()) {
-                    Path p = (Path) o;
-                    Files.delete(p);
-                }
-
-                Files.copy(Paths.get("src/main/assets/db/main.script"), Paths.get("db/main.script"));
-            }
-        } catch (IOException ioe) {
-            System.out.println("Failed to reset database.");
-            System.out.println(ioe.getMessage());
-        }
+    private AccessRecipes initAccessRecipes() {
+        Services.createDataStore(new StubDataStore("stub"));
+        return new AccessRecipes();
     }
 }

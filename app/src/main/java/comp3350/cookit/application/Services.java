@@ -6,9 +6,9 @@ import comp3350.cookit.persistence.IDataStore;
 public class Services {
     private static IDataStore activeDataStore = null;
 
-    public static IDataStore createDataStore() {
+    public static IDataStore createDataStore(String dbName) {
         if (activeDataStore == null) {
-            activeDataStore = new HsqldbDataStore();
+            activeDataStore = new HsqldbDataStore(dbName);
             activeDataStore.open(Main.getDBPath());
         }
         return activeDataStore;
@@ -20,7 +20,7 @@ public class Services {
         return activeDataStore;
     }
 
-    public static IDataStore getDataStore() {
+    public static IDataStore getDataStore(String dbName) {
         if (activeDataStore == null) {
             System.out.println("Connection to data access has not been established.");
             System.exit(1);

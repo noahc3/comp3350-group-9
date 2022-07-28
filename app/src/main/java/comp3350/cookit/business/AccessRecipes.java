@@ -11,27 +11,11 @@ public class AccessRecipes {
     private final IDataStore dataStore;
 
     public AccessRecipes() {
-        dataStore = Services.getDataStore();
+        dataStore = Services.getDataStore(Main.dbName);
     }
 
     public List<Recipe> getRecipes() {
         return dataStore.getAllRecipes();
-    }
-
-    public List<Recipe> getFavoriteRecipes() {
-        return dataStore.getFavoriteRecipes();
-    }
-
-    public void insertFavoriteRecipe(Recipe r) {
-        dataStore.insertFavoriteRecipe(r.getId());
-    }
-
-    public void deleteFavoriteRecipe(Recipe r) {
-        dataStore.deleteFavoriteRecipe(r.getId());
-    }
-
-    public boolean isRecipeFavorited(Recipe r) {
-        return getFavoriteRecipes().contains(r);
     }
 
     public List<Recipe> getRecipesWithTag(String tag) {

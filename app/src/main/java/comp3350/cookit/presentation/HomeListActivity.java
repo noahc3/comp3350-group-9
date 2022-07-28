@@ -19,9 +19,11 @@ import comp3350.cookit.R;
 import comp3350.cookit.application.Main;
 import comp3350.cookit.business.AccessRecipes;
 import comp3350.cookit.objects.Recipe;
+import comp3350.cookit.presentation.component.RecipeBoxView;
 
 public class HomeListActivity extends Activity {
-    private LinearLayout recipeList;
+
+    LinearLayout recipeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +53,24 @@ public class HomeListActivity extends Activity {
         recipeList.removeAllViews();
 
         for (Recipe recipe : recipes) {
-            Button button = new Button(this);
-            button.setText(recipe.getTitle());
-            button.setTag(recipe.getId());
-            button.setOnClickListener(new View.OnClickListener() {
+//            Button button = new Button(this);
+//            button.setText(recipe.getTitle());
+//            button.setTag(recipe.getId());
+//            button.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    displayRecipe(v);
+//                }
+//            });
+//            recipeList.addView(button);
+            RecipeBoxView view =new RecipeBoxView(this,recipe);
+            view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     displayRecipe(v);
                 }
             });
-            recipeList.addView(button);
+            recipeList.addView(view);
         }
 
         recipeList.requestLayout();
@@ -69,11 +79,6 @@ public class HomeListActivity extends Activity {
     public void newRecipesOnClick(View v) {
         Intent newRecipesIntent = new Intent(this, NewRecipeActivity.class);
         startActivity(newRecipesIntent);
-    }
-
-    public void favoriteListOnClick(View v) {
-        Intent favoriteList = new Intent(this, FavoriteListActivity.class);
-        startActivity(favoriteList);
     }
 
     public void displayRecipe(View v) {
@@ -85,7 +90,7 @@ public class HomeListActivity extends Activity {
     private void initDatabase() {
         Context context = getApplicationContext();
         File dataDirectory = context.getDir(Main.getDbAssetsPath(), Context.MODE_PRIVATE);
-        Main.setDBPath(dataDirectory.toString() + "/" + Main.getDbName());
+        Main.setDBPath(dataDirectory.toString() + "/" + Main.dbName);
 
         copyAssetFolderToDevice(Main.getDbAssetsPath());
     }
@@ -104,7 +109,7 @@ public class HomeListActivity extends Activity {
 
             copyAssetsToDirectory(assetNames, dataDirectory);
         } catch (IOException ioe) {
-            ioe.printStackTrace();
+            Messages.warning(this, "Unable to access application data: " + ioe.getMessage());
         }
     }
 

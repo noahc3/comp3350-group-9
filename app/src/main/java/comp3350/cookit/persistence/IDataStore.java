@@ -23,12 +23,6 @@ public interface IDataStore {
 
     void deleteRecipe(Recipe recipe);
 
-    List<Recipe> getFavoriteRecipes();
-
-    void insertFavoriteRecipe(String recipeId);
-
-    void deleteFavoriteRecipe(String recipeId);
-
     List<Author> getAllAuthors();
 
     Author getAuthorById(String id);
@@ -40,8 +34,6 @@ public interface IDataStore {
     void deleteAuthor(Author author);
 
     List<Review> getAllReviews();
-
-    List<Review> getReviewsForRecipe(String recipeId);
 
     Review getReviewById(String id);
 

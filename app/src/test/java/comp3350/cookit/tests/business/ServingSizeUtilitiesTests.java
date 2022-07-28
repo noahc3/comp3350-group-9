@@ -14,7 +14,6 @@ import comp3350.cookit.objects.IngredientList;
 import comp3350.cookit.objects.Recipe;
 
 public class ServingSizeUtilitiesTests {
-
     @Test
     public void testTypical() {
         Recipe recipe = createRecipeFromTemplate(
