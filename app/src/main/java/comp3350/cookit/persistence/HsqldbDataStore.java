@@ -86,22 +86,6 @@ public class HsqldbDataStore implements IDataStore {
         return taggedRecipes;
     }
 
-//    @Override
-//    public List<Recipe> getFavoriteRecipes() {
-//        List<Recipe> recipes = getAllRecipes();
-//        List<Recipe> favoriteRecipes = new ArrayList<>();
-//
-//        if (recipes != null) {
-//            for (Recipe r : recipes) {
-//                if (r.getFavorite()) {
-//                    favoriteRecipes.add(r);
-//                }
-//            }
-//        }
-//
-//        return favoriteRecipes;
-//    }
-
     @Override
     public Recipe getRecipeById(String id) {
         Recipe result = null;

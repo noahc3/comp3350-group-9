@@ -59,7 +59,6 @@ public class DisplayRecipeActivity extends Activity {
     private ImageView imageView;
 
     private ImageView favorite;
-//    int [] ImageId = {R.drawable.ic_baseline_favorite_border_24, R.drawable.ic_baseline_favorite_24};
     ImageView favoriteImage;
 
     private RatingBar averageRating;
@@ -127,24 +126,45 @@ public class DisplayRecipeActivity extends Activity {
         });
 
         favoriteImage = (ImageView) findViewById(R.id.favorite);
-        favoriteImage.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-        favoriteImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addFavorite(v);
-            }
-        });
+        clickFavorite();
+    }
 
-
+    public void clickFavorite() {
+        AccessRecipes recipes = new AccessRecipes();
+        if(recipes.isRecipeFavorited(getRecipeToDisplay())) {
+            favoriteImage.setImageResource(R.drawable.ic_baseline_favorite_24);
+            favoriteImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteFavorite(v);
+                }
+            });
+        } else {
+            favoriteImage.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+            favoriteImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addFavorite(v);
+                }
+            });
+        }
     }
 
     public void addFavorite(View v) {
         favoriteImage.setImageResource(R.drawable.ic_baseline_favorite_24);
         AccessRecipes recipes = new AccessRecipes();
         recipes.insertFavoriteRecipe(getRecipeToDisplay());
+        Messages.toastShort(this, getString(R.string.favorited));
+        clickFavorite();
     }
 
-
+    public void deleteFavorite(View v) {
+        favoriteImage.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+        AccessRecipes recipes = new AccessRecipes();
+        recipes.deleteFavoriteRecipe(getRecipeToDisplay());
+        Messages.toastShort(this, getString(R.string.defavorited));
+        clickFavorite();
+    }
 
     public void displayRecipe(int servingSize) {
         Recipe recipe = getRecipeToDisplay();

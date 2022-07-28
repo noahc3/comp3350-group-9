@@ -4,6 +4,7 @@
     <string name="title_activity_home">Home</string>
     <string name="title_activity_new_recipe">Submit New Recipe</string>
     <string name="title_activity_tagged_list">Recipes tagged as \'%s\'</string>
+    <string name="title_activity_favorite_list">Favorite List</string>
 
     <!-- Recipe-Related -->
     <string name="recipes">Recipes</string>
@@ -95,6 +96,10 @@
     <string name="add">Add</string>
     <string name="create">Create</string>
     <string name="cancel">Cancel</string>
+
+    <!-- Favorite-Related -->
+    <string name="favorited">Added to favorites</string>
+    <string name="defavorited">Favorite has been deleted</string>
 
     <!-- Misc -->
     <string name="loremIpsum">

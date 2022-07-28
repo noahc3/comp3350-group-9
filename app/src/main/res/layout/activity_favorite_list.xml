@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:fontFamily="sans-serif-black"
-        android:text="Favorite List"
+        android:text="@string/title_activity_favorite_list"
         android:textColor="@color/colorPrimary"
         android:textSize="24sp" />
 
