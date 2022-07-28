@@ -212,7 +212,7 @@ public class BusinessPersistenceSeamTest {
         // Look at the avg review score again
         Assert.assertEquals(3.3, reviews.getAverageReviewScoreForRecipe(recipe), 0.1);
 
-        // Look at the again
+        // Look at the reviews again
         reviewList = reviews.getReviewsForRecipe(recipe);
 
         Assert.assertEquals(3, reviewList.size());
@@ -258,7 +258,7 @@ public class BusinessPersistenceSeamTest {
         // Look at the avg review score again
         Assert.assertEquals(5.0, reviews.getAverageReviewScoreForRecipe(recipe), 0.1);
 
-        // Look at the again
+        // Look at the reviews again
         reviewList = reviews.getReviewsForRecipe(recipe);
 
         Assert.assertEquals(1, reviewList.size());

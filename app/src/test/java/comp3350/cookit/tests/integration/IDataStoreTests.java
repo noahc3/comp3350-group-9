@@ -1,4 +1,4 @@
-package comp3350.cookit.tests.persistence;
+package comp3350.cookit.tests.integration;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,6 +23,7 @@ import comp3350.cookit.objects.Review;
 import comp3350.cookit.persistence.HsqldbDataStore;
 import comp3350.cookit.persistence.IDataStore;
 import comp3350.cookit.tests.RunIntegrationTests;
+import comp3350.cookit.tests.persistence.StubDataStore;
 
 public class IDataStoreTests {
     IDataStore dataStore;

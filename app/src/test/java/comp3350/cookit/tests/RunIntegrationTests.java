@@ -9,7 +9,7 @@ import comp3350.cookit.tests.business.AccessAuthorsTests;
 import comp3350.cookit.tests.business.AccessRecipesTests;
 import comp3350.cookit.tests.business.AccessReviewsTests;
 import comp3350.cookit.tests.integration.BusinessPersistenceSeamTest;
-import comp3350.cookit.tests.persistence.IDataStoreTests;
+import comp3350.cookit.tests.integration.IDataStoreTests;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
