@@ -1,6 +1,7 @@
 package comp3350.cookit.tests.business;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -19,7 +20,15 @@ import comp3350.cookit.tests.RunIntegrationTests;
 import comp3350.cookit.tests.persistence.StubDataStore;
 
 public class AccessRecipesTests {
-    AccessRecipes ar;
+    private static AccessRecipes ar;
+
+    @BeforeClass
+    public static void resetDatabaseBeforeTesting() {
+        // Reset the database once before running tests. This will fix the database
+        // in case a test which modifies the database failed mid-run without reaching
+        // the cleanup action.
+        resetDatabase();
+    }
 
     @Test
     public void testRecipeList() {
@@ -116,6 +125,8 @@ public class AccessRecipesTests {
         Assert.assertEquals(r.getCookTime(), recipes.get(14).getCookTime());
         Assert.assertEquals(r.getDifficulty(), recipes.get(14).getDifficulty());
 
+        Assert.assertTrue(ar.anyRecipeWithTag("Some"));
+        Assert.assertTrue(ar.anyRecipeWithTag("Tags"));
         Assert.assertEquals(2, recipes.get(14).getTags().size());
         Assert.assertEquals("Some", recipes.get(14).getTags().get(0));
         Assert.assertEquals("Tags", recipes.get(14).getTags().get(1));
@@ -367,7 +378,7 @@ public class AccessRecipesTests {
     }
 
 
-    private void initDatabase() {
+    private static void initDatabase() {
         if (RunIntegrationTests.USE_STUBDATASTORE) {
             Services.createDataStore(new StubDataStore());
         } else {
@@ -377,7 +388,7 @@ public class AccessRecipesTests {
         ar = new AccessRecipes();
     }
 
-    private void resetDatabase() {
+    private static void resetDatabase() {
         try {
             if (!RunIntegrationTests.USE_STUBDATASTORE) {
                 Services.closeDataStore();

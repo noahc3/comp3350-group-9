@@ -1,6 +1,7 @@
 package comp3350.cookit.tests.integration;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -23,9 +24,17 @@ import comp3350.cookit.tests.RunIntegrationTests;
 import comp3350.cookit.tests.persistence.StubDataStore;
 
 public class BusinessPersistenceSeamTest {
-    private AccessAuthors authors;
-    private AccessRecipes recipes;
-    private AccessReviews reviews;
+    private static AccessAuthors authors;
+    private static AccessRecipes recipes;
+    private static AccessReviews reviews;
+
+    @BeforeClass
+    public static void resetDatabaseBeforeTesting() {
+        // Reset the database once before running tests. This will fix the database
+        // in case a test which modifies the database failed mid-run without reaching
+        // the cleanup action.
+        resetDatabase();
+    }
 
     @Test
     public void testBrowseRecipes() {
@@ -61,8 +70,6 @@ public class BusinessPersistenceSeamTest {
         List<Review> reviewList = reviews.getReviewsForRecipe(recipe);
         Assert.assertEquals(1, reviewList.size());
         Assert.assertEquals("Sheila M. Higgs-Coulthard", reviewList.get(0).getAuthor());
-
-        resetDatabase();
     }
 
     @Test
@@ -156,8 +163,8 @@ public class BusinessPersistenceSeamTest {
         Assert.assertTrue(recipes.isRecipeFavorited(recipes.getRecipeById("1")));
         Assert.assertTrue(recipes.isRecipeFavorited(recipes.getRecipeById("3")));
         Assert.assertTrue(recipes.isRecipeFavorited(recipes.getRecipeById("7")));
-        Assert.assertFalse(recipes.isRecipeFavorited(recipes.getRecipeById("0")));
         Assert.assertTrue(recipes.isRecipeFavorited(recipes.getRecipeById("9")));
+        Assert.assertFalse(recipes.isRecipeFavorited(recipes.getRecipeById("0")));
         Assert.assertFalse(recipes.isRecipeFavorited(recipes.getRecipeById("2")));
 
         recipes.deleteFavoriteRecipe(recipeList.get(1));
@@ -172,8 +179,8 @@ public class BusinessPersistenceSeamTest {
         Assert.assertTrue(recipes.isRecipeFavorited(recipes.getRecipeById("7")));
         Assert.assertTrue(recipes.isRecipeFavorited(recipes.getRecipeById("9")));
         Assert.assertFalse(recipes.isRecipeFavorited(recipes.getRecipeById("0")));
-        Assert.assertFalse(recipes.isRecipeFavorited(recipes.getRecipeById("3")));
         Assert.assertFalse(recipes.isRecipeFavorited(recipes.getRecipeById("2")));
+        Assert.assertFalse(recipes.isRecipeFavorited(recipes.getRecipeById("3")));
 
         resetDatabase();
     }
@@ -269,7 +276,7 @@ public class BusinessPersistenceSeamTest {
         resetDatabase();
     }
 
-    private void initDatabase() {
+    private static void initDatabase() {
         if (RunIntegrationTests.USE_STUBDATASTORE) {
             Services.createDataStore(new StubDataStore());
         } else {
@@ -281,7 +288,7 @@ public class BusinessPersistenceSeamTest {
         reviews = new AccessReviews();
     }
 
-    private void resetDatabase() {
+    private static void resetDatabase() {
         try {
             if (!RunIntegrationTests.USE_STUBDATASTORE) {
                 Services.closeDataStore();

@@ -5,6 +5,7 @@ import junit.framework.TestCase;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import comp3350.cookit.tests.business.ReviewUtilitiesTests;
 import comp3350.cookit.tests.business.ServingSizeUtilitiesTests;
 import comp3350.cookit.tests.business.StringUtilitiesTests;
 import comp3350.cookit.tests.objects.AuthorTests;
@@ -22,6 +23,7 @@ import comp3350.cookit.tests.objects.ReviewTests;
         IngredientTests.class,
         RecipeTests.class,
         ReviewTests.class,
+        ReviewUtilitiesTests.class,
         ServingSizeUtilitiesTests.class,
         StringUtilitiesTests.class})
 public class RunUnitTests extends TestCase {

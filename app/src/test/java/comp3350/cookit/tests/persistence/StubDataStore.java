@@ -491,6 +491,8 @@ public class StubDataStore implements IDataStore {
         if (!favorites.contains(recipeId)) {
             favorites.add(recipeId);
         }
+
+        favorites.sort((String r1, String r2) -> (int) (getRecipeById(r1).getTimestamp() - getRecipeById(r2).getTimestamp()));
     }
 
     @Override
@@ -564,7 +566,7 @@ public class StubDataStore implements IDataStore {
             }
         }
 
-        Collections.reverse(recipeReviews);
+        reviews.sort((Review r1, Review r2) -> (int) (r1.getTimestamp() - r2.getTimestamp()));
 
         return recipeReviews;
     }

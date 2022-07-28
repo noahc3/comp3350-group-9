@@ -23,18 +23,8 @@ public class AccessReviews {
     }
 
     public float getAverageReviewScoreForRecipe(Recipe recipe) {
-        float avg = 0;
         List<Review> reviews = getReviewsForRecipe(recipe);
-
-        if (reviews.size() > 0) {
-            for (Review review : reviews) {
-                avg += review.getRating();
-            }
-
-            avg = (float) Math.floor(avg * 10.0f / reviews.size()) / 10.0f;
-        }
-
-        return avg;
+        return ReviewUtilities.calculateAverageReviewScore(reviews);
     }
 
 

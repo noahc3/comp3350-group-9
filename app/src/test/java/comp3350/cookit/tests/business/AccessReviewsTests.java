@@ -1,6 +1,7 @@
 package comp3350.cookit.tests.business;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -16,8 +17,15 @@ import comp3350.cookit.tests.RunIntegrationTests;
 import comp3350.cookit.tests.persistence.StubDataStore;
 
 public class AccessReviewsTests {
+    private static AccessReviews ar;
 
-    AccessReviews ar;
+    @BeforeClass
+    public static void resetDatabaseBeforeTesting() {
+        // Reset the database once before running tests. This will fix the database
+        // in case a test which modifies the database failed mid-run without reaching
+        // the cleanup action.
+        resetDatabase();
+    }
 
     @Test
     public void testNewReview() {
@@ -200,7 +208,7 @@ public class AccessReviewsTests {
         resetDatabase();
     }
 
-    private void initDatabase() {
+    private static void initDatabase() {
         if (RunIntegrationTests.USE_STUBDATASTORE) {
             Services.createDataStore(new StubDataStore());
         } else {
@@ -210,7 +218,7 @@ public class AccessReviewsTests {
         ar = new AccessReviews();
     }
 
-    private void resetDatabase() {
+    private static void resetDatabase() {
         try {
             if (!RunIntegrationTests.USE_STUBDATASTORE) {
                 Services.closeDataStore();

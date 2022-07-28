@@ -60,6 +60,14 @@ public class StoreRecipeContentAcceptanceTests {
         closeSoftKeyboard();
         onView(withId(R.id.tagsTimeOfDay)).perform(scrollTo(), click(), replaceText("All Day"));
         closeSoftKeyboard();
+        onView(withId(R.id.tagsDiet)).perform(scrollTo(), click(), replaceText("Keto"));
+        closeSoftKeyboard();
+        onView(withId(R.id.tagsRegion)).perform(scrollTo(), click(), replaceText("African"));
+        closeSoftKeyboard();
+        onView(withId(R.id.tagsOccasion)).perform(scrollTo(), click(), replaceText("Christmas"));
+        closeSoftKeyboard();
+        onView(withId(R.id.tagsSeason)).perform(scrollTo(), click(), replaceText("Winter"));
+        closeSoftKeyboard();
 
         // add ingredient A
 
@@ -110,11 +118,15 @@ public class StoreRecipeContentAcceptanceTests {
         onView(withId(R.id.ingredientList)).perform(scrollTo()).check(matches(hasChildCount(2)));
         onView(withId(R.id.ingredientList)).perform(scrollTo()).check(matches(withChild(withText("3 cup Ingredient A"))));
         onView(withId(R.id.ingredientList)).perform(scrollTo()).check(matches(withChild(withText("2 1/2 tsp Ingredient B"))));
-        onView(withId(R.id.tagsList)).perform(scrollTo()).check(matches(hasChildCount(4)));
+        onView(withId(R.id.tagsList)).perform(scrollTo()).check(matches(hasChildCount(8)));
         onView(withId(R.id.tagsList)).perform(scrollTo()).check(matches(withChild(withText("Pastry"))));
         onView(withId(R.id.tagsList)).perform(scrollTo()).check(matches(withChild(withText("Sweet"))));
         onView(withId(R.id.tagsList)).perform(scrollTo()).check(matches(withChild(withText("Appetizer"))));
         onView(withId(R.id.tagsList)).perform(scrollTo()).check(matches(withChild(withText("All Day"))));
+        onView(withId(R.id.tagsList)).perform(scrollTo()).check(matches(withChild(withText("Keto"))));
+        onView(withId(R.id.tagsList)).perform(scrollTo()).check(matches(withChild(withText("African"))));
+        onView(withId(R.id.tagsList)).perform(scrollTo()).check(matches(withChild(withText("Christmas"))));
+        onView(withId(R.id.tagsList)).perform(scrollTo()).check(matches(withChild(withText("Winter"))));
         onView(withId(R.id.difficulty_display)).perform(scrollTo()).check(matches(withText("Difficulty: Moderate")));
         onView(withId(R.id.prep_time_display)).perform(scrollTo()).check(matches(withText("Prep Time: 10 minutes")));
         onView(withId(R.id.cook_time_display)).perform(scrollTo()).check(matches(withText("Cook Time: 20 minutes")));
