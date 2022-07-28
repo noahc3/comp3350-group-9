@@ -131,7 +131,7 @@ public class DisplayRecipeActivity extends Activity {
 
     public void clickFavorite() {
         AccessRecipes recipes = new AccessRecipes();
-        if(recipes.isRecipeFavorited(getRecipeToDisplay())) {
+        if (recipes.isRecipeFavorited(getRecipeToDisplay())) {
             favoriteImage.setImageResource(R.drawable.ic_baseline_favorite_24);
             favoriteImage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -282,7 +282,7 @@ public class DisplayRecipeActivity extends Activity {
                  * to their length; Android Studio seems to resize it accordingly if it is close
                  * enough, thus the hard-coded scaling "22"
                  */
-                if(tag.length() >= 8)
+                if (tag.length() >= 8)
                     btnTag.getLayoutParams().width = tag.length() * 22;
             }
             tagsList.requestLayout();

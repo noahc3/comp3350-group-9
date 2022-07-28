@@ -15,20 +15,17 @@ public class ReviewView extends LinearLayout {
     TextView author;
     TextView content;
 
-    public ReviewView(Context context)
-    {
+    public ReviewView(Context context) {
         super(context);
         initControl(context);
     }
 
-    public ReviewView(Context context, AttributeSet attrs)
-    {
+    public ReviewView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initControl(context);
     }
 
-    public ReviewView(Context context, Review review)
-    {
+    public ReviewView(Context context, Review review) {
         this(context);
         setReview(review);
     }
@@ -40,11 +37,10 @@ public class ReviewView extends LinearLayout {
         content.setText(review.getContent());
     }
 
-    private void initControl(Context context)
-    {
+    private void initControl(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        inflater.inflate(R.layout.compontent_review_view, this);
+        inflater.inflate(R.layout.component_review_view, this);
 
         rating = findViewById(R.id.reviewViewRating);
         author = findViewById(R.id.reviewViewAuthor);

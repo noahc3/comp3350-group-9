@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -43,7 +42,7 @@ public class TaggedListActivity extends Activity {
     public void showRecipeButtons() {
         List<Recipe> recipes = new AccessRecipes().getRecipesWithTag(tag);
 
-        if(!recipes.isEmpty()) {
+        if (!recipes.isEmpty()) {
             taggedRecipeList.removeAllViews();
 
             for (Recipe recipe : recipes) {

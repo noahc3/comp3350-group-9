@@ -1,9 +1,7 @@
 package comp3350.cookit.presentation;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -12,25 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Random;
 
 import comp3350.cookit.R;
 import comp3350.cookit.application.Main;
-import comp3350.cookit.business.AccessRecipes;
-import comp3350.cookit.objects.Recipe;
-import comp3350.cookit.presentation.components.RecipeBoxView;
 
 public class FilterByTagActivity extends Activity {
     private LinearLayout tagsLayout;
@@ -57,13 +40,13 @@ public class FilterByTagActivity extends Activity {
         String[][] allTags = getAllTags();
         if (allTags.length != 0) {
             tagsLayout.removeAllViews();
-            for(int i = 0; i < allTags.length-1; i++) {
-                createHeader(tagsLayout, "\n" + allTags[8][i]);
+            for (int i = 0; i < allTags.length - 1; i++) {
+                createHeader(tagsLayout, allTags[8][i]);
 
                 HorizontalScrollView hScrollView = createHorizontalScrollView(tagsLayout);
                 LinearLayout tagListLayout = createHorizontalLinearLayout(hScrollView);
 
-                for(int j = 0; j < allTags[i].length; j++) {
+                for (int j = 0; j < allTags[i].length; j++) {
                     createTagButton(tagListLayout, allTags[i][j]);
                 }
 
@@ -82,7 +65,7 @@ public class FilterByTagActivity extends Activity {
         tagsArray[5] = getResources().getStringArray(R.array.tags_region);
         tagsArray[6] = getResources().getStringArray(R.array.tags_occasion);
         tagsArray[7] = getResources().getStringArray(R.array.tags_season);
-        tagsArray[8] = new String[] {"Time of Day", "Type", "Taste", "Course", "Diet", "Region", "Occasion", "Season"};
+        tagsArray[8] = new String[]{"Time of Day", "Type", "Taste", "Course", "Diet", "Region", "Occasion", "Season"};
 
         return tagsArray;
     }
@@ -106,6 +89,9 @@ public class FilterByTagActivity extends Activity {
 
     private TextView createHeader(LinearLayout parentLayout, String text) {
         TextView newTextView = new TextView(FilterByTagActivity.this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0, 40, 0, 0);
+        newTextView.setLayoutParams(params);
         newTextView.setText(text);
         newTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
         newTextView.setTypeface(null, Typeface.BOLD);
@@ -124,15 +110,10 @@ public class FilterByTagActivity extends Activity {
         btnTag.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
         btnTag.setTextColor(getResources().getColor(R.color.colorWhite));
         btnTag.getBackground().setColorFilter(btnTag.getContext().getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
-        btnTag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Button btn = (Button) v;
-
-                Intent taggedRecipeListIntent = new Intent(v.getContext(), TaggedListActivity.class);
-                taggedRecipeListIntent.putExtra("recipeTag", tag);
-                startActivity(taggedRecipeListIntent);
-            }
+        btnTag.setOnClickListener(v -> {
+            Intent taggedRecipeListIntent = new Intent(v.getContext(), TaggedListActivity.class);
+            taggedRecipeListIntent.putExtra("recipeTag", tag);
+            startActivity(taggedRecipeListIntent);
         });
         btnTag.setPadding(1, 1, 1, 1);
 
@@ -150,7 +131,7 @@ public class FilterByTagActivity extends Activity {
          * to their length; Android Studio seems to resize it accordingly if it is close
          * enough, thus the hard-coded scaling "22"
          */
-        btnTag.getLayoutParams().width = tag.length() >= 8? tag.length() * 22 : tag.length() * 30;
+        btnTag.getLayoutParams().width = tag.length() >= 8 ? tag.length() * 22 : tag.length() * 30;
 
         return btnTag;
     }

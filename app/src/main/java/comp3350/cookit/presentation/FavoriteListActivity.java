@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -16,7 +15,6 @@ import comp3350.cookit.presentation.components.RecipeBoxView;
 
 public class FavoriteListActivity extends Activity {
 
-    private TextView header;
     private LinearLayout favoriteRecipeList;
 
     @Override
@@ -25,7 +23,6 @@ public class FavoriteListActivity extends Activity {
 
         setContentView(R.layout.activity_favorite_list);
 
-        header = findViewById(R.id.favoriteListHeader);
         favoriteRecipeList = findViewById(R.id.favoriteRecipeList);
 
         showRecipeButtons();

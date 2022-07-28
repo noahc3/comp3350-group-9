@@ -7,11 +7,9 @@ import android.content.res.AssetManager;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.TypedValue;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -47,7 +45,7 @@ public class HomeListActivity extends Activity {
         tagsList = findViewById(R.id.tagsSuggestions);
 
         showRecipeButtons();
-        
+
         showTagSuggestions();
     }
 
@@ -111,7 +109,7 @@ public class HomeListActivity extends Activity {
                  * to their length; Android Studio seems to resize it accordingly if it is close
                  * enough, thus the hard-coded scaling "22"
                  */
-                if(tag.length() >= 8)
+                if (tag.length() >= 8)
                     btnTag.getLayoutParams().width = tag.length() * 22;
             }
             tagsList.requestLayout();
@@ -141,11 +139,11 @@ public class HomeListActivity extends Activity {
         int currHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 
         // Suggest time_of_day tag for the time of day
-        if(currHour >= 6 && currHour <= 10)
+        if (currHour >= 6 && currHour <= 10)
             suggestions.add(timeOfDay[0]); // "Breakfast" Tag
-        else if(currHour >= 12 && currHour <= 2)
+        else if (currHour >= 12 && currHour <= 2)
             suggestions.add(timeOfDay[1]); // "Lunch" Tag
-        else if(currHour >= 18 && currHour <= 22)
+        else if (currHour >= 18 && currHour <= 22)
             suggestions.add(timeOfDay[2]); // "Dinner" Tag
         else // if odd hours
             suggestions.add(timeOfDay[3]); // "Snack" Tag
@@ -154,7 +152,7 @@ public class HomeListActivity extends Activity {
         suggestions.add(timeOfDay[4]); // "All Day" Tag
 
         // Add exactly one random tag from each tag category (apart from Time of Day)
-        for(int i = 0; i < tagsArray.length; i++) {
+        for (int i = 0; i < tagsArray.length; i++) {
             int randIndex = rng.nextInt(tagsArray[i].length);
             suggestions.add(tagsArray[i][randIndex]);
         }
