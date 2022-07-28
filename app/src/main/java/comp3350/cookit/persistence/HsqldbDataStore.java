@@ -131,7 +131,7 @@ public class HsqldbDataStore implements IDataStore {
             st.setString(4, recipe.getContent());
             st.setObject(5, recipe.getIngredientList().getIngredients().toArray());
             st.setInt(6, recipe.getServingSize());
-            st.setObject(7, recipe.getTags().toArray());
+            st.setString(7, String.join(",", recipe.getTags()));
             st.setInt(8, recipe.getPrepTime());
             st.setInt(9, recipe.getCookTime());
             st.setString(10, recipe.getDifficulty());
@@ -156,7 +156,7 @@ public class HsqldbDataStore implements IDataStore {
             st.setString(3, recipe.getContent());
             st.setObject(4, recipe.getIngredientList().getIngredients().toArray());
             st.setInt(5, recipe.getServingSize());
-            st.setObject(6, recipe.getTags().toArray());
+            st.setString(6, String.join(",", recipe.getTags()));
             st.setInt(7, recipe.getPrepTime());
             st.setInt(8, recipe.getCookTime());
             st.setString(9, recipe.getDifficulty());
@@ -236,6 +236,21 @@ public class HsqldbDataStore implements IDataStore {
         } catch (Exception e) {
             processSQLError(e);
         }
+    }
+
+    @Override
+    public boolean anyRecipeWithTag(String tag) {
+        List<Recipe> recipes = getAllRecipes();
+
+        if (recipes != null) {
+            for (Recipe r : recipes) {
+                if (r.getTags().contains(tag)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     @Override
@@ -454,17 +469,22 @@ public class HsqldbDataStore implements IDataStore {
         String difficulty = rs.getString("DIFFICULTY");
         long timestamp = rs.getLong("TIMESTAMP");
 
+        List<String> tags;
+        String tagRaw = rs.getString("TAGS");
+        if (tagRaw.contains(",")) {
+            tags = new ArrayList<>(Arrays.asList(tagRaw.split(",")));
+        } else if (tagRaw.length() > 0) {
+            tags = new ArrayList<>(Collections.singleton(tagRaw));
+        } else {
+            tags = new ArrayList<>();
+        }
+
         Object[] objArr;
 
         List<Ingredient> ingredients = new ArrayList<>();
         objArr = (Object[]) rs.getObject("INGREDIENTS");
         Ingredient[] ingredientsArr = Arrays.copyOf(objArr, objArr.length, Ingredient[].class);
         Collections.addAll(ingredients, ingredientsArr);
-
-        List<String> tags = new ArrayList<>();
-        objArr = (Object[]) rs.getObject("TAGS");
-        String[] tagsArr = Arrays.copyOf(objArr, objArr.length, String[].class);
-        Collections.addAll(tags, tagsArr);
 
         List<String> images = new ArrayList<>();
         objArr = (Object[]) rs.getObject("IMAGES");
